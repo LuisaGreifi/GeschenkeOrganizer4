@@ -1,0 +1,36 @@
+<resources>
+
+    //Allgemeines
+    <string name="app_name">GeschenkeOrganizer</string>
+
+    //InfoTexts
+    <string name="text_noPresents">GeschenkeOrganizer</string>
+
+    //StringArrays
+    <string-array name="names">
+        <item>Anna</item>
+        <item>Bert</item>
+        <item>Carla</item>
+    </string-array>
+
+    //Buttons
+    <string name="button_presents">Geschenke</string>
+    <string name="button_persons">Personen</string>
+    <string name="button_inspiration">Inspiration</string>
+    <string name="button_done">Fertig!</string>
+    <string name="button_back">zurück</string>
+    <string name="button_add">+</string>
+
+    //Checkboxes
+    <string name="checkbox_hadIdea">Ich habe bereits eine Idee.</string>
+    <string name="checkbox_isBought">Das Geschenk ist gekauft.</string>
+    <string name="checkbox_isWrapped">Das Geschenk ist verpackt.</string>
+
+    //EditTexts - Hints
+    <string name="EditText_hint_firstName">Vorname</string>
+    <string name="EditText_hint_surName">Nachname</string>
+    <string name="EditText_hint_description">Beschreibung</string>
+    <string name="EditText_hint_placeOfPurchase">Ort/Geschäft</string>
+    <string name="EditText_hint_price">Preis</string>
+
+</resources>
