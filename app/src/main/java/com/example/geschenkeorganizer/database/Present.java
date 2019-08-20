@@ -13,6 +13,7 @@ public class Present {
     @PrimaryKey(autoGenerate = true)
     private int presentId;
 
+    @NonNull
     public int personId;
     public int eventId;
 
@@ -38,6 +39,15 @@ public class Present {
     }
 
     @NonNull
+    public int getPersonId(){
+        return personId;
+    }
+
+    public int getEventId(){
+        return eventId;
+    }
+
+    @NonNull
     public String getPresentTitle(){
         return presentTitle;
     }
@@ -55,8 +65,16 @@ public class Present {
     }
 
     //setter
-    public void setpresentId(@NonNull int presentId){
+    public void setPresentId(@NonNull int presentId){
         this.presentId = presentId;
+    }
+
+    public void setPersonId(@NonNull int personId){
+        this.personId = personId;
+    }
+
+    public void setEventId(int eventId){
+        this.eventId = eventId;
     }
 
     public void setPresentTitle(@NonNull String presentTitle){
