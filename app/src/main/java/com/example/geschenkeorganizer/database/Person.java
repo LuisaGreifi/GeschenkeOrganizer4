@@ -2,9 +2,13 @@ package com.example.geschenkeorganizer.database;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+/** https://developer.android.com/training/data-storage/room/defining-data
+Index und unique */
+@Entity(indices = {@Index(value = {"firstName", "lastName"},
+        unique = true)})
 public class Person {
     @NonNull
     @PrimaryKey(autoGenerate = true)
@@ -13,11 +17,12 @@ public class Person {
     private String firstName;
     private String lastName;
 
+    // verschiedene Konstruktoren
     public Person(){}
 
-    // oder in DAO-Methode
     public Person(String firstName, String lastName){}
 
+    //getter
     public int getPersonId(){
         return personId;
     }
@@ -31,6 +36,7 @@ public class Person {
         return lastName;
     }
 
+    //setter
     public void setPersonId(@NonNull int personId){
         this.personId = personId;
     }

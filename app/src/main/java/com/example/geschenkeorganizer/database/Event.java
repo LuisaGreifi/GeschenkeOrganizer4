@@ -13,11 +13,12 @@ public class Event {
     private String eventName;
     private long eventDate;
 
+    // verschiedene Konstruktoren
     public Event(){}
 
-    // oder in DAO-Methode
     public Event(String eventName, String eventDate){}
 
+    //getter
     public int getEventId(){
         return eventId;
     }
@@ -30,6 +31,7 @@ public class Event {
         return eventDate;
     }
 
+    //setter
     public void setEventId(@NonNull int eventId){
         this.eventId = eventId;
     }
