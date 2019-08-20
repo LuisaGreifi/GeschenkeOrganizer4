@@ -9,21 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".otherActivities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PersonsActivity">
+        <activity android:name=".persons.PersonsActivity">
 
         </activity>
-        <activity android:name=".PresentsActivity">
+        <activity android:name=".presents.PresentsActivity">
         </activity>
-        <activity android:name=".InspirationActivity">
+        <activity android:name=".otherActivities.InspirationActivity">
         </activity>
-        <activity android:name=".PresentsAddActivity">
+        <activity android:name=".presents.PresentsAddActivity">
         </activity>
 
     </application>

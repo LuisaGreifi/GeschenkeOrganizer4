@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer;
+package com.example.geschenkeorganizer.persons;
 
 import java.util.ArrayList;
 import java.util.Date;

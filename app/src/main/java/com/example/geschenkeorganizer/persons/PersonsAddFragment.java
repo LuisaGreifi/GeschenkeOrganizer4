@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer;
+package com.example.geschenkeorganizer.persons;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.geschenkeorganizer.R;
 
 public class PersonsAddFragment extends Fragment implements View.OnClickListener {
 

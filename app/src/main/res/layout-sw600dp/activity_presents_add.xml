@@ -4,13 +4,13 @@
 
     <fragment
         android:id="@+id/fragment2"
-        android:name="com.example.geschenkeorganizer.PresentsListFragment"
+        android:name="com.example.geschenkeorganizer.presents.PresentsListFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <fragment
         android:id="@+id/fragment4"
-        android:name="com.example.geschenkeorganizer.PresentsAddFragment"
+        android:name="com.example.geschenkeorganizer.presents.PresentsAddFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/fragment2"

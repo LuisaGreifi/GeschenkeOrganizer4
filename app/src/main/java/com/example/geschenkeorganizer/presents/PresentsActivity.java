@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer;
+package com.example.geschenkeorganizer.presents;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.geschenkeorganizer.R;
 
-public class PresentsActivity extends AppCompatActivity implements  PresentsListFragment.OnListItemSelectedListener{
+
+public class PresentsActivity extends AppCompatActivity implements PresentsListFragment.OnListItemSelectedListener {
 
     @Override
     public void onListItemSelected(int id) {

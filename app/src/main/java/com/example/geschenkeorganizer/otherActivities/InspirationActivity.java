@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer;
+package com.example.geschenkeorganizer.otherActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

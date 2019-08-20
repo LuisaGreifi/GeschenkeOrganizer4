@@ -4,7 +4,7 @@
 
     <fragment
         android:id="@+id/fragment5"
-        android:name="com.example.geschenkeorganizer.PresentsListFragment"
+        android:name="com.example.geschenkeorganizer.presents.PresentsListFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

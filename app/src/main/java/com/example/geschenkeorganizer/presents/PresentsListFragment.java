@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer;
+package com.example.geschenkeorganizer.presents;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.ListFragment;
+
+import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.presents.Present;
 
 // Code von NoteTaker-Übung
 
