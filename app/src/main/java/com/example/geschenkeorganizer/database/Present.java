@@ -32,10 +32,12 @@ public class Present {
     public Present(String presentTitle, double price, String shop, String status){}
 
     //getter
+    @NonNull
     public int getPresentId(){
         return presentId;
     }
 
+    @NonNull
     public String getPresentTitle(){
         return presentTitle;
     }

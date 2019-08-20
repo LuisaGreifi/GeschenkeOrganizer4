@@ -19,6 +19,7 @@ public class Event {
     public Event(String eventName, String eventDate){}
 
     //getter
+    @NonNull
     public int getEventId(){
         return eventId;
     }
