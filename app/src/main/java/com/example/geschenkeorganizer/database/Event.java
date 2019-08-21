@@ -2,9 +2,14 @@ package com.example.geschenkeorganizer.database;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+/** https://developer.android.com/training/data-storage/room/defining-data
+ Index und unique
+ glaub unique, weil 1 Zeile in DB genügt --> Zuordnung zu Personen über Join-Klasse, besser für Weihnachten etc*/
+@Entity(indices = {@Index(value = {"eventName", "eventDate"},
+        unique = true)})
 public class Event {
     @NonNull
     @PrimaryKey(autoGenerate = true)
