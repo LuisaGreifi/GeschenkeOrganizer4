@@ -29,7 +29,7 @@ public interface DaoAccess {
 
     //vgl. Übung 6
     @Query("SELECT firstName FROM Person WHERE lastName =:lastName")
-    List<String> getFirstNameByLAstName(String lastName);
+    List<String> getFirstNameByLastName(String lastName);
 
     @Query("SELECT * FROM Person WHERE personId =:personId")
     List<Person> getPersonById(int personId);
@@ -43,13 +43,11 @@ public interface DaoAccess {
 
 
 
+
     //Event Access
 
     @Insert
      void insertSingleEvent(Event event);
-
-    @Insert
-    void insertMoreEvents(Event... event);
 
     //vgl. Übung 6
     @Query("SELECT * FROM Event")
@@ -75,17 +73,84 @@ public interface DaoAccess {
 
 
 
-
-
-
-
-
-
     //PersonEventJoin Access
+
+    //vgl. https://developer.android.com/training/data-storage/room/relationships
     @Insert
     void insertPersonEventJoin(PersonEventJoin personEventJoin);
 
+    //vgl. https://developer.android.com/training/data-storage/room/relationships
+    @Query("SELECT * FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId")
+    List<Event> getEventForPerson(final int personId);
+
+    @Query("SELECT eventName FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId")
+    List<String> getEventNameForPerson(final int personId);
+
+    //todo: absolut nicht sicher, ob das so funktioniert!
+    @Query("SELECT eventName FROM Event, Person " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE Person.firstName =:firstName")
+    List<String> getEventNameForPersonsFirstName(final String firstName);
+
+    //vgl. https://developer.android.com/training/data-storage/room/relationships
+    @Query("SELECT * FROM Person " + "INNER JOIN PersonEventJoin " + "ON Person.personId = PersonEventJoin.personId " + "WHERE PersonEventJoin.eventId =:eventId")
+    List<Person> getPersonForEvent(final int eventId);
+
+    @Query("SELECT firstName FROM Person " + "INNER JOIN PersonEventJoin " + "ON Person.personId = PersonEventJoin.personId " + "WHERE PersonEventJoin.eventId =:eventId")
+    List<String> getPersonsFirstNameForEvent(final int eventId);
+
+    @Query("SELECT lastName FROM Person " + "INNER JOIN PersonEventJoin " + "ON Person.personId = PersonEventJoin.personId " + "WHERE PersonEventJoin.eventId =:eventId")
+    List<String> getPersonsLastNameForEvent(final int eventId);
+
+    @Delete
+    void deletePersonEventJoin(PersonEventJoin presentEventJoin);
+
+
+
+
+
     //Present Access
+
     @Insert
     void insertPresent(Present present);
+
+    //vgl. Übung 6
+    @Query("SELECT * FROM Present")
+    List<Present> getAllPresents();
+
+    @Query("SELECT * FROM Present WHERE presentId =:presentId")
+    List<Present> getPresentById(int presentId);
+
+    @Query("SELECT * FROM Present WHERE personId =:personId")
+    List<Present> getPresentByPersonId(int personId);
+
+    @Query("SELECT * FROM Present WHERE eventId =:eventId")
+    List<Present> getPresentByEventId(int eventId);
+
+    @Delete
+    void deletePresent(Present present);
+
+
+
+    //todo: absolut unsicher --> ÜBERPRÜFEN!
+    //Present Representation
+    @Query("SELECT Person.firstName, Person.lastName, Event.eventName, Present.presentTitle, Present.price, Present.shop, Present.status FROM Person, Event, Present WHERE Present.personId = Person.personId AND Present.eventId = Event.eventId")
+    List<String> getPresentRepresentataion();
+    // brauch noch ein eigenes Objekt dafür :)
+
+    //Alternativ vllt:
+    //Element 1: Name Person zu personId in Geschenke bekommen
+    // Inspiration: //vgl. https://developer.android.com/training/data-storage/room/relationships
+    @Query("SELECT firstName, lastName FROM Person " + "INNER JOIN Present " + "ON Person.personId = Present.personId " + "WHERE Present.personId =:presentPersonId")
+    List<Person> getPersonNameForPresentPersonId(final int presentPersonId);
+    //Element 2: Eventtitel zu Event ID in Geschenk bekommen
+    // Inspiration: //vgl. https://developer.android.com/training/data-storage/room/relationships
+    @Query("SELECT eventName FROM Event " + "INNER JOIN Present " + "ON Event.eventId = Present.eventId " + "WHERE Present.eventId =:presentEventId")
+    List<String> getEventNameForPresentEventId(final int presentEventId);
+    //Element 3:
+    @Query("SELECT presentTitle, price, shop, status FROM Present")
+    List<Present> getPresentRepresentationInformation();
+    
+    //dann resultiert ungefähr sowas
+    @Query("SELECT Person.firstName, Person.lastName, Event.eventName, Present.presentTitle, Present.price, Present.shop, Present.status FROM Person, Event, Present " + "INNER JOIN Present " + "ON Person.personId = Present.personId AND Event.eventId = Present.eventId")
+    List<Present> getAllPresentsForRepresentation();
+    //brauchst eigenes Objekt zur Anzeige! --> Pojo
 }
