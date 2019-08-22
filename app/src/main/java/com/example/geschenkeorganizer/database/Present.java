@@ -52,15 +52,15 @@ public class Present {
         return presentTitle;
     }
 
-    public double getPresentPrice(){
+    public double getPrice(){
         return price;
     }
 
-    public String getPresentShop(){
+    public String getShop(){
         return shop;
     }
 
-    public String getPresentStatus(){
+    public String getStatus(){
         return status;
     }
 
@@ -81,15 +81,15 @@ public class Present {
         this.presentTitle = presentTitle;
     }
 
-    public void setPresentPrice(double price){
+    public void setPrice(double price){
         this.price = price;
     }
 
-    public void setPresentShop(String shop){
+    public void setShop(String shop){
         this.shop = shop;
     }
 
-    public void setPresentStatus(String status){
+    public void setStatus(String status){
         this.status = status;
     }
 

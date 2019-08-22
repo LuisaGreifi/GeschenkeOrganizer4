@@ -28,7 +28,6 @@ public class Person {
         return personId;
     }
 
-
     public String getFirstName(){
         return firstName;
     }
