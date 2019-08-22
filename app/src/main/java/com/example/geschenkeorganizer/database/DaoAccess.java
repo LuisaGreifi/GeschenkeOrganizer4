@@ -56,27 +56,42 @@ public interface DaoAccess {
     //Event Access
 
     @Insert
-     void insertSingleEvent(Event event);
+     void insertEvent(Event event);
+
+    //unktioniert für mehrere (und für eins!)
+    //Unterscheidung bei mehreren komplizierter, ob schon in DB oder nicht...(nur wenn unbedingt nötig für UI!)
+    @Insert
+    void insertEvents(Event... event);
 
     //vgl. Übung 6
     @Query("SELECT * FROM Event")
     List<Event> getAllEvents();
 
-    // todo: Rückgabewert checken!!
+    //todo: Obacht: long wird manchmal als Bit Zahl verstanden (0303 --> 195)
     @Query("SELECT eventDate FROM Event")
-    ArrayList<Long> getAllEventDates();
+    List<Long> getAllEventDates();
 
     @Query("SELECT eventName FROM Event")
     List<String> getAllEventNames();
 
     @Query("SELECT * FROM Event WHERE eventId =:eventId")
-    List<Event> getEventById(int eventId);
+    Event getEventById(int eventId);
 
     @Query("SELECT eventId FROM Event WHERE eventName =:eventName AND eventDate =:eventDate")
     int getEventIdByEventInformation (String eventName, long eventDate);
 
-    @Delete
-    void deleteEvent(Event event);
+    @Query("SELECT * FROM Event WHERE eventName =:eventName AND eventDate =:eventDate")
+    boolean existsEventWithEventInformationAlready(String eventName, long eventDate);
+
+    // https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3
+    @Query("DELETE FROM Event")
+    void deleteAllEvents();
+
+    @Query("DELETE FROM Event WHERE eventName =:eventName AND eventDate =:eventDate")
+    void deleteEventByEventInformation(String eventName, long eventDate);
+
+    @Query("DELETE FROM Event WHERE eventId =:eventId")
+    void deleteEventByEventId(int eventId);
 
 
 
