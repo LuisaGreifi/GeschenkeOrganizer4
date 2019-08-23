@@ -160,26 +160,39 @@ public interface DaoAccess {
     List<Present> getAllPresents();
 
     @Query("SELECT * FROM Present WHERE presentId =:presentId")
-    List<Present> getPresentById(int presentId);
+    Present getPresentById(int presentId);
 
     @Query("SELECT * FROM Present WHERE personId =:personId")
-    List<Present> getPresentByPersonId(int personId);
+    List<Present> getPresentsByPersonId(int personId);
 
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
-    List<Present> getPresentByEventId(int eventId);
+    List<Present> getPresentsByEventId(int eventId);
 
-    @Delete
-    void deletePresent(Present present);
+    @Query("SELECT * FROM Present WHERE eventId =:eventId")
+    boolean existsPresentForEventAlready(int eventId);
+
+    // https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3
+    @Query("DELETE FROM Present")
+    void deleteAllPresents();
+
+    @Query("DELETE FROM Present WHERE personId =:personId AND eventId =:eventId")
+    void deletePresentByPersonAndEvent(int personId, int eventId);
+
+    @Query("DELETE FROM Present WHERE personId =:personId")
+    void deletePresentByPerson(int personId);
+
+    @Query("DELETE FROM Present WHERE eventId =:eventId")
+    void deletePresentByEvent(int eventId);
 
 
-
+/**
     //todo: absolut unsicher --> ÜBERPRÜFEN!
     //Present Representation
 
-    @Query("SELECT Person.firstName, Person.lastName, Event.eventName, Present.presentTitle, Present.price, Present.shop, Present.status FROM Person, Event, Present WHERE Present.personId = Person.personId AND Present.eventId = Event.eventId")
+    @Query("SELECT Person.firstName, Person.lastName, Event.eventName, Present.presentName, Present.price, Present.shop, Present.status FROM Person, Event, Present WHERE Present.personId = Person.personId AND Present.eventId = Event.eventId")
     List<String> getPresentRepresentataion();
     // brauch noch ein eigenes Objekt dafür :)
-
+*/
     //Alternativ vllt:
     /**
     //Element 1: Name Person zu personId in Geschenke bekommen
@@ -194,9 +207,10 @@ public interface DaoAccess {
     @Query("SELECT presentTitle, price, shop, status FROM Present")
     List<Present> getPresentRepresentationInformation();
     */
-
+/**
     //dann resultiert ungefähr sowas
-    @Query("SELECT Person.firstName, Person.lastName, Event.eventName, Present.presentTitle, Present.price, Present.shop, Present.status FROM Person, Event, Present " + "INNER JOIN Present " + "ON Person.personId = Present.personId AND Event.eventId = Present.eventId")
+    @Query("SELECT Person.firstName, Person.lastName, Event.eventName, Present.presentName, Present.price, Present.shop, Present.status FROM Person, Event, Present " + "INNER JOIN Present " + "ON Person.personId = Present.personId AND Event.eventId = Present.eventId")
     List<Present> getAllPresentsForRepresentation();
     //brauchst eigenes Objekt zur Anzeige! --> Pojo
+    */
 }

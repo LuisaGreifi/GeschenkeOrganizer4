@@ -18,7 +18,7 @@ public class Present {
     public int eventId;
 
     @NonNull
-    private String presentTitle;
+    private String presentName;
     private double price;
     private String shop;
     private String status;
@@ -26,11 +26,11 @@ public class Present {
     // verschiedene Konstruktoren
     public Present(){}
 
-    public Present(String presentTitle){}
+    public Present(String presentName){}
 
-    public Present(String presentTitle, String status){}
+    public Present(String presentName, String status){}
 
-    public Present(String presentTitle, double price, String shop, String status){}
+    public Present(String presentName, double price, String shop, String status){}
 
     //getter
     @NonNull
@@ -49,7 +49,7 @@ public class Present {
 
     @NonNull
     public String getPresentTitle(){
-        return presentTitle;
+        return presentName;
     }
 
     public double getPrice(){
@@ -77,8 +77,8 @@ public class Present {
         this.eventId = eventId;
     }
 
-    public void setPresentTitle(@NonNull String presentTitle){
-        this.presentTitle = presentTitle;
+    public void setPresentTitle(@NonNull String presentName){
+        this.presentName = presentName;
     }
 
     public void setPrice(double price){
