@@ -103,16 +103,28 @@ public interface DaoAccess {
     @Insert
     void insertPersonEventJoin(PersonEventJoin personEventJoin);
 
+    //vgl. Übung 6
+    @Query("SELECT * FROM PersonEventJoin")
+    List<PersonEventJoin> getAllPersonEventJoins();
+
     //vgl. https://developer.android.com/training/data-storage/room/relationships
+    // könnte gut für Spinner in Geschenke hinzufügen sein
+    // auch: wahrscheinlich Nutzung zur Anzeige Events passend zu den Personen
     @Query("SELECT * FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId")
     List<Event> getEventForPerson(final int personId);
 
+    //eher das gut für Spinner
     @Query("SELECT eventName FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId")
     List<String> getEventNameForPerson(final int personId);
 
-    //todo: absolut nicht sicher, ob das so funktioniert!
-    @Query("SELECT eventName FROM Event, Person " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE Person.firstName =:firstName")
-    List<String> getEventNameForPersonsFirstName(final String firstName);
+    @Query("SELECT eventName FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId AND Event.eventDate =:eventDate")
+    String getEventNameForPersonAndEventDate(final int personId, final long eventDate);
+
+    @Query("SELECT eventDate FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId AND Event.eventName =:eventName")
+    long getEventDateForPersonAndEventName(final int personId, final String eventName);
+
+    @Query("SELECT eventDate FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId AND Event.eventId =:eventId")
+    long getEventDateForPersonAndEvent(final int personId, final int eventId);
 
     //vgl. https://developer.android.com/training/data-storage/room/relationships
     @Query("SELECT * FROM Person " + "INNER JOIN PersonEventJoin " + "ON Person.personId = PersonEventJoin.personId " + "WHERE PersonEventJoin.eventId =:eventId")
@@ -124,8 +136,15 @@ public interface DaoAccess {
     @Query("SELECT lastName FROM Person " + "INNER JOIN PersonEventJoin " + "ON Person.personId = PersonEventJoin.personId " + "WHERE PersonEventJoin.eventId =:eventId")
     List<String> getPersonsLastNameForEvent(final int eventId);
 
-    @Delete
-    void deletePersonEventJoin(PersonEventJoin presentEventJoin);
+    @Query("SELECT * FROM PersonEventJoin WHERE personId =:personId AND eventId =:eventId")
+    boolean existsPersonEventConnectionAlready(int personId, int eventId);
+
+    // https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3
+    @Query("DELETE FROM PersonEventJoin")
+    void deleteAllPersonEventJoins();
+
+    @Query("DELETE FROM PersonEventJoin WHERE personId =:personId AND eventId =:eventId")
+    void deletePersonEventJoin(int personId, int eventId);
 
 
 

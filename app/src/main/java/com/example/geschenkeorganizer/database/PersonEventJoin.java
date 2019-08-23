@@ -13,8 +13,9 @@ public class PersonEventJoin {
     private int personId;
     private int eventId;
 
-    // todo: nachfolgendes: weiß nicht, ob Join Klasse das überhaupt braucht?
     public PersonEventJoin(){}
+
+    public PersonEventJoin(int personId, int eventId){}
 
     public int getPersonId(){
         return personId;
