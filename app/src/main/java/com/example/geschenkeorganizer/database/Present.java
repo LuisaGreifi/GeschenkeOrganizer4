@@ -48,7 +48,7 @@ public class Present {
     }
 
     @NonNull
-    public String getPresentTitle(){
+    public String getPresentName(){
         return presentName;
     }
 
@@ -77,7 +77,7 @@ public class Present {
         this.eventId = eventId;
     }
 
-    public void setPresentTitle(@NonNull String presentName){
+    public void setPresentName(@NonNull String presentName){
         this.presentName = presentName;
     }
 

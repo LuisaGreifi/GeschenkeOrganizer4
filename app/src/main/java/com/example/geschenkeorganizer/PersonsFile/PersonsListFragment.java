@@ -43,17 +43,7 @@ public class PersonsListFragment extends ListFragment {
 
     protected void populateList() {
         //todo: mit Datenbank verbinden (für Array)
-        Person[] values = new Person[0];
-        if (values.length == 0) {
-            Toast.makeText(getActivity(), R.string.text_noPersons,
-                    Toast.LENGTH_LONG).show();
-        }
-        else {
-            ArrayAdapter<Person> adapter =
-                    new ArrayAdapter<Person>(getActivity(), android.R.layout.simple_list_item_1,
-                            values);
-            setListAdapter(adapter);
-        }
+
     }
 
     @Override
