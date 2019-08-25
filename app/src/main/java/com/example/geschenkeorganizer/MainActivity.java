@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer.otherActivities;
+package com.example.geschenkeorganizer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.persons.PersonsActivity;
+import com.example.geschenkeorganizer.PersonsFile.PersonsActivity;
 import com.example.geschenkeorganizer.presents.PresentsActivity;
 
 public class MainActivity extends AppCompatActivity {

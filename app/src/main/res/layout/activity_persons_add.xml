@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment9"
-        android:name="com.example.geschenkeorganizer.persons.PersonsListFragment"
+        android:name="com.example.geschenkeorganizer.PersonsFile.PersonsListFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

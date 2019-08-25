@@ -1,6 +1,7 @@
 package com.example.geschenkeorganizer.presents;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import androidx.fragment.app.ListFragment;
 
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.presents.Present;
@@ -40,20 +39,19 @@ public class PresentsListFragment extends ListFragment {
     }
 
     protected void populateList() {
-        //todo: TextView oder Toast für kein Geschenk vorhanden statt dummy
+        //todo: mit Datenbank verbinden (für Array)
 
-        //todo: mit Datenbank verbinden (für ArrayList)
         Present[] values = new Present[0];
         if (values.length == 0) {
-            Present dummy = new Present("Geschenke", "", "nicht vorhanden", "", "", false, false, false, 0.0);
-            dummy.setId(-1);
-            values = new Present[]{dummy};
-
+            Toast.makeText(getActivity(), R.string.text_noPresents,
+                    Toast.LENGTH_LONG).show();
         }
-        ArrayAdapter<Present> adapter =
-                new ArrayAdapter<Present>(getActivity(), android.R.layout.simple_list_item_1,
-                        values);
-        setListAdapter(adapter);
+        else {
+            ArrayAdapter<Present> adapter =
+                    new ArrayAdapter<Present>(getActivity(), android.R.layout.simple_list_item_1,
+                            values);
+            setListAdapter(adapter);
+        }
     }
 
     @Override

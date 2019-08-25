@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer.presents;
+package com.example.geschenkeorganizer.PersonsFile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,51 +10,49 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geschenkeorganizer.R;
 
-
-public class PresentsActivity extends AppCompatActivity implements PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener {
+public class PersonsActivity extends AppCompatActivity implements  PersonsListFragment.OnListItemSelectedListener, PersonsAddFragment.OnListItemChangedListener {
 
     @Override
     public void onListItemSelected(int id) {
         //todo: evtl. anzeigen und dann ändern lassen, so in etwa:
-        // PresentsAddFragment paf =
-        // (PresentsAddFragment) getFragmentManager().findFragmentById(R.id.fragment_presents_add);
+        // PersonsAddFragment paf =
+        // (PersonsAddFragment) getFragmentManager().findFragmentById(R.id.fragment_persons_add);
         // if (paf != null) {
         // paf.viewContent(id); <- muss noch implementiert werden
         // } else {
         // Toast.makeText(this, "Du wirst weitergeleitet.", Toast.LENGTH_SHORT).show();
-        // Intent intent = new Intent(this, PresentsAddActivity.class);
-        // intent.putExtra(PresentsAddFragment.ARG_ID, id);
+        // Intent intent = new Intent(this, PersonsAddActivity.class);
+        // intent.putExtra(PersonsAddFragment.ARG_ID, id);
         // startActivity(intent);
     }
 
     @Override
     public void onListItemChanged() {
-        PresentsListFragment paf =
-                (PresentsListFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_list);
+        PersonsListFragment paf =
+                (PersonsListFragment) getFragmentManager().findFragmentById(R.layout.fragment_persons_list);
         if (paf != null) {
             paf.populateList();
         }
         //Datenbank Bescheid geben?
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_presents);
+        setContentView(R.layout.activity_persons);
 
-        Button addButton = findViewById(R.id.button_addPresent);
+        Button addButton = findViewById(R.id.button_addPerson);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PresentsAddFragment paf =
-                        (PresentsAddFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_add);
+                PersonsAddFragment paf =
+                        (PersonsAddFragment) getFragmentManager().findFragmentById(R.layout.fragment_persons_add);
                 if (paf != null) {
-                    Toast.makeText(PresentsActivity.this, "Gib das neue Geschenk auf der rechten Seite ein.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonsActivity.this, "Gib die neue Person auf der rechten Seite ein.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(PresentsActivity.this, "Du wirst weitergeleitet.",
+                    Toast.makeText(PersonsActivity.this, "Du wirst weitergeleitet.",
                             Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(PresentsActivity.this, PresentsAddActivity.class);
+                    Intent intent = new Intent(PersonsActivity.this, PersonsAddActivity.class);
                     startActivity(intent);
                 }
             }

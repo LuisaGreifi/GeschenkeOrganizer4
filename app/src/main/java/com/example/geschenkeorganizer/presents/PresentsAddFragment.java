@@ -1,5 +1,6 @@
 package com.example.geschenkeorganizer.presents;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
-import androidx.fragment.app.Fragment;
+import android.widget.Toast;
 
 import com.example.geschenkeorganizer.R;
 
@@ -44,19 +44,24 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         firstName = getView().findViewById(R.id.editText_firstName);
         surName = getView().findViewById(R.id.editText_surName);
+        description = getView().findViewById(R.id.editText_description);
         if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
             saveEntry(v);
             mCallback.onListItemChanged();
+        } else {
+            Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",
+                    Toast.LENGTH_SHORT).show();
         }
-
-        /*todo: else ... String s = "Du musst noch eine Person eingeben."; Toast.makeText(PresentsAddFragment.this, s,
-                    Toast.LENGTH_SHORT).show(); */
     }
 
     private void saveEntry(View v) {
         findViewsById();
         getInformation(v);
         //todo: Informationen in Datenbank speichern
+    }
+
+    public void loadEmptyAddView() {
+        //todo: alle Views ohne Text etc. laden
     }
 
     private void findViewsById() {
