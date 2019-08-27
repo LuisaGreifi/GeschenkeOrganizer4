@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_firstName2" />
 
     <Spinner
-        android:id="@+id/spinner_dateOfBirth2"
+        android:id="@+id/spinner_eventType"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -57,14 +57,16 @@
         android:text="@string/button_done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_dateOfBirth2" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_eventDate" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="395dp"
+    <EditText
+        android:id="@+id/editText_eventDate"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/EditText_eventDate"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_done2"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_eventType" />
 </androidx.constraintlayout.widget.ConstraintLayout>

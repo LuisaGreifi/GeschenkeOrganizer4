@@ -4,21 +4,27 @@
     <string name="app_name">GeschenkeOrganizer</string>
 
     //InfoTexts
-    <string name="text_noPresents">GeschenkeOrganizer</string>
+    <string name="text_noPresents">Es sind keine Geschenke vorhanden.</string>
+    <string name="text_noPersons">Es sind keine Personen vorhanden.</string>
 
     //StringArrays
-    <string-array name="names">
-        <item>Anna</item>
-        <item>Bert</item>
-        <item>Carla</item>
+    <string-array name="eventTypes">
+        <item>Geburtstag</item>
+        <item>Weihnachten</item>
+        <item>Jahrestag</item>
+        <item>Hochzeit</item>
+        <item>Valentinstag</item>
+        <item>Muttertag</item>
+        <item>Vatertag</item>
+        <item>Namenstag</item>
+        <item>Sonstiges</item>
     </string-array>
 
     //Buttons
     <string name="button_presents">Geschenke</string>
-    <string name="button_persons">Personen</string>
+    <string name="button_persons">Personen und Events</string>
     <string name="button_inspiration">Inspiration</string>
     <string name="button_done">Fertig!</string>
-    <string name="button_back">zurück</string>
     <string name="button_add">+</string>
 
     //Checkboxes
@@ -32,5 +38,6 @@
     <string name="EditText_hint_description">Beschreibung</string>
     <string name="EditText_hint_placeOfPurchase">Ort/Geschäft</string>
     <string name="EditText_hint_price">Preis</string>
+    <string name="EditText_eventDate">Datum</string>
 
 </resources>

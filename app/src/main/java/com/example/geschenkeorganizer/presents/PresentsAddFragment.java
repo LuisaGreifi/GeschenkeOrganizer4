@@ -40,6 +40,8 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
+
+
     @Override
     public void onClick(View v) {
         firstName = getView().findViewById(R.id.editText_firstName);
