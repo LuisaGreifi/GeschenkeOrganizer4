@@ -6,6 +6,7 @@
     //InfoTexts
     <string name="text_noPresents">Es sind keine Geschenke vorhanden.</string>
     <string name="text_noPersons">Es sind keine Personen vorhanden.</string>
+    <string name="text_dateEntry">Wenn du möchtest, kannst du noch ein Datum eingeben.</string>
 
     //StringArrays
     <string-array name="eventTypes">
@@ -26,6 +27,7 @@
     <string name="button_inspiration">Inspiration</string>
     <string name="button_done">Fertig!</string>
     <string name="button_add">+</string>
+    <string name="button_calendarCall">Zu deinem Kalender...</string>
 
     //Checkboxes
     <string name="checkbox_hadIdea">Ich habe bereits eine Idee.</string>

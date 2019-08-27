@@ -2,6 +2,8 @@ package com.example.geschenkeorganizer.PersonsFile;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.core.view.KeyEventDispatcher;
 
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.presents.PresentsActivity;
@@ -33,7 +37,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     private EditText editText_firstName, editText_surName, editText_eventDate;
     private Spinner spinner_eventType;
-    private Button button_done;
+    private Button button_done, button_calendarCall;
 
     private String textFirstName, textSurName;
     private String textSpinner;
@@ -52,7 +56,9 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
                          Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_persons_add, container, false);
         button_done = view.findViewById(R.id.button_done2);
+        button_calendarCall = view.findViewById(R.id.button_calendarCall);
         button_done.setOnClickListener(this);
+        button_calendarCall.setOnClickListener(this);
 
         spinner_eventType = view.findViewById(R.id.spinner_eventType);
         initSpinner(spinner_eventType);
@@ -149,15 +155,26 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     }
     @Override
     public void onClick(View v) {
-        editText_firstName = getView().findViewById(R.id.editText_firstName2);
-        editText_surName = getView().findViewById(R.id.editText_surName2);
-        if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty()) {
-            saveEntry(v);
-            mCallback.onListItemChanged();
+        if(v.getId()==R.id.button_done2) {
+            editText_firstName = getView().findViewById(R.id.editText_firstName2);
+            editText_surName = getView().findViewById(R.id.editText_surName2);
+            if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty()) {
+                saveEntry(v);
+                mCallback.onListItemChanged();
+            } else {
+                Toast.makeText(getActivity(), "Du musst noch eine Person eingeben.",
+                        Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(getActivity(), "Du musst noch eine Person eingeben.",
-                    Toast.LENGTH_SHORT).show();
+            //todo: Code zitieren: https://stackoverflow.com/questions/1943679/android-calendar (abgerufen am 27.08.2019)
+            Intent i = new Intent();
+
+            ComponentName cn = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
+
+            i.setComponent(cn);
+            startActivity(i);
         }
+
     }
 
     private void saveEntry(View v) {

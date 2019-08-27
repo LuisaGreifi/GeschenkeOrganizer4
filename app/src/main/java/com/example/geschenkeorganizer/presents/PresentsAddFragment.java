@@ -1,6 +1,7 @@
 package com.example.geschenkeorganizer.presents;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,11 +50,14 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         description = getView().findViewById(R.id.editText_description);
         if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
             saveEntry(v);
+
             mCallback.onListItemChanged();
+
         } else {
             Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",
                     Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void saveEntry(View v) {
