@@ -29,6 +29,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     private static final int EVENTTYPE_BIRTHDAY = 0, EVENTTYPE_CHRISTMAS = 1, EVENTTYPE_ANNIVERSARY = 2, EVENTTYPE_WEDDING = 3, EVENTTYPE_VALENTINESDAY = 4, EVENTTYPE_MOTHERSDAY = 5, EVENTTYPE_FATHERSDAY = 6, EVENTTYPE_NAMEDAY = 7, EVENTTYPE_OTHER = 8;
     private String eventType, eventDate;
+    private int eventDateDay, eventDateMonth;
 
     private EditText editText_firstName, editText_surName, editText_eventDate;
     private Spinner spinner_eventType;
@@ -162,7 +163,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     private void saveEntry(View v) {
         findViewsById();
         getInformation(v);
-        //todo: Informationen in Datenbank speichern (textFirstName als String, textSurName als String, eventType als String
+        //todo: Informationen in Datenbank speichern (textFirstName als String, textSurName als String, eventType als String, eventDateDay als int, eventDateMonth als int
     }
 
     private void findViewsById() {
@@ -175,7 +176,11 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     private void getInformation(View v) {
         textFirstName = editText_firstName.getText().toString();
         textSurName = editText_surName.getText().toString();
+
         eventDate = editText_eventDate.getText().toString();
+        eventDateDay = Integer.getInteger(eventDate.substring(0,2));
+        eventDateMonth = Integer.getInteger(eventDate.substring(3, 5));
+
         int eventTypeInt = spinner_eventType.getSelectedItemPosition();
         eventType = getEvent(eventTypeInt);
     }
