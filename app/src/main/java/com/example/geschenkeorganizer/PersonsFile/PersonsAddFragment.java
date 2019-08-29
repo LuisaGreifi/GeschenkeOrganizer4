@@ -120,7 +120,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
                 eventType = "Geburtstag";
                 break;
             case EVENTTYPE_CHRISTMAS:
-                eventType = "Weihnachtene";
+                eventType = "Weihnachten";
                 break;
             case EVENTTYPE_ANNIVERSARY:
                 eventType = "Jahrestag";
