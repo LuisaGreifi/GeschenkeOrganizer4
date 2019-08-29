@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.Repository;
 
 public class PresentsAddFragment extends Fragment implements View.OnClickListener {
 
@@ -25,9 +26,12 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private CheckBox hadIdea, bought, wrapped;
     private Button done;
 
-    private String textFirstName, textSurName, textDescription, textEvent, textPlaceOfPurchase, StringTextPrice;
+    private String textFirstName, textSurName, textDescription, textEvent, textPlaceOfPurchase, StringTextPrice, /**todo:NEU */textStatus;;
     private boolean booHadIdea, booBought, booWrapped;
     private double textPrice;
+
+    private Repository repository;
+
 
     public PresentsAddFragment() {
     }
@@ -50,8 +54,8 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         description = getView().findViewById(R.id.editText_description);
         if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
             saveEntry(v);
-
-            mCallback.onListItemChanged();
+            // todo: für Insert erstmal nicht relevant
+            //mCallback.onListItemChanged();
 
         } else {
             Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",
@@ -63,7 +67,18 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private void saveEntry(View v) {
         findViewsById();
         getInformation(v);
-        //todo: Informationen in Datenbank speichern
+        //todo: NEU (Kein Plan, ob das hier richtig initialisiert ist + ob dann wirklich bloß 1 Db pro Activity erzeugt wird)
+
+        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Erstellung Repository mit richtigem Kontext
+        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Kontext der Activity des Fragments: Präfix: getActivity()
+        repository = new Repository(getActivity().getApplicationContext());
+
+        //todo: NEU
+        repository.insertPresent(textFirstName,textSurName, textEvent, textDescription, textPrice, textPlaceOfPurchase, textStatus);
+
+        // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
     }
 
     public void loadEmptyAddView() {
@@ -90,11 +105,39 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         textEvent = event.getText().toString();
         textPlaceOfPurchase = placeOfPurchase.getText().toString();
         StringTextPrice = price.getText().toString();
+
+        //todo:neu (textPrice unten is mejor!), funktioniert soweit!
+        //todo:obacht: es dürfen nur "."(Punkt) doubles eingegeben werden!
+
+        // https://www.journaldev.com/18361/java-remove-character-string
+        // characters ersetzen
+        textPrice = Double.parseDouble(StringTextPrice.replace(",", "."));
+
+
         //todo: EditText im Layout über Attribute näher definieren (nur Komma-/Punktzahlen eingeben)
         textPrice = Double.valueOf(StringTextPrice);
         //todo: nachschauen, ob isChecked richtige Methode ist
         booHadIdea = hadIdea.isChecked();
         booBought = bought.isChecked();
         booWrapped = wrapped.isChecked();
+
+        //todo: neu
+        textStatus = getHighestStatusOfCheckboxes();
+    }
+
+    //todo: neu
+    private String getHighestStatusOfCheckboxes(){
+        String result = "";
+        String hadIdea = "Idee";
+        String bought = "gekauft";
+        String wrapped = "verpackt";
+        if((booHadIdea && booBought && booWrapped) || (booHadIdea && booWrapped) || (booBought && booWrapped) || booWrapped ){
+            result = wrapped;
+        } else if ((booHadIdea && booBought) || booBought){
+            result = bought;
+        } else if (booHadIdea){
+            result = hadIdea;
+        }
+        return result;
     }
 }

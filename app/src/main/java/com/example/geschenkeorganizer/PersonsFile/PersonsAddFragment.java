@@ -16,12 +16,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.core.view.KeyEventDispatcher;
-
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.presents.PresentsActivity;
+import com.example.geschenkeorganizer.database.Repository;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -33,7 +30,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     private static final int EVENTTYPE_BIRTHDAY = 0, EVENTTYPE_CHRISTMAS = 1, EVENTTYPE_ANNIVERSARY = 2, EVENTTYPE_WEDDING = 3, EVENTTYPE_VALENTINESDAY = 4, EVENTTYPE_MOTHERSDAY = 5, EVENTTYPE_FATHERSDAY = 6, EVENTTYPE_NAMEDAY = 7, EVENTTYPE_OTHER = 8;
     private String eventType, eventDate;
-    private int eventDateDay, eventDateMonth;
+    private int eventDateDay, eventDateMonth, eventDateInt;
 
     private EditText editText_firstName, editText_surName, editText_eventDate;
     private Spinner spinner_eventType;
@@ -41,6 +38,8 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     private String textFirstName, textSurName;
     private String textSpinner;
+
+    private Repository repository;
 
     public interface OnListItemChangedListener {
         public void onListItemChanged();
@@ -160,7 +159,8 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
             editText_surName = getView().findViewById(R.id.editText_surName2);
             if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty()) {
                 saveEntry(v);
-                mCallback.onListItemChanged();
+                // todo: für Insert erstmal nicht relevant
+                // mCallback.onListItemChanged();
             } else {
                 Toast.makeText(getActivity(), "Du musst noch eine Person eingeben.",
                         Toast.LENGTH_SHORT).show();
@@ -181,11 +181,37 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         findViewsById();
         getInformation(v);
         //todo: Informationen in Datenbank speichern (textFirstName als String, textSurName als String, eventType als String, eventDateDay als int, eventDateMonth als int
+
+        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Erstellung Repository mit richtigem Kontext
+        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Kontext der Activity des Fragments: Präfix: getActivity()
+        repository = new Repository(getActivity().getApplicationContext());
+
+
+        //todo: Informationen in Datenbank speichern (textFirstName als String, textSurName als String, eventType als String, eventDateDay als int, eventDateMonth als int
+        //todo: statt Tag + Monat: 1 Int!
+        //todo: NEU
+        repository.insertPersonEvent(textFirstName,textSurName, eventType, eventDateInt);
+
+        // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
+
     }
 
+    //todo: NEU
+    //todo: muss von onPostExecute aufgerufen werden..momentan nicht in Verwendung!
+    //todo: damit EditText wieder leer ist, nachdem Zeug gespeichert wurde (Wenn Inserten nicht mehr funktioniert ist das schuld!)
+    private void clearEditText(){
+        editText_firstName.setText("");
+        editText_surName.setText("");
+        editText_eventDate.setText("");
+        //todo: Wie Ursprungsanzeige Spinner zurückbekommen?
+    }
+
+
     private void findViewsById() {
-        editText_firstName = getView().findViewById(R.id.editText_firstName);
-        editText_surName = getView().findViewById(R.id.editText_surName);
+        editText_firstName = getView().findViewById(R.id.editText_firstName2);
+        editText_surName = getView().findViewById(R.id.editText_surName2);
         editText_eventDate = getView().findViewById(R.id.editText_eventDate);
         spinner_eventType = getView().findViewById(R.id.spinner_eventType);
     }
@@ -195,8 +221,10 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         textSurName = editText_surName.getText().toString();
 
         eventDate = editText_eventDate.getText().toString();
-        eventDateDay = Integer.getInteger(eventDate.substring(0,2));
-        eventDateMonth = Integer.getInteger(eventDate.substring(3, 5));
+
+        // https://www.journaldev.com/18361/java-remove-character-string
+        // characters ersetzen + String kürzen
+        eventDateInt = Integer.parseInt(eventDate.replace(".", "").substring(0, 4));
 
         int eventTypeInt = spinner_eventType.getSelectedItemPosition();
         eventType = getEvent(eventTypeInt);

@@ -6,7 +6,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 /** https://developer.android.com/training/data-storage/room/defining-data
-Index und unique */
+ Index und unique */
 @Entity(indices = {@Index(value = {"firstName", "lastName"},
         unique = true)})
 public class Person {

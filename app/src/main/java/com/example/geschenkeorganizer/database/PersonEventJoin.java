@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
 /** https://developer.android.com/training/data-storage/room/relationships
-many-to-many relationship --> grundlegender Aufbau Join Klasse*/
+ many-to-many relationship --> grundlegender Aufbau Join Klasse*/
 @Entity(primaryKeys = {"personId", "eventId"},
         foreignKeys = {@ForeignKey(entity=Person.class, parentColumns="personId", childColumns = "personId"), @ForeignKey(entity= Event.class, parentColumns = "eventId", childColumns = "eventId")})
 public class PersonEventJoin {

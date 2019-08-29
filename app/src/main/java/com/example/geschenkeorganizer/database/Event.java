@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 /** https://developer.android.com/training/data-storage/room/defining-data
  Index und unique
-*/
+ */
 @Entity(indices = {@Index(value = {"eventName", "eventDate"},
         unique = true)})
 public class Event {
@@ -16,12 +16,12 @@ public class Event {
     private int eventId;
 
     private String eventName;
-    private long eventDate;
+    private int eventDate;
 
     // verschiedene Konstruktoren
     public Event(){}
 
-    public Event(String eventName, String eventDate){}
+    public Event(String eventName, int eventDate){}
 
     //getter
     @NonNull
@@ -33,7 +33,7 @@ public class Event {
         return eventName;
     }
 
-    public long getEventDate(){
+    public int getEventDate(){
         return eventDate;
     }
 
@@ -46,7 +46,7 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public void setEventDate(Long eventDate){
+    public void setEventDate(int eventDate){
         this.eventDate = eventDate;
     }
 }

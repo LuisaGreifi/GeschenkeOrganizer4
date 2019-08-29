@@ -9,6 +9,29 @@
     <string name="text_dateEntry">Wenn du möchtest, kannst du noch ein Datum eingeben.</string>
 
     //StringArrays
+    <string name="button_presents">Geschenke</string>
+
+    //Buttons
+    <string name="button_persons">Personen und Events</string>
+    <string name="button_inspiration">Inspiration</string>
+    <string name="button_done">Fertig!</string>
+    <string name="button_add">+</string>
+    <string name="button_calendarCall">Zu deinem Kalender...</string>
+    <string name="checkbox_hadIdea">Ich habe bereits eine Idee.</string>
+
+    //Checkboxes
+    <string name="checkbox_isBought">Das Geschenk ist gekauft.</string>
+    <string name="checkbox_isWrapped">Das Geschenk ist verpackt.</string>
+    <string name="EditText_hint_firstName">Vorname</string>
+
+    //EditTexts - Hints
+    <string name="EditText_hint_surName">Nachname</string>
+    <string name="EditText_hint_description">Beschreibung</string>
+    <string name="EditText_hint_placeOfPurchase">Ort/Geschäft</string>
+    <string name="EditText_hint_price">Preis</string>
+    <string name="EditText_eventDate">Datum</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
     <string-array name="eventTypes">
         <item>Geburtstag</item>
         <item>Weihnachten</item>
@@ -20,26 +43,5 @@
         <item>Namenstag</item>
         <item>Sonstiges</item>
     </string-array>
-
-    //Buttons
-    <string name="button_presents">Geschenke</string>
-    <string name="button_persons">Personen und Events</string>
-    <string name="button_inspiration">Inspiration</string>
-    <string name="button_done">Fertig!</string>
-    <string name="button_add">+</string>
-    <string name="button_calendarCall">Zu deinem Kalender...</string>
-
-    //Checkboxes
-    <string name="checkbox_hadIdea">Ich habe bereits eine Idee.</string>
-    <string name="checkbox_isBought">Das Geschenk ist gekauft.</string>
-    <string name="checkbox_isWrapped">Das Geschenk ist verpackt.</string>
-
-    //EditTexts - Hints
-    <string name="EditText_hint_firstName">Vorname</string>
-    <string name="EditText_hint_surName">Nachname</string>
-    <string name="EditText_hint_description">Beschreibung</string>
-    <string name="EditText_hint_placeOfPurchase">Ort/Geschäft</string>
-    <string name="EditText_hint_price">Preis</string>
-    <string name="EditText_eventDate">Datum</string>
 
 </resources>
