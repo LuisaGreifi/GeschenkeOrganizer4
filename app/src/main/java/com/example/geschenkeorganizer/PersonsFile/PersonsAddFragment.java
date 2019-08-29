@@ -155,18 +155,20 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.button_done2) {
+
             editText_firstName = getView().findViewById(R.id.editText_firstName2);
             editText_surName = getView().findViewById(R.id.editText_surName2);
             if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty()) {
                 saveEntry(v);
                 // todo: für Insert erstmal nicht relevant
-                // mCallback.onListItemChanged();
+                //mCallback.onListItemChanged();
             } else {
                 Toast.makeText(getActivity(), "Du musst noch eine Person eingeben.",
                         Toast.LENGTH_SHORT).show();
             }
-        } else {
+        } else if(v.getId()==R.id.button_calendarCall) {
             //todo: Code zitieren: https://stackoverflow.com/questions/1943679/android-calendar (abgerufen am 27.08.2019)
+
             Intent i = new Intent();
 
             ComponentName cn = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
