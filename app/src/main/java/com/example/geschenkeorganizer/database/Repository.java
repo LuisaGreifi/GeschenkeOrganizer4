@@ -14,7 +14,8 @@ public class Repository {
 
     //Person une Event hinzufügen Dialog
 
-    //vorsicht: Felder, die nicht leer sein dürfen, müssen davor noch gecheckt werden (Button Klick -- > falls Feld leer, dass nicht leer sein darf: Meldung --> inserten)
+    //todo: vorsicht: Felder, die nicht leer sein dürfen, müssen davor noch gecheckt werden (Button Klick -- > falls Feld leer, dass nicht leer sein darf: Meldung --> inserten)
+
     // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
     //Funktionsweise
     public void insertPersonEvent(final String firstName, final String lastName, final String eventName, final int eventDate){
@@ -65,22 +66,16 @@ public class Repository {
 
     // Geschenk hinzufügen Dialog
 
+    //todo: Neu (ebentId bekommen geändert --> TESTEN)
     public void insertPresent(final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 insertPerson(firstName, lastName);
-                //todo: evntl auslagern
                 int personId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
-
                 insertEventForPresent(personId, eventName);
-                //todo: evntl. auslagern
-                //todo: funktioniert nachhad a bloß, wenn Person-Event Beziehung schon exisitert (if(Event für Person+EventName exisitert schon)( --> getEventDate)else( --> EventDate=0) --> eventId anhand Daten
-                int eventId;
-                int eventDate = myDatabase.daoAccess().getEventDateForPersonAndEventName(personId, eventName);
-                eventId = myDatabase.daoAccess().getEventIdByEventInformation(eventName, eventDate);
-
-                //todo: evntl. mit Merhode oben zusammenlegen
+                int eventId = getEventIdForPresent(personId, eventName);
+                //todo: evntl. mit Methode oben zusammenlegen
                 insertPersonEventConnectionForPresent(personId, eventId);
                 insertPresentWithData(personId, eventId, presentName, presentPrice, presentShop, presentStatus);
                 return null;
@@ -89,11 +84,9 @@ public class Repository {
     }
 
     private void insertEventForPresent(int personId, String eventName){
-        //todo: obacht: das eine Zeile unique ist kann so nicht eingehalten werden (Anlass - null) (bei:  if (!myDatabase.daoAccess().existsEventForPersonAlready(personId, eventName)))
-        //todo: nicht einfach so per id updatebar --> bezieht sich ja auf 1 Person (NICHT einfach Eventdatum ändern)
-        //todo: Lösungsvorschlag: vllt doch Spinner mit Array aus bereits existierenden Events (KOMPLIZIERT!)
-        //todo: Lösungsvorschlag: update umständlicher gestalten (eventId anhand Name und Personen Infos bekommen --> neues Event --> eventName altes Event getten + für neues setten --> eingegebenes Datum für Event setten --> Event inserten --> Person inserten --> PersonEventJoin inserten --> alten PersonEventJoin löschen)
-        //todo: mit 0 semi-elegante Lösung, aber sollte funktionieren
+        //todo: nicht einfach so per id updatebar --> Event bezieht sich ja nicht nur auf 1 Person (NICHT einfach Eventdatum ändern)
+        //todo: Lösungsvorschlag: update umständlicher gestalten (eventId anhand Name und Personen Infos bekommen --> neues Event (wenn Eventdate = 0) --> eventName altes Event getten + für neues setten --> eingegebenes Datum für Event setten --> Event inserten (--> Person inserten) --> PersonEventJoin inserten --> alten PersonEventJoin löschen)
+        //todo: mit 0 semi-elegante Lösung, aber sollte funktionieren (vllt in UI Eventdatum nicht anzeigen, wenn Date=0?
         if (!myDatabase.daoAccess().existsEventForPersonAlready(personId, eventName) && !myDatabase.daoAccess().existsEventWithEventInformationAlready(eventName, 0)) {
             Event event = new Event();
             event.setEventName(eventName);
@@ -103,6 +96,19 @@ public class Repository {
             //--> wahrscheinlich hast du wieder die Ehre mit onPostExecute
             // --> Intent zu Mini-Activity
         }
+    }
+
+    //todo: NEU
+    private int getEventIdForPresent(int personId, String eventName){
+        int eventId;
+        int eventDate;
+        if(myDatabase.daoAccess().existsEventForPersonAlready(personId, eventName)){
+            eventDate = myDatabase.daoAccess().getEventDateForPersonAndEventName(personId, eventName);
+        } else {
+            eventDate = 0;
+        }
+        eventId = myDatabase.daoAccess().getEventIdByEventInformation(eventName, eventDate);
+        return eventId;
     }
 
     private void insertPersonEventConnectionForPresent(int personId, int eventId){
