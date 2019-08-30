@@ -26,7 +26,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private CheckBox hadIdea, bought, wrapped;
     private Button done;
 
-    private String textFirstName, textSurName, textDescription, textEvent, textPlaceOfPurchase, StringTextPrice, /**todo:NEU */textStatus;;
+    private String textFirstName, textSurName, textDescription, textEvent, textPlaceOfPurchase, StringTextPrice, /**todo:NEU */textStatus;
     private boolean booHadIdea, booBought, booWrapped;
     private double textPrice;
 
@@ -106,8 +106,9 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         textPlaceOfPurchase = placeOfPurchase.getText().toString();
         StringTextPrice = price.getText().toString();
 
-        //todo:neu (textPrice unten is mejor!), funktioniert soweit!
+
         //todo:obacht: es dürfen nur "."(Punkt) doubles eingegeben werden!
+        //todo: muss noch geändert werden --> Fehlermeldung
 
         // https://www.journaldev.com/18361/java-remove-character-string
         // characters ersetzen
@@ -115,7 +116,8 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
 
         //todo: EditText im Layout über Attribute näher definieren (nur Komma-/Punktzahlen eingeben)
-        textPrice = Double.valueOf(StringTextPrice);
+
+        // textPrice = Double.valueOf(StringTextPrice);
         //todo: nachschauen, ob isChecked richtige Methode ist
         booHadIdea = hadIdea.isChecked();
         booBought = bought.isChecked();
