@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.geschenkeorganizer.R;
@@ -26,9 +29,14 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private CheckBox hadIdea, bought, wrapped;
     private Button done;
 
-    private String textFirstName, textSurName, textDescription, textEvent, textPlaceOfPurchase, StringTextPrice, /**todo:NEU */textStatus;
+    private String textFirstName, textSurName, textDescription, textPlaceOfPurchase, StringTextPrice, /**todo:NEU */textStatus;
     private boolean booHadIdea, booBought, booWrapped;
     private double textPrice;
+
+    //todo: neu
+    private Spinner spinner_event;
+    private String eventType;
+    private static final int EVENTTYPE_BIRTHDAY = 0, EVENTTYPE_CHRISTMAS = 1, EVENTTYPE_ANNIVERSARY = 2, EVENTTYPE_WEDDING = 3, EVENTTYPE_VALENTINESDAY = 4, EVENTTYPE_MOTHERSDAY = 5, EVENTTYPE_FATHERSDAY = 6, EVENTTYPE_NAMEDAY = 7, EVENTTYPE_OTHER = 8;
 
     private Repository repository;
 
@@ -45,6 +53,56 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
+    private void initSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),  R.array.eventTypes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_event.setAdapter(adapter);
+
+        spinner_event.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View v,
+                                       int position, long arg3) {
+                int eventTypeInt = spinner_event.getSelectedItemPosition();
+                eventType = getEvent(eventTypeInt);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+    }
+
+    private String getEvent(int eventTypeInt) {
+        switch (eventTypeInt) {
+            case EVENTTYPE_BIRTHDAY:
+                eventType = "Geburtstag";
+                break;
+            case EVENTTYPE_CHRISTMAS:
+                eventType = "Weihnachten";
+                break;
+            case EVENTTYPE_ANNIVERSARY:
+                eventType = "Jahrestag";
+                break;
+            case EVENTTYPE_WEDDING:
+                eventType = "Hochzeit";
+                break;
+            case EVENTTYPE_VALENTINESDAY:
+                eventType = "Valentinstag";
+                break;
+            case EVENTTYPE_MOTHERSDAY:
+                eventType = "Muttertag";
+                break;
+            case EVENTTYPE_FATHERSDAY:
+                eventType = "Vatertag";
+                break;
+            case EVENTTYPE_NAMEDAY:
+                eventType = "Namenstag";
+                break;
+            case EVENTTYPE_OTHER:
+                eventType = "Sonstiges";
+                break;
+        }
+        return eventType;
+    }
 
 
     @Override
@@ -76,7 +134,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         repository = new Repository(getActivity().getApplicationContext());
 
         //todo: NEU
-        repository.insertPresent(textFirstName,textSurName, textEvent, textDescription, textPrice, textPlaceOfPurchase, textStatus);
+        repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
 
         // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
     }
@@ -102,7 +160,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         textFirstName = firstName.getText().toString();
         textSurName = surName.getText().toString();
         textDescription = description.getText().toString();
-        textEvent = event.getText().toString();
         textPlaceOfPurchase = placeOfPurchase.getText().toString();
         StringTextPrice = price.getText().toString();
 
@@ -119,6 +176,11 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
         // textPrice = Double.valueOf(StringTextPrice);
         //todo: nachschauen, ob isChecked richtige Methode ist
+
+        //todo: neu
+        int eventTypeInt = spinner_event.getSelectedItemPosition();
+        eventType = getEvent(eventTypeInt);
+
         booHadIdea = hadIdea.isChecked();
         booBought = bought.isChecked();
         booWrapped = wrapped.isChecked();

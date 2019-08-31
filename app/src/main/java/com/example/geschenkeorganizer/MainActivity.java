@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     Button personsButton;
     Button inspirationButton;
 
+    //todo: neu
+    Button testNotificationButton;
+
     //onCreate()-Methode
 
     @Override
@@ -32,12 +35,16 @@ public class MainActivity extends AppCompatActivity {
         presentsButton = findViewById(R.id.button_presents);
         personsButton = findViewById(R.id.button_persons);
         inspirationButton = findViewById(R.id.button_inspiration);
+        //todo: neu
+        testNotificationButton = findViewById(R.id.button_testNotification);
     }
 
     private void initViews() {
         initPresentsButton();
         initPersonsButton();
         initInspirationButton();
+        //todo: neu
+        initTestNotificationButton();
     }
 
     private void initPresentsButton() {
@@ -65,6 +72,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, InspirationActivity.class);
+                startActivity(i);
+            }
+        });
+    }
+
+    //todo: neu
+    private void initTestNotificationButton() {
+        testNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, TestNotificationActivity.class);
                 startActivity(i);
             }
         });

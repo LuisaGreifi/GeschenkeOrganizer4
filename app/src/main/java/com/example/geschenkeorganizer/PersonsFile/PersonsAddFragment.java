@@ -1,8 +1,11 @@
 package com.example.geschenkeorganizer.PersonsFile;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.PendingIntent;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.geschenkeorganizer.NotifyService;
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.Repository;
 
@@ -23,6 +27,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class PersonsAddFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener{
 
@@ -34,7 +39,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     private EditText editText_firstName, editText_surName, editText_eventDate;
     private Spinner spinner_eventType;
-    private Button button_done, button_calendarCall;
+    private Button button_done, button_calendarCall, button_test;
 
     private String textFirstName, textSurName;
     private String textSpinner;
@@ -58,6 +63,10 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         button_calendarCall = view.findViewById(R.id.button_calendarCall);
         button_done.setOnClickListener(this);
         button_calendarCall.setOnClickListener(this);
+
+        //todo: neu
+        button_test = view.findViewById(R.id.button_test);
+        button_test.setOnClickListener(this);
 
         spinner_eventType = view.findViewById(R.id.spinner_eventType);
         initSpinner(spinner_eventType);
@@ -154,7 +163,9 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     }
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.button_done2) {
+        if(v.getId()==R.id.button_test) {
+            setReminder();
+        } else if(v.getId()==R.id.button_done2) {
 
             editText_firstName = getView().findViewById(R.id.editText_firstName2);
             editText_surName = getView().findViewById(R.id.editText_surName2);
@@ -162,6 +173,8 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
                 saveEntry(v);
                 // todo: für Insert erstmal nicht relevant
                 //mCallback.onListItemChanged();
+                Intent intent = new Intent(getActivity(), PersonsActivity.class);
+                startActivity(intent);
             } else {
                 Toast.makeText(getActivity(), "Du musst noch eine Person eingeben.",
                         Toast.LENGTH_SHORT).show();
@@ -197,6 +210,24 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         repository.insertPersonEvent(textFirstName,textSurName, eventType, eventDateInt);
 
         // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
+
+        //todo: neu
+        setReminder();
+    }
+
+    //todo: neu
+    private void setReminder() {
+        //https://stackoverflow.com/questions/14726065/how-to-use-alarm-manager-for-birthday-reminder-in-android-the-date-is-read-from (abgerufen am 30.08.2019)
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+        Intent myIntent = new Intent(getActivity() , NotifyService.class);
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(getActivity(), 0, myIntent, 0);
+        //todo: vom Nutzer eingegebene Daten einsetzen
+
+        cal.set(2019,Calendar.AUGUST,31,12,20);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 365*24*60*60*1000, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
 
     }
 
