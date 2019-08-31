@@ -7,7 +7,7 @@ public class Present {
     private String firstName, surName, description, placeOfPurchase, event;
     private boolean hadIdea, bought, wrapped;
     private double price;
-    private int id;
+    private int id, test;
 
 
     //Konstruktor
