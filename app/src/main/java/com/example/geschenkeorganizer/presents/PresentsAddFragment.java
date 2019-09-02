@@ -44,6 +44,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     public PresentsAddFragment() {
     }
 
+    //todo: in PersonsAdFragment wird hier Spinner initialisiert?
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
+    //todo: müsste oben aufgerufen werden + Spinner spinenr übergeben werden
     private void initSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),  R.array.eventTypes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -142,6 +144,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         //todo: alle Views ohne Text etc. laden
     }
 
+    //todo: spinner heißt hier anders bzw. existiert noch gar nicht in Layout!! KEIN EditText
     private void findViewsById() {
         firstName = getView().findViewById(R.id.editText_firstName);
         surName = getView().findViewById(R.id.editText_surName);
