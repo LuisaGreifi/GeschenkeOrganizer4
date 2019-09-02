@@ -125,7 +125,6 @@ public interface DaoAccess {
     @Query("SELECT eventDate FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId AND Event.eventId =:eventId")
     int getEventDateForPersonAndEvent(final int personId, final int eventId);
 
-    //todo: neu
     //Person-Event-Join zu Event (& Event) dürfen halt nicht existieren
     @Query("SELECT * FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE personId =:personId AND eventName =:eventName")
     boolean existsEventForPersonAlready(int personId, String eventName);

@@ -125,7 +125,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private void saveEntry(View v) {
         findViewsById();
         getInformation(v);
-        //todo: NEU (Kein Plan, ob das hier richtig initialisiert ist + ob dann wirklich bloß 1 Db pro Activity erzeugt wird)
+        //todo:(Kein Plan, ob das hier richtig initialisiert ist + ob dann wirklich bloß 1 Db pro Activity erzeugt wird)
 
         // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
         // Erstellung Repository mit richtigem Kontext
@@ -133,7 +133,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         // Kontext der Activity des Fragments: Präfix: getActivity()
         repository = new Repository(getActivity().getApplicationContext());
 
-        //todo: NEU
         repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
 
         // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
@@ -173,11 +172,10 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
 
         //todo: EditText im Layout über Attribute näher definieren (nur Komma-/Punktzahlen eingeben)
+        //todo: unteren textPrice rauslöschen!
 
         // textPrice = Double.valueOf(StringTextPrice);
-        //todo: nachschauen, ob isChecked richtige Methode ist
 
-        //todo: neu
         int eventTypeInt = spinner_event.getSelectedItemPosition();
         eventType = getEvent(eventTypeInt);
 
@@ -185,11 +183,10 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         booBought = bought.isChecked();
         booWrapped = wrapped.isChecked();
 
-        //todo: neu
         textStatus = getHighestStatusOfCheckboxes();
     }
 
-    //todo: neu
+    //todo: Stati noch ändern (Idee eigtl unnötig!)
     private String getHighestStatusOfCheckboxes(){
         String result = "";
         String hadIdea = "Idee";

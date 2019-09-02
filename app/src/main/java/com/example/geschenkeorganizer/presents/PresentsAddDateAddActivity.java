@@ -52,6 +52,7 @@ public class PresentsAddDateAddActivity extends AppCompatActivity implements Dat
         eventDateDay = Integer.getInteger(eventDate.substring(0,2));
         eventDateMonth = Integer.getInteger(eventDate.substring(3, 5));
         //todo: in Datenbank (eventDateDay als int und eventDateMonth als int)
+        //todo: eventDate wie in Persons-Add-Fragment bekommen --> andere Methoden!
     }
 
     private void initEventDate() {

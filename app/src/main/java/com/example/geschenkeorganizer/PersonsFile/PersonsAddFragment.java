@@ -64,7 +64,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         button_done.setOnClickListener(this);
         button_calendarCall.setOnClickListener(this);
 
-        //todo: neu
+        //todo: Test
         button_test = view.findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
 
@@ -195,7 +195,6 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     private void saveEntry(View v) {
         findViewsById();
         getInformation(v);
-        //todo: Informationen in Datenbank speichern (textFirstName als String, textSurName als String, eventType als String, eventDateDay als int, eventDateMonth als int
 
         // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
         // Erstellung Repository mit richtigem Kontext
@@ -203,19 +202,15 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         // Kontext der Activity des Fragments: Präfix: getActivity()
         repository = new Repository(getActivity().getApplicationContext());
 
-
-        //todo: Informationen in Datenbank speichern (textFirstName als String, textSurName als String, eventType als String, eventDateDay als int, eventDateMonth als int
-        //todo: statt Tag + Monat: 1 Int!
-        //todo: NEU
         repository.insertPersonEvent(textFirstName,textSurName, eventType, eventDateInt);
 
         // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
 
-        //todo: neu
+        //todo: TEST
         setReminder();
     }
 
-    //todo: neu
+    //todo: TEST
     private void setReminder() {
         //https://stackoverflow.com/questions/14726065/how-to-use-alarm-manager-for-birthday-reminder-in-android-the-date-is-read-from (abgerufen am 30.08.2019)
         Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
@@ -231,7 +226,6 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     }
 
-    //todo: NEU
     //todo: muss von onPostExecute aufgerufen werden..momentan nicht in Verwendung!
     //todo: damit EditText wieder leer ist, nachdem Zeug gespeichert wurde (Wenn Inserten nicht mehr funktioniert ist das schuld!)
     private void clearEditText(){

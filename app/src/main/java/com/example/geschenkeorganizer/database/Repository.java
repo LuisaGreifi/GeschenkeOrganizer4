@@ -98,7 +98,6 @@ public class Repository {
         }
     }
 
-    //todo: NEU
     private int getEventIdForPresent(int personId, String eventName){
         int eventId;
         int eventDate;
