@@ -179,9 +179,15 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
         // textPrice = Double.valueOf(StringTextPrice);
 
-        int eventTypeInt = spinner_event.getSelectedItemPosition();
+        //todo: neu Spinner haut so noch nicht hin! (vorübergehend auskommentiert!)
+        /** int eventTypeInt = spinner_event.getSelectedItemPosition();
         eventType = getEvent(eventTypeInt);
+         */
 
+        //todo: neu vorübergehend noch/wieder event (später rauslöschen)
+        eventType = event.getText().toString();
+
+        //todo: Stati noch ändern (Idee eigtl unnötig!)
         booHadIdea = hadIdea.isChecked();
         booBought = bought.isChecked();
         booWrapped = wrapped.isChecked();
