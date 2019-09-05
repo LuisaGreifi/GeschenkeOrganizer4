@@ -39,7 +39,7 @@ public class Repository {
         }
     }
 
-    //todo: in diesem Fall MUSS der Nutzer EventName + -datum eingeben?
+    //todo: in diesem Fall MUSS der Nutzer EventName + -datum eingeben? --> noch in UI Nutzer informieren!
     private void insertEvent(String eventName, int eventDate){
         if (!myDatabase.daoAccess().existsEventWithEventInformationAlready(eventName, eventDate)) {
             Event event = new Event();
@@ -66,7 +66,7 @@ public class Repository {
 
     // Geschenk hinzufügen Dialog
 
-    //todo: Neu (ebentId bekommen geändert --> TESTEN)
+    //todo: Neu (eventId bekommen geändert --> TESTEN)
     public void insertPresent(final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus) {
         new AsyncTask<Void, Void, Void>() {
             @Override

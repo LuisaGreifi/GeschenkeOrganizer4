@@ -188,32 +188,20 @@ public interface DaoAccess {
     void deletePresentByEvent(int eventId);
 
 
-/**
- //todo: absolut unsicher --> ÜBERPRÜFEN!
+
  //Present Representation
 
- @Query("SELECT Person.firstName, Person.lastName, Event.eventName, Present.presentName, Present.price, Present.shop, Present.status FROM Person, Event, Present WHERE Present.personId = Person.personId AND Present.eventId = Event.eventId")
- List<String> getPresentRepresentataion();
- // brauch noch ein eigenes Objekt dafür :)
- */
-    //Alternativ vllt:
-    /**
-     //Element 1: Name Person zu personId in Geschenke bekommen
-     // Inspiration: //vgl. https://developer.android.com/training/data-storage/room/relationships
-     @Query("SELECT firstName, lastName FROM Person " + "INNER JOIN Present " + "ON Person.personId = Present.personId " + "WHERE Present.personId =:presentPersonId")
-     List<Person> getPersonNameForPresentPersonId(final int presentPersonId);
-     //Element 2: Eventtitel zu Event ID in Geschenk bekommen
-     // Inspiration: //vgl. https://developer.android.com/training/data-storage/room/relationships
-     @Query("SELECT eventName FROM Event " + "INNER JOIN Present " + "ON Event.eventId = Present.eventId " + "WHERE Present.eventId =:presentEventId")
-     List<String> getEventNameForPresentEventId(final int presentEventId);
-     //Element 3:
-     @Query("SELECT presentTitle, price, shop, status FROM Present")
-     List<Present> getPresentRepresentationInformation();
-     */
-/**
- //dann resultiert ungefähr sowas
- @Query("SELECT Person.firstName, Person.lastName, Event.eventName, Present.presentName, Present.price, Present.shop, Present.status FROM Person, Event, Present " + "INNER JOIN Present " + "ON Person.personId = Present.personId AND Event.eventId = Present.eventId")
- List<Present> getAllPresentsForRepresentation();
- //brauchst eigenes Objekt zur Anzeige! --> Pojo
- */
+    //todo: NEU
+
+    //https://codelabs.developers.google.com/codelabs/android-persistence/#7
+    // Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
+
+    //https://stackoverflow.com/questions/12662954/query-error-with-ambiguous-column-name-in-sql
+    //Alias
+
+    //vgl. https://developer.android.com/training/data-storage/room/relationships
+    // Inspiration Abfrage
+
+    @Query("SELECT pe.firstName, pe.lastName, e.eventName, pr.presentName, pr.price, pr.shop, pr.status FROM Person AS pe, Event AS e, Present AS pr " + "INNER JOIN Present " + "ON pe.personId = pr.personId AND e.eventId = pr.eventId")
+    List<PresentRepresentation> getAllPresentsForRepresentation();
 }
