@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geschenkeorganizer.R;
 
+//todo: NEU (ausgeklammert: Interfaces)
+public class PresentsActivity extends AppCompatActivity /**implements PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
 
-public class PresentsActivity extends AppCompatActivity implements PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener {
-
+    //todo: NEU (erstmal ausgeklammert: Interfaces)
+    /**
     @Override
     public void onListItemSelected(int id) {
         //todo: evtl. anzeigen und dann ändern lassen, so in etwa:
@@ -26,7 +28,9 @@ public class PresentsActivity extends AppCompatActivity implements PresentsAddFr
         // intent.putExtra(PresentsAddFragment.ARG_ID, id);
         // startActivity(intent);
     }
+     */
 
+    /**
     @Override
     public void onListItemChanged() {
         PresentsListFragment paf =
@@ -36,6 +40,7 @@ public class PresentsActivity extends AppCompatActivity implements PresentsAddFr
         }
         //Datenbank Bescheid geben?
     }
+     */
 
 
     @Override
@@ -45,6 +50,7 @@ public class PresentsActivity extends AppCompatActivity implements PresentsAddFr
 
         Button addButton = findViewById(R.id.button_addPresent);
         addButton.setOnClickListener(new View.OnClickListener() {
+            //todo: die Textmeldungen noch rauslöschen: nur für uns intern, oder?
             @Override
             public void onClick(View v) {
                 PresentsAddFragment paf =

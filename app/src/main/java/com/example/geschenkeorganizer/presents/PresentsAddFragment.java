@@ -19,11 +19,14 @@ import com.example.geschenkeorganizer.database.Repository;
 
 public class PresentsAddFragment extends Fragment implements View.OnClickListener {
 
+    //todo: NEU (ausgeklammert: Interface)
+    /**
     private OnListItemChangedListener mCallback;
 
     public interface OnListItemChangedListener {
         public void onListItemChanged();
     }
+     */
 
     private EditText firstName, surName, description, event, placeOfPurchase, price;
     private CheckBox hadIdea, bought, wrapped;

@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geschenkeorganizer.R;
 
-
-public class PresentsAddActivity extends AppCompatActivity implements PresentsAddFragment.OnListItemChangedListener {
+//todo: Neu Interface auskommentiert
+public class PresentsAddActivity extends AppCompatActivity /**implements PresentsAddFragment.OnListItemChangedListener */{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +21,11 @@ public class PresentsAddActivity extends AppCompatActivity implements PresentsAd
         }
     }
 
+    //todo: Neu Interface-Methode auskommentiert
+    /**
     @Override
     public void onListItemChanged() {
         //todo: Datenbank Bescheid geben?
     }
+    */
 }

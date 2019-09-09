@@ -16,12 +16,15 @@ import com.example.geschenkeorganizer.presents.Present;
 // Code von NoteTaker-Übung
 
 public class PresentsListFragment extends ListFragment {
+    //todo: NEU (ausgeklammert: Interfaces, nicht benötigt zwecks LiveData)
+    /**
     private OnListItemSelectedListener mCallback;
 
 
     public interface OnListItemSelectedListener {
         public void onListItemSelected(int id);
     }
+     */
 
     public PresentsListFragment() {
     }
@@ -71,9 +74,14 @@ public class PresentsListFragment extends ListFragment {
         if (clickedPresent.getId() == -1) {
             return;
         }
+        //todo: NEU (Callback erstmal ausgeklammert)
+        /**
         mCallback.onListItemSelected(clickedPresent.getId());
+         */
     }
 
+    //todo: NEU (ausgeklammert: Interface/Callback)
+    /**
     @SuppressWarnings("deprecation")
     // The new method onAttach(Context context) doesn't exist in API level 22 and below
     @Override
@@ -88,5 +96,6 @@ public class PresentsListFragment extends ListFragment {
                     activity.toString() + " must implement OnListItemSelectedListener!");
         }
     }
+    */
 
 }
