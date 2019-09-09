@@ -1,5 +1,6 @@
 package com.example.geschenkeorganizer.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -202,6 +203,10 @@ public interface DaoAccess {
     //vgl. https://developer.android.com/training/data-storage/room/relationships
     // Inspiration Abfrage
 
+    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
+    // LiveData als Rückgabe
+
     @Query("SELECT pe.firstName, pe.lastName, e.eventName, pr.presentName, pr.price, pr.shop, pr.status FROM Person AS pe, Event AS e, Present AS pr " + "INNER JOIN Present " + "ON pe.personId = pr.personId AND e.eventId = pr.eventId")
-    List<PresentRepresentation> getAllPresentsForRepresentation();
+    LiveData<List<PresentRepresentation>> getAllPresentsForRepresentation();
+
 }

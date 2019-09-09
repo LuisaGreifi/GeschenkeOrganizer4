@@ -10,18 +10,38 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.PresentListAdapter;
+import com.example.geschenkeorganizer.database.PresentRepresentation;
+import com.example.geschenkeorganizer.database.PresentViewModel;
 import com.example.geschenkeorganizer.presents.Present;
+
+import java.util.List;
+
 
 // Code von NoteTaker-Übung
 
 public class PresentsListFragment extends ListFragment {
-    private OnListItemSelectedListener mCallback;
+    //todo: Neu (auskommentiert)
+    // private OnListItemSelectedListener mCallback;
 
-
+    //todo. NEU (auskommentert)
+    //todo: später initialiesieren!
+    /**
     public interface OnListItemSelectedListener {
         public void onListItemSelected(int id);
     }
+     */
+
+    //todo: neu
+    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
+    private PresentViewModel presentViewModel;
 
     public PresentsListFragment() {
     }
@@ -35,9 +55,42 @@ public class PresentsListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        populateList();
+        //todo: Neu (auskommentiert)
+        //populateList();
+
+        //todo: NEU
+        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#10
+        //todo: NEU (Test)
+        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Kontext der Activity des Fragments: Präfix: getActivity()
+        // Kontext für adapter und LayoutManger angepasst
+        // VORSICHT: Absolut nicht sicher, ob ich Kontext hier so übergeben darf!
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
+        final PresentListAdapter adapter = new PresentListAdapter(getActivity().getApplicationContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+
+        //todo: neu
+        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
+        presentViewModel = ViewModelProviders.of(this).get(PresentViewModel.class);
+
+        //todo: neu
+        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
+        presentViewModel.getAllPresents().observe(this, new Observer<List<PresentRepresentation>>() {
+            @Override
+            public void onChanged(@Nullable final List<PresentRepresentation> presents) {
+                // Update the cached copy of the words in the adapter.
+                adapter.setPresents(presents);
+            }
+        });
+
+
     }
 
+    //todo: Neu (auskommentiert)
+    // RecyclerView regelt
+    // todo: bei Länge 0 wäre das schon ganz nett
+    /**
     protected void populateList() {
         //todo: mit Datenbank verbinden (für Array)
 
@@ -53,13 +106,21 @@ public class PresentsListFragment extends ListFragment {
             setListAdapter(adapter);
         }
     }
+     +//
+//todo: Neu (auskommentiert)
+    //rauslöschen (LiveData + RecyclerView kümemrt sich drum!)
 
+    /**
     @Override
     public void onResume() {
         super.onResume();
         populateList();
     }
+    */
 
+    //todo. NEU (auskommentert)
+    //todo: später initialiesieren!
+    /**
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Present clickedPresent = (Present) l.getItemAtPosition(position);
@@ -73,7 +134,11 @@ public class PresentsListFragment extends ListFragment {
         }
         mCallback.onListItemSelected(clickedPresent.getId());
     }
+     */
 
+//todo: NEU (auskommentiert)
+    // es wird kein callBack benötigt wg LiveData und Co.
+    /**
     @SuppressWarnings("deprecation")
     // The new method onAttach(Context context) doesn't exist in API level 22 and below
     @Override
@@ -88,5 +153,6 @@ public class PresentsListFragment extends ListFragment {
                     activity.toString() + " must implement OnListItemSelectedListener!");
         }
     }
+    */
 
 }

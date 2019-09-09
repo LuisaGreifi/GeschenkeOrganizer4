@@ -14,7 +14,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.PresentViewModel;
 import com.example.geschenkeorganizer.database.Repository;
 
 public class PresentsAddFragment extends Fragment implements View.OnClickListener {
@@ -39,6 +42,12 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private static final int EVENTTYPE_BIRTHDAY = 0, EVENTTYPE_CHRISTMAS = 1, EVENTTYPE_ANNIVERSARY = 2, EVENTTYPE_WEDDING = 3, EVENTTYPE_VALENTINESDAY = 4, EVENTTYPE_MOTHERSDAY = 5, EVENTTYPE_FATHERSDAY = 6, EVENTTYPE_NAMEDAY = 7, EVENTTYPE_OTHER = 8;
 
     private Repository repository;
+
+    //todo: neu
+    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
+    private PresentViewModel presentViewModel;
+
+
 
 
     public PresentsAddFragment() {
@@ -135,7 +144,11 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         // Kontext der Activity des Fragments: Präfix: getActivity()
         repository = new Repository(getActivity().getApplicationContext());
 
-        repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
+        //todo: neu
+        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
+        presentViewModel = ViewModelProviders.of(this).get(PresentViewModel.class);
+        presentViewModel.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
+
 
         // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
     }

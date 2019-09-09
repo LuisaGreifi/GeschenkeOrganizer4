@@ -3,16 +3,29 @@ package com.example.geschenkeorganizer.database;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
+
 public class Repository {
+
+    //todo: NEU
+    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
+    private LiveData<List<PresentRepresentation>> allPresents;
 
     // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
     private MyDatabase myDatabase;
+
     public Repository(Context context){
         // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
         myDatabase = MyDatabase.getDatabase(context);
+
+        //todo: NEU
+        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
+        allPresents = myDatabase.daoAccess().getAllPresentsForRepresentation();
     }
 
-    //Person une Event hinzufügen Dialog
+    //Person und Event hinzufügen Dialog
 
     //todo: vorsicht: Felder, die nicht leer sein dürfen, müssen davor noch gecheckt werden (Button Klick -- > falls Feld leer, dass nicht leer sein darf: Meldung --> inserten)
 
@@ -130,4 +143,16 @@ public class Repository {
 
         myDatabase.daoAccess().insertPresent(present);
     }
+
+
+
+    //todo: NEU
+    // Present Representation
+
+    //https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
+    LiveData<List<PresentRepresentation>> getAllPresents() {
+        return allPresents;
+    }
+
+
 }
