@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geschenkeorganizer.R;
 
+//todo: neu: ausgeklammert: onListItemSelected
+public class PresentsActivity extends AppCompatActivity implements PresentsAddFragment.OnListItemChangedListener/** , PresentsListFragment.OnListItemSelectedListener */ {
 
-public class PresentsActivity extends AppCompatActivity implements PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener {
-
+    //todo: neu: ausgeklammert
+    /**
     @Override
     public void onListItemSelected(int id) {
         //todo: evtl. anzeigen und dann ändern lassen, so in etwa:
@@ -26,11 +28,14 @@ public class PresentsActivity extends AppCompatActivity implements PresentsAddFr
         // intent.putExtra(PresentsAddFragment.ARG_ID, id);
         // startActivity(intent);
     }
+     */
+
 
     @Override
     public void onListItemChanged() {
         PresentsListFragment paf =
                 (PresentsListFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_list);
+        //todo: NEU: ausgeklammert
         if (paf != null) {
             paf.populateList();
         }

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.geschenkeorganizer.R;
@@ -146,7 +147,10 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
         //todo: neu
         // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
-        presentViewModel = ViewModelProviders.of(this).get(PresentViewModel.class);
+        //todo: Neu
+        // https://developer.android.com/topic/libraries/architecture/viewmodel
+        // statt ViewModelProviders.of(this) -> of.(getActivity())
+        presentViewModel = ViewModelProviders.of((FragmentActivity) getActivity()).get(PresentViewModel.class);
         presentViewModel.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
 
 
