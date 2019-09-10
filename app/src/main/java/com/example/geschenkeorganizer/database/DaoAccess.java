@@ -172,6 +172,11 @@ public interface DaoAccess {
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
     List<Present> getPresentsByEventId(int eventId);
 
+    //todo: Neu: Test
+    @Query("SELECT presentId FROM Present WHERE personId =:personId AND eventId =:eventId AND presentName =:presentName")
+    int getPresentIdByPersonAndEventAndPresentName (int personId, int eventId, String presentName);
+
+
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
     boolean existsPresentForEventAlready(int eventId);
 
@@ -208,5 +213,9 @@ public interface DaoAccess {
 
     @Query("SELECT pe.firstName, pe.lastName, e.eventName, pr.presentName, pr.price, pr.shop, pr.status FROM Person AS pe, Event AS e, Present AS pr " + "INNER JOIN Present " + "ON pe.personId = pr.personId AND e.eventId = pr.eventId")
     LiveData<List<PresentRepresentation>> getAllPresentsForRepresentation();
+
+    //todo: Neu (TEST)
+    @Query("SELECT pe.firstName, pe.lastName, e.eventName, pr.presentName, pr.price, pr.shop, pr.status FROM Person AS pe, Event AS e, Present AS pr " + "INNER JOIN Present " + "ON pe.personId = pr.personId AND e.eventId = pr.eventId")
+    List<PresentRepresentation> getAllPresentsForRepresentationTEST();
 
 }

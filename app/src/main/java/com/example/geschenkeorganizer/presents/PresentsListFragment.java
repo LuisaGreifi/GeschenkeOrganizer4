@@ -18,9 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.MyDatabase;
+import com.example.geschenkeorganizer.database.Present;
 import com.example.geschenkeorganizer.database.PresentListAdapter;
 import com.example.geschenkeorganizer.database.PresentRepresentation;
 import com.example.geschenkeorganizer.database.PresentViewModel;
+import com.example.geschenkeorganizer.database.Repository;
 
 import java.util.List;
 
@@ -61,7 +64,42 @@ public class PresentsListFragment extends Fragment {
                 Log.d("List", "List " + presents);
                 int size = presents.size();
                 Log.d("ListSize", "ListSize " + size);
+
+                //todo: Test
+                // Liste Geschenke allein funktioniert :)
+                new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            MyDatabase myDatabase = MyDatabase.getDatabase(context);
+                            final List<com.example.geschenkeorganizer.database.Present> presents = myDatabase.daoAccess().getAllPresents();
+                            if (presents.isEmpty()) {
+                                Log.d("GeschenkeListeOhneAlles", "istLeer");
+                            } else {
+                                int presentSize = presents.size();
+                                Log.d("GeschenkeListeOhneAlles", "" + presentSize);
+                            }
+                        }
+                    }).start();
+
+                //todo: Test
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        MyDatabase myDatabase = MyDatabase.getDatabase(context);
+                        final List<PresentRepresentation> presents = myDatabase.daoAccess().getAllPresentsForRepresentationTEST();
+                        if (presents.isEmpty()) {
+                            Log.d("ListeOhneLiveData", "istLeer");
+                        } else {
+                            int presentSize = presents.size();
+                            Log.d("ListeOhneLiveData", "" + presentSize);
+                        }
+                    }
+                }).start();
             }
+
+
         });
 
     }

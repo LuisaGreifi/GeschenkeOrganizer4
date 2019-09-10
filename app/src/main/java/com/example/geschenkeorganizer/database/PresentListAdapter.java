@@ -69,7 +69,7 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
                 holder.shopView.setText(current.getShop());
                 holder.statusView.setText(current.getStatus());
 
-            //todo: Test
+                //todo: Test
                 Log.d("List", "List " + presents);
                 int size = presents.size();
                 Log.d("ListSize", "ListSize " + size);

@@ -2,6 +2,7 @@ package com.example.geschenkeorganizer.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -142,6 +143,11 @@ public class Repository {
         present.setStatus(presentStatus);
 
         myDatabase.daoAccess().insertPresent(present);
+
+        //todo: Test
+        int presentId;
+        presentId = myDatabase.daoAccess().getPresentIdByPersonAndEventAndPresentName(personId, eventId, presentName);
+        Log.d("presentInsertRepo_ID", " "+ presentId);
     }
 
 
@@ -153,8 +159,5 @@ public class Repository {
     LiveData<List<PresentRepresentation>> getAllPresents() {
         return allPresents;
     }
-
-
-
 
 }

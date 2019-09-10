@@ -59,6 +59,15 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_presents_add, container, false);
         Button doneButton = view.findViewById(R.id.button_done);
         doneButton.setOnClickListener(this);
+
+        //todo: neu TEST (davor in saveEntry)
+        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Erstellung Repository mit richtigem Kontext
+        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Kontext der Activity des Fragments: Präfix: getActivity()
+        repository = new Repository(getActivity().getApplicationContext());
+
+
         return view;
     }
 
@@ -135,6 +144,9 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private void saveEntry(View v) {
         findViewsById();
         getInformation(v);
+
+        //todo: Neu TEST (Ausgeklammert) --> in onCreateView
+        /**
         //todo:(Kein Plan, ob das hier richtig initialisiert ist + ob dann wirklich bloß 1 Db pro Activity erzeugt wird)
 
         // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
@@ -142,7 +154,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
         // Kontext der Activity des Fragments: Präfix: getActivity()
         repository = new Repository(getActivity().getApplicationContext());
-
+*/
         repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
 
         // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
