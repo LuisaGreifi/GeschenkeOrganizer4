@@ -2,12 +2,14 @@ package com.example.geschenkeorganizer.presents;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
@@ -54,8 +56,14 @@ public class PresentsListFragment extends Fragment {
             public void onChanged(@Nullable final List<PresentRepresentation> presents) {
                 // Update the cached copy of the words in the adapter.
                 presentListAdapter.setPresents(presents);
+
+                //todo: Test
+                Log.d("List", "List " + presents);
+                int size = presents.size();
+                Log.d("ListSize", "ListSize " + size);
             }
         });
+
     }
 
     @Nullable
