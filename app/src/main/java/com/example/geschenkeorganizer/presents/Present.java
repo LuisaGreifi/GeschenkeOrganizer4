@@ -1,6 +1,7 @@
 package com.example.geschenkeorganizer.presents;
 
 public class Present {
+    //todo: NEU (Klasse kann komplett gelöscht werden, wird nicht benötigt)
 
     //Variablen und Konstanten
 

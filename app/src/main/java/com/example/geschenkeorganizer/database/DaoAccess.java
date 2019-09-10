@@ -172,11 +172,6 @@ public interface DaoAccess {
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
     List<Present> getPresentsByEventId(int eventId);
 
-    //todo: Neu: Test
-    @Query("SELECT presentId FROM Present WHERE personId =:personId AND eventId =:eventId AND presentName =:presentName")
-    int getPresentIdByPersonAndEventAndPresentName (int personId, int eventId, String presentName);
-
-
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
     boolean existsPresentForEventAlready(int eventId);
 
@@ -199,22 +194,6 @@ public interface DaoAccess {
 
     //todo: NEU
 
-    //https://codelabs.developers.google.com/codelabs/android-persistence/#7
-    // Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
-
-    //https://stackoverflow.com/questions/12662954/query-error-with-ambiguous-column-name-in-sql
-    //Alias
-
-    //vgl. https://developer.android.com/training/data-storage/room/relationships
-    // Inspiration Abfrage
-
-    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
-    // LiveData als Rückgabe
-/**
-    @Query("SELECT pe.firstName, pe.lastName, e.eventName, pr.presentName, pr.price, pr.shop, pr.status FROM Person AS pe, Event AS e, Present AS pr " + "INNER JOIN Present " + "ON pe.personId = pr.personId AND e.eventId = pr.eventId")
-    LiveData<List<PresentRepresentation>> getAllPresentsForRepresentation();
-*/
-    //todo: Neu (TEST)
     //https://codelabs.developers.google.com/codelabs/android-persistence/#7
     // Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
     // https://wiki.selfhtml.org/wiki/Datenbank/Fortgeschrittene_Jointechniken#Unterschiedliche_Join-Spalten_nutzen

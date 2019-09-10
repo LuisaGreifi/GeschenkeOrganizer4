@@ -59,46 +59,6 @@ public class PresentsListFragment extends Fragment {
             public void onChanged(@Nullable final List<PresentRepresentation> presents) {
                 // Update the cached copy of the words in the adapter.
                 presentListAdapter.setPresents(presents);
-
-                //todo: Test
-                Log.d("List", "List " + presents);
-                int size = presents.size();
-                Log.d("ListSize", "ListSize " + size);
-
-                //todo: Test
-                // Liste Geschenke allein funktioniert :)
-                new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            MyDatabase myDatabase = MyDatabase.getDatabase(context);
-                            final List<com.example.geschenkeorganizer.database.Present> presents = myDatabase.daoAccess().getAllPresents();
-                            if (presents.isEmpty()) {
-                                Log.d("GeschenkeListeOhneAlles", "istLeer");
-                            } else {
-                                int presentSize = presents.size();
-                                Log.d("GeschenkeListeOhneAlles", "" + presentSize);
-                            }
-                        }
-                    }).start();
-
-                /**
-                //todo: Test
-                new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        MyDatabase myDatabase = MyDatabase.getDatabase(context);
-                        final List<PresentRepresentation> presents = myDatabase.daoAccess().getAllPresentsForRepresentationTEST();
-                        if (presents.isEmpty()) {
-                            Log.d("ListeOhneLiveData", "istLeer");
-                        } else {
-                            int presentSize = presents.size();
-                            Log.d("ListeOhneLiveData", "" + presentSize);
-                        }
-                    }
-                }).start();
-                 */
             }
 
 

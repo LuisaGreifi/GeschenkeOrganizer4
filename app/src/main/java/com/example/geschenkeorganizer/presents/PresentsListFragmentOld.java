@@ -14,6 +14,7 @@ import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.presents.Present;
 
 // Code von NoteTaker-Übung
+//todo: NEU (Klasse kann komplett gelöscht werden, wird nicht benötigt)
 
 public class PresentsListFragmentOld extends ListFragment {
     //todo: NEU (ausgeklammert: Interfaces, nicht benötigt zwecks LiveData)

@@ -57,8 +57,6 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
     public void onBindViewHolder(PresentViewHolder holder, int position) {
         if (presents != null) {
                 PresentRepresentation current = presents.get(position);
-                //todo: Test
-                Log.d("position", "position" + position);
 
                 // todo: NEU: angepasst an mich
                 holder.presentNameView.setText(current.getPresentName());
@@ -68,15 +66,6 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
                 holder.priceView.setText(current.getPrice() + " €");
                 holder.shopView.setText(current.getShop());
                 holder.statusView.setText(current.getStatus());
-
-                //todo: Test
-                Log.d("List", "List " + presents);
-                int size = presents.size();
-                Log.d("ListSize", "ListSize " + size);
-
-                //todo: Test
-                String presentName = current.getPresentName();
-                Log.d("presentName", "presentName" + presentName);
         } else {
             // Covers the case of data not being ready yet.
             holder.presentNameView.setText("Kein Geschenk vorhanden");

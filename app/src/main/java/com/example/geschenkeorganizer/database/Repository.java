@@ -144,10 +144,6 @@ public class Repository {
 
         myDatabase.daoAccess().insertPresent(present);
 
-        //todo: Test
-        int presentId;
-        presentId = myDatabase.daoAccess().getPresentIdByPersonAndEventAndPresentName(personId, eventId, presentName);
-        Log.d("presentInsertRepo_ID", " "+ presentId);
     }
 
 
