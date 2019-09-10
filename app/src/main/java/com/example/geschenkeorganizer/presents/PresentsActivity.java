@@ -10,8 +10,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.room.Room;
 
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.MyDatabase;
+import com.example.geschenkeorganizer.database.Repository;
 
 //todo: NEU (ausgeklammert: Interfaces)
 public class PresentsActivity extends AppCompatActivity /**implements PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
@@ -48,6 +51,8 @@ public class PresentsActivity extends AppCompatActivity /**implements PresentsAd
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presents);
 

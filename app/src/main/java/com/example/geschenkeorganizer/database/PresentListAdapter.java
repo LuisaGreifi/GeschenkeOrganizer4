@@ -42,7 +42,9 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
     private final LayoutInflater mInflater;
     private List<PresentRepresentation> presents;
 
-    public PresentListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public PresentListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+        }
 
     @Override
     public PresentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,6 +56,7 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
     public void onBindViewHolder(PresentViewHolder holder, int position) {
         if (presents != null) {
             PresentRepresentation current = presents.get(position);
+
             // todo: NEU: angepasst an mich
             holder.presentNameView.setText(current.getPresentName());
             holder.personFirstNameView.setText(current.getFirstName());
@@ -81,4 +84,6 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
             return presents.size();
         else return 0;
     }
+
+
 }
