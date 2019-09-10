@@ -82,6 +82,7 @@ public class PresentsListFragment extends Fragment {
                         }
                     }).start();
 
+                /**
                 //todo: Test
                 new Thread(new Runnable() {
 
@@ -97,6 +98,7 @@ public class PresentsListFragment extends Fragment {
                         }
                     }
                 }).start();
+                 */
             }
 
 

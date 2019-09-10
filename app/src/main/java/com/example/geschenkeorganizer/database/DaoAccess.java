@@ -210,12 +210,18 @@ public interface DaoAccess {
 
     // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
     // LiveData als Rückgabe
-
+/**
     @Query("SELECT pe.firstName, pe.lastName, e.eventName, pr.presentName, pr.price, pr.shop, pr.status FROM Person AS pe, Event AS e, Present AS pr " + "INNER JOIN Present " + "ON pe.personId = pr.personId AND e.eventId = pr.eventId")
     LiveData<List<PresentRepresentation>> getAllPresentsForRepresentation();
-
+*/
     //todo: Neu (TEST)
-    @Query("SELECT pe.firstName, pe.lastName, e.eventName, pr.presentName, pr.price, pr.shop, pr.status FROM Person AS pe, Event AS e, Present AS pr " + "INNER JOIN Present " + "ON pe.personId = pr.personId AND e.eventId = pr.eventId")
-    List<PresentRepresentation> getAllPresentsForRepresentationTEST();
+    //https://codelabs.developers.google.com/codelabs/android-persistence/#7
+    // Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
+    // https://wiki.selfhtml.org/wiki/Datenbank/Fortgeschrittene_Jointechniken#Unterschiedliche_Join-Spalten_nutzen
+    // inner join + Struktur
+    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
+    // LiveData als Rückgabe
+    @Query("SELECT firstName, lastName, eventName, presentName, price, shop, status FROM Present " + "INNER JOIN Person INNER JOIN Event " + "ON Present.eventId = Event.eventId AND Present.personId = Person.personId")
+    LiveData<List<PresentRepresentation>> getAllPresentsForRepresentation();
 
 }
