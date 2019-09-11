@@ -6,10 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--todo: NEU
+    width -> match parent -->
     <fragment
         android:id="@+id/fragment9"
         android:name="com.example.geschenkeorganizer.PersonsFile.PersonsListFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"

@@ -38,7 +38,7 @@ public interface DaoAccess {
     Person getPersonById(int personId);
 
     @Query("SELECT personId FROM Person WHERE firstName =:firstName AND lastName =:lastName")
-    int getPersonIdByName (String firstName, String lastName);
+    int getPersonIdByName(String firstName, String lastName);
 
     @Query("SELECT * FROM Person WHERE firstName =:firstName AND lastName =:lastName")
     boolean existsPersonWithNameAlready(String firstName, String lastName);
@@ -49,9 +49,6 @@ public interface DaoAccess {
 
     @Query("DELETE FROM Person WHERE firstName =:firstName AND lastName =:lastName")
     void deletePersonByName(String firstName, String lastName);
-
-
-
 
 
     //Event Access
@@ -78,7 +75,7 @@ public interface DaoAccess {
     Event getEventById(int eventId);
 
     @Query("SELECT eventId FROM Event WHERE eventName =:eventName AND eventDate =:eventDate")
-    int getEventIdByEventInformation (String eventName, int eventDate);
+    int getEventIdByEventInformation(String eventName, int eventDate);
 
     @Query("SELECT * FROM Event WHERE eventName =:eventName AND eventDate =:eventDate")
     boolean existsEventWithEventInformationAlready(String eventName, int eventDate);
@@ -92,9 +89,6 @@ public interface DaoAccess {
 
     @Query("DELETE FROM Event WHERE eventId =:eventId")
     void deleteEventByEventId(int eventId);
-
-
-
 
 
     //PersonEventJoin Access
@@ -151,9 +145,6 @@ public interface DaoAccess {
     void deletePersonEventJoin(int personId, int eventId);
 
 
-
-
-
     //Present Access
 
     @Insert
@@ -189,8 +180,7 @@ public interface DaoAccess {
     void deletePresentByEvent(int eventId);
 
 
-
- //Present Representation
+    //Present Representation
 
     //todo: NEU
 
@@ -202,5 +192,19 @@ public interface DaoAccess {
     // LiveData als Rückgabe
     @Query("SELECT firstName, lastName, eventName, presentName, price, shop, status FROM Present " + "INNER JOIN Person INNER JOIN Event " + "ON Present.eventId = Event.eventId AND Present.personId = Person.personId")
     LiveData<List<PresentRepresentation>> getAllPresentsForRepresentation();
+
+
+// Person Event Representation
+
+//todo: NEU
+
+    //https://codelabs.developers.google.com/codelabs/android-persistence/#7
+    // Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
+    // https://wiki.selfhtml.org/wiki/Datenbank/Fortgeschrittene_Jointechniken#Unterschiedliche_Join-Spalten_nutzen
+    // inner join + Struktur
+    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
+    // LiveData als Rückgabe
+    @Query("SELECT firstName, lastName, eventName, eventDate FROM PersonEventJoin " + "INNER JOIN Person INNER JOIN Event " + "ON PersonEventJoin.eventId = Event.eventId AND PersonEventJoin.personId = Person.personId")
+    LiveData<List<PersonEventRepresentation>> getAllPersonsWithEventsForRepresentation();
 
 }

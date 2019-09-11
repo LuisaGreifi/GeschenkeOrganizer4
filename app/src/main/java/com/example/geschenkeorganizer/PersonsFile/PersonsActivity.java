@@ -10,8 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geschenkeorganizer.R;
 
-public class PersonsActivity extends AppCompatActivity implements  PersonsListFragment.OnListItemSelectedListener, PersonsAddFragment.OnListItemChangedListener {
+//todo: NEU (ausgeklammert: Interfaces)
+public class PersonsActivity extends AppCompatActivity /**implements  PersonsListFragment.OnListItemSelectedListener, PersonsAddFragment.OnListItemChangedListener */{
 
+//todo: NEU (erstmal ausgeklammert: Interfaces)
+/**
     @Override
     public void onListItemSelected(int id) {
         //todo: evtl. anzeigen und dann ändern lassen, so in etwa:
@@ -25,7 +28,9 @@ public class PersonsActivity extends AppCompatActivity implements  PersonsListFr
         // intent.putExtra(PersonsAddFragment.ARG_ID, id);
         // startActivity(intent);
     }
-
+ */
+//todo: NEU (erstmal ausgeklammert: Interfaces)
+/**
     @Override
     public void onListItemChanged() {
         PersonsListFragment paf =
@@ -35,6 +40,7 @@ public class PersonsActivity extends AppCompatActivity implements  PersonsListFr
         }
         //Datenbank Bescheid geben?
     }
+ */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

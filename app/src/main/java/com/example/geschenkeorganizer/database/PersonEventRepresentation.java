@@ -2,23 +2,20 @@ package com.example.geschenkeorganizer.database;
 
 //todo: Neu
 //Klasse, die als Rückgabewert für DAO-Abrfrage verwendet werden kann
-//wird zur Darstellung der Geschenke in der App verwendet
+//wird zur Darstellung der Personen und Events in der App verwendet
 
 //https://codelabs.developers.google.com/codelabs/android-persistence/#7
 //Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
 
 import androidx.annotation.NonNull;
 
-public class PresentRepresentation {
+public class PersonEventRepresentation {
     private String firstName;
     private String lastName;
     private String eventName;
-    private String presentName;
-    private double price;
-    private String shop;
-    private String status;
+    private int eventDate;
 
-    public PresentRepresentation(){}
+    public PersonEventRepresentation(){}
 
     //getter
 
@@ -34,20 +31,8 @@ public class PresentRepresentation {
         return eventName;
     }
 
-    public String getPresentName(){
-        return presentName;
-    }
-
-    public double getPrice(){
-        return price;
-    }
-
-    public String getShop(){
-        return shop;
-    }
-
-    public String getStatus(){
-        return status;
+    public int getEventDate(){
+        return eventDate;
     }
 
     //setter
@@ -64,21 +49,8 @@ public class PresentRepresentation {
         this.eventName = eventName;
     }
 
-    public void setPresentName(String presentName){
-        this.presentName = presentName;
+    public void setEventDate(int eventDate){
+        this.eventDate = eventDate;
     }
 
-    public void setPrice(double price){
-        this.price = price;
-    }
-
-    public void setShop(String shop){
-        this.shop = shop;
-    }
-
-    public void setStatus(String status){
-        this.status = status;
-    }
 }
-
-

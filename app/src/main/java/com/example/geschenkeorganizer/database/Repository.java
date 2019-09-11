@@ -13,6 +13,7 @@ public class Repository {
     //todo: NEU
     // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
     private LiveData<List<PresentRepresentation>> allPresents;
+    private LiveData<List<PersonEventRepresentation>> allPersonsEvents;
 
     // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
     private MyDatabase myDatabase;
@@ -24,6 +25,7 @@ public class Repository {
         //todo: NEU
         // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
         allPresents = myDatabase.daoAccess().getAllPresentsForRepresentation();
+        allPersonsEvents = myDatabase.daoAccess().getAllPersonsWithEventsForRepresentation();
     }
 
     //Person und Event hinzufügen Dialog
@@ -154,6 +156,16 @@ public class Repository {
     //https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
     LiveData<List<PresentRepresentation>> getAllPresents() {
         return allPresents;
+    }
+
+
+
+    //todo: NEU
+    // Person Event Representation
+
+    //https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
+    LiveData<List<PersonEventRepresentation>> getAllPersonsWithEvents() {
+        return allPersonsEvents;
     }
 
 }
