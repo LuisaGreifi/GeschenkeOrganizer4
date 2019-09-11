@@ -204,7 +204,7 @@ public interface DaoAccess {
     // inner join + Struktur
     // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
     // LiveData als Rückgabe
-    @Query("SELECT firstName, lastName, eventName, eventDate FROM PersonEventJoin " + "INNER JOIN Person INNER JOIN Event " + "ON PersonEventJoin.eventId = Event.eventId AND PersonEventJoin.personId = Person.personId")
+    @Query("SELECT firstName, lastName, eventName, eventDate FROM PersonEventJoin " + "INNER JOIN Person INNER JOIN Event " + "ON PersonEventJoin.eventId = Event.eventId AND PersonEventJoin.personId = Person.personId " + "ORDER BY firstName, lastName")
     LiveData<List<PersonEventRepresentation>> getAllPersonsWithEventsForRepresentation();
 
 }

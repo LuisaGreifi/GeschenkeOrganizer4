@@ -16,11 +16,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.PresentRepresentation;
 import com.example.geschenkeorganizer.database.PresentViewModel;
 import com.example.geschenkeorganizer.database.Repository;
+
+import java.util.List;
 
 public class PresentsAddFragment extends Fragment implements View.OnClickListener {
 
@@ -67,7 +71,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
         // Kontext der Activity des Fragments: Präfix: getActivity()
         repository = new Repository(getActivity().getApplicationContext());
-
 
         return view;
     }
@@ -176,9 +179,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         textPlaceOfPurchase = placeOfPurchase.getText().toString();
         StringTextPrice = price.getText().toString();
 
-
-        //todo:obacht: es dürfen nur "."(Punkt) doubles eingegeben werden!
-        //todo: muss noch geändert werden --> Fehlermeldung
+        //todo: evntl auch andere Sachen replacen... €, Leerzeichen zu NICHTS
 
         // https://www.journaldev.com/18361/java-remove-character-string
         // characters ersetzen
