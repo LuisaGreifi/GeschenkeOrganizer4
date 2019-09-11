@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- todo: Neu
+Funktionsweise Erstellung Layout für einzelnes RecylcerView Item
+https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#9 -->
+
+<!-- todo: Neu (layout_height -> wrap_content) -> 1 Item nicht so groß wie Bildschirm, sondern wie Objekt
+https://stackoverflow.com/questions/35906652/recycleview-displaying-only-the-first-item -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/presentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
+
+        <!-- https://medium.com/@elye.project/the-challenge-of-arranging-horizontal-textviews-231dc8f4bed5
+        Verwendung space zwischen Elementen für schöne Anordnung -->
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- https://medium.com/@geekanamika/android-beginners-views-layouts-657a5bbeebe2
+        Verwendung margin für schönene Abstand Elemente -->
+        <TextView
+            android:id="@+id/shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"/>
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- https://medium.com/@geekanamika/android-beginners-views-layouts-657a5bbeebe2
+        Verwendung margin für schönene Abstand Elemente -->
+        <TextView
+            android:id="@+id/personFirstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"/>
+
+        <!-- https://medium.com/@geekanamika/android-beginners-views-layouts-657a5bbeebe2
+        Verwendung margin für schönene Abstand Elemente -->
+        <TextView
+            android:id="@+id/personLastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"/>
+
+        <TextView
+            android:id="@+id/eventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</LinearLayout>

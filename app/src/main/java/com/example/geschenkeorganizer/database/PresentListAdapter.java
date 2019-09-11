@@ -4,7 +4,6 @@ package com.example.geschenkeorganizer.database;
 // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#10
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
 
     @Override
     public PresentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.recyclerview_present_item, parent, false);
         return new PresentViewHolder(itemView);
     }
 

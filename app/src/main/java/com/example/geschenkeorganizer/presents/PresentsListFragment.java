@@ -70,7 +70,7 @@ public class PresentsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_presents_list, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerviewPresentList);
         recyclerView.setAdapter(presentListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
