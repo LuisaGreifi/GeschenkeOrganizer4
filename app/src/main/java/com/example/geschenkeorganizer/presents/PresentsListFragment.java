@@ -21,6 +21,7 @@ import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.MyDatabase;
 import com.example.geschenkeorganizer.database.Present;
 import com.example.geschenkeorganizer.database.PresentListAdapter;
+import com.example.geschenkeorganizer.database.PresentListClickListener;
 import com.example.geschenkeorganizer.database.PresentRepresentation;
 import com.example.geschenkeorganizer.database.PresentViewModel;
 import com.example.geschenkeorganizer.database.Repository;
@@ -38,6 +39,7 @@ public class PresentsListFragment extends Fragment {
     private PresentViewModel presentViewModel;
     private Context context;
 
+
     public PresentsListFragment() {
     }
 
@@ -45,12 +47,14 @@ public class PresentsListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+
         presentListAdapter = new PresentListAdapter(context);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //todo: neu
         // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
         presentViewModel = ViewModelProviders.of(this).get(PresentViewModel.class);

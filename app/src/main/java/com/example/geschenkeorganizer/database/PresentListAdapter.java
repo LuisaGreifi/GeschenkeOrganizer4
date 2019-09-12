@@ -4,11 +4,13 @@ package com.example.geschenkeorganizer.database;
 // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#10
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.geschenkeorganizer.R;
@@ -26,7 +28,6 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
         private final TextView shopView;
         private final TextView statusView;
 
-        // todo: NEU: angepasst an mich
         private PresentViewHolder(View itemView) {
             super(itemView);
             presentNameView = itemView.findViewById(R.id.presentName);
@@ -36,19 +37,51 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
             priceView = itemView.findViewById(R.id.price);
             shopView = itemView.findViewById(R.id.shop);
             statusView = itemView.findViewById(R.id.status);
+
+            // todo: NEU
+            // https://medium.com/@apeapius/how-i-usually-code-recyclerview-adapter-class-65e30bcf30f
+            // onClickListener für einzelnes Item erstellen
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("PresentListAdapter", "onClick");
+                    if (listener != null) {
+                        String presentNameString = presentNameView.getText().toString();
+                        String personFirstNameString = personFirstNameView.getText().toString();
+                        String personLastNameString = personLastNameView.getText().toString();
+                        String eventNameString = eventNameView.getText().toString();
+                        String priceString = priceView.getText().toString();
+                        String shopString = shopView.getText().toString();
+                        String statusString = statusView.getText().toString();
+
+                        Log.d("PresentListAdapter", presentNameString + " " + personFirstNameString + " " + personLastNameString + " " + eventNameString + " " + priceString + " " + shopString + " " + statusString);
+                        listener.onPresentListItemClicked(presentNameString, personFirstNameString, personLastNameString, eventNameString, priceString, shopString, statusString);
+                    } else {
+                        Log.d("PresentListAdapter", "kein Listener");
+                    }
+                }
+            });
         }
     }
 
     private final LayoutInflater mInflater;
     private List<PresentRepresentation> presents;
 
+    // todo: NEU
+    // https://medium.com/@apeapius/how-i-usually-code-recyclerview-adapter-class-65e30bcf30f
+    //onClickListener für einzelnes Item
+    private PresentListClickListener listener;
+
     public PresentListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+
         }
+
 
     @Override
     public PresentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_present_item, parent, false);
+
         return new PresentViewHolder(itemView);
     }
 
@@ -62,6 +95,8 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
                 holder.personFirstNameView.setText(current.getFirstName());
                 holder.personLastNameView.setText(current.getLastName());
                 holder.eventNameView.setText(current.getEventName());
+                //todo: Warum muss man hier eigtl nicht in String umwandeln?
+                //todo: evntl 2 Nachkommastellen
                 holder.priceView.setText(current.getPrice() + " €");
                 holder.shopView.setText(current.getShop());
                 holder.statusView.setText(current.getStatus());

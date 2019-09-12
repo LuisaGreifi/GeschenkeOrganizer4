@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.PresentListAdapter;
 import com.example.geschenkeorganizer.database.PresentRepresentation;
 import com.example.geschenkeorganizer.database.PresentViewModel;
 import com.example.geschenkeorganizer.database.Repository;
@@ -53,6 +54,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private Repository repository;
 
 
+
     public PresentsAddFragment() {
     }
 
@@ -74,6 +76,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
         return view;
     }
+
 
     //todo: müsste oben aufgerufen werden + Spinner spinenr übergeben werden
     private void initSpinner() {

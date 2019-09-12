@@ -14,10 +14,12 @@ import androidx.room.Room;
 
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.MyDatabase;
+import com.example.geschenkeorganizer.database.PresentListClickListener;
 import com.example.geschenkeorganizer.database.Repository;
 
 //todo: NEU (ausgeklammert: Interfaces)
-public class PresentsActivity extends AppCompatActivity /**implements PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
+//todo: Neu (PresentListClickListener)
+public class PresentsActivity extends AppCompatActivity implements PresentListClickListener/*PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
 
     //todo: NEU (erstmal ausgeklammert: Interfaces)
     /**
@@ -73,5 +75,16 @@ public class PresentsActivity extends AppCompatActivity /**implements PresentsAd
                 }
             }
         });
+
+
     }
+    // todo: Neu
+    //wird aufgerufen, wenn Item aus Liste angeklickt wurde
+    @Override
+    public void onPresentListItemClicked(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
+        Log.d("PresentsActivity", presentName + " " + personFirstName + " " + personLastName + " " + eventName + " " + price + " " + shop + " " + status);
+        Toast.makeText(PresentsActivity.this, "Listener funktioniert", Toast.LENGTH_SHORT).show();
+
+    }
+
 }
