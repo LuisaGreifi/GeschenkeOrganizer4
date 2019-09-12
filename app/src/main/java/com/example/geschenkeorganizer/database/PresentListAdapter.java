@@ -28,8 +28,10 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
         private final TextView shopView;
         private final TextView statusView;
 
+
         private PresentViewHolder(View itemView) {
             super(itemView);
+
             presentNameView = itemView.findViewById(R.id.presentName);
             personFirstNameView = itemView.findViewById(R.id.personFirstName);
             personLastNameView = itemView.findViewById(R.id.personLastName);
@@ -44,7 +46,6 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("PresentListAdapter", "onClick");
                     if (listener != null) {
                         String presentNameString = presentNameView.getText().toString();
                         String personFirstNameString = personFirstNameView.getText().toString();
@@ -54,10 +55,7 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
                         String shopString = shopView.getText().toString();
                         String statusString = statusView.getText().toString();
 
-                        Log.d("PresentListAdapter", presentNameString + " " + personFirstNameString + " " + personLastNameString + " " + eventNameString + " " + priceString + " " + shopString + " " + statusString);
                         listener.onPresentListItemClicked(presentNameString, personFirstNameString, personLastNameString, eventNameString, priceString, shopString, statusString);
-                    } else {
-                        Log.d("PresentListAdapter", "kein Listener");
                     }
                 }
             });
@@ -67,14 +65,19 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
     private final LayoutInflater mInflater;
     private List<PresentRepresentation> presents;
 
-    // todo: NEU
-    // https://medium.com/@apeapius/how-i-usually-code-recyclerview-adapter-class-65e30bcf30f
-    //onClickListener für einzelnes Item
+    //todo: Neu
+    //https://medium.com/@apeapius/how-i-usually-code-recyclerview-adapter-class-65e30bcf30f
+    //listener Variable in Adapter
     private PresentListClickListener listener;
+
 
     public PresentListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
+        //todo: neu
+        // https://thedeveloperworldisyours.com/android/listener-from-fragment-to-activity/
+        // Initialisierung listener (Kontext übergeben)
+        listener = (PresentListClickListener) context;
         }
 
 
