@@ -1,5 +1,6 @@
 package com.example.geschenkeorganizer.presents;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +18,12 @@ import com.example.geschenkeorganizer.database.MyDatabase;
 import com.example.geschenkeorganizer.database.PresentListClickListener;
 import com.example.geschenkeorganizer.database.Repository;
 
+import static java.security.AccessController.getContext;
+
 //todo: NEU (ausgeklammert: Interfaces)
 //todo: Neu (PresentListClickListener)
 public class PresentsActivity extends AppCompatActivity implements PresentListClickListener/*PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
+
 
     //todo: NEU (erstmal ausgeklammert: Interfaces)
     /**
@@ -54,7 +58,6 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presents);
 
@@ -78,13 +81,22 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
 
 
     }
-    // todo: Neu
+    // todo: Neu (Test)
     //wird aufgerufen, wenn Item aus Liste angeklickt wurde
     @Override
     public void onPresentListItemClicked(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
         Log.d("PresentsActivity", presentName + " " + personFirstName + " " + personLastName + " " + eventName + " " + price + " " + shop + " " + status);
-        Toast.makeText(PresentsActivity.this, "Listener funktioniert", Toast.LENGTH_SHORT).show();
 
+        //todo: hier wäre ein Listener schön, der Informationen an PresentsAddActivity weiterleitet und da die Konstante für Update setzt.
+
+        PresentsAddFragment paf =
+                (PresentsAddFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_add);
+        if (paf != null) {
+            //todo: hier müsste Eingabe auch aktualisiert werden ?
+        } else {
+            Intent intent = new Intent(PresentsActivity.this, PresentsAddActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

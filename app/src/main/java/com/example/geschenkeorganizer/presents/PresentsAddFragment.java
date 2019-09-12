@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.PresentListAdapter;
+import com.example.geschenkeorganizer.database.PresentListClickListener;
 import com.example.geschenkeorganizer.database.PresentRepresentation;
 import com.example.geschenkeorganizer.database.PresentViewModel;
 import com.example.geschenkeorganizer.database.Repository;
 
 import java.util.List;
 
-public class PresentsAddFragment extends Fragment implements View.OnClickListener {
+//todo: Neu (Test) (PresentActivityPresentsAddFragmentCommunication
+public class PresentsAddFragment extends Fragment implements View.OnClickListener, PresentsActivityPresentsAddFragmentCommunication {
 
     //todo: NEU (ausgeklammert: Interface)
     /**
@@ -53,6 +56,16 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     private Repository repository;
 
+    //todo: Neu (Test)
+    //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PresentsAddFragment deswegen angepasst werden soll
+    //initial: add
+    private int presentsAddFragmentStatus = STATUS_ADD;
+    private static final int STATUS_ADD = 0;
+    private static final int STATUS_UPDATE = 1;
+
+    // todo: Neu (Test)
+    //Inhalte, die in Item gespeichert sind --> sollen angezeigt/updatebar sein
+    private String presentNameToUpdate, personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, priceToUpdate, shopToUpdate, statusToUpdate;
 
 
     public PresentsAddFragment() {
@@ -63,6 +76,15 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_presents_add, container, false);
+
+        //todo: neu (Test
+        //TextViews nur setten, wenn davor listItem angeklickt wurde
+        if(presentsAddFragmentStatus == STATUS_UPDATE){
+            findViewsById();
+            setInformation();
+            Log.d("PAF_onCreateView", "onCLick");
+        }
+
         Button doneButton = view.findViewById(R.id.button_done);
         doneButton.setOnClickListener(this);
 
@@ -224,5 +246,47 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
             result = hadIdea;
         }
         return result;
+    }
+
+    //todo: Neu (test)
+    private void setInformation(){
+        firstName.setText(personFirstNameToUpdate);
+        surName.setText(personLastNameToUpdate);
+        description.setText(presentNameToUpdate);
+        event.setText(eventNameToUpdate);
+        placeOfPurchase.setText(shopToUpdate);
+        price.setText(priceToUpdate);
+
+        //https://developer.android.com/reference/android/widget/CheckBox
+        //Checkbox checken (setten)
+        //todo: schöner: switch-case
+        //todo: schöner Konstanten (wird obe nzum speichern auch benötigt
+        if(statusToUpdate == "Idee"){
+            hadIdea.setChecked(true);
+        } else if(statusToUpdate == "gekauft"){
+            bought.setChecked(true);
+        } else if(statusToUpdate == "verpackt"){
+            wrapped.setChecked(true);
+        }
+    }
+
+
+
+    // todo: Neu (Test)
+    //wird aufgerufen, wenn Item aus Liste angeklickt wurde
+
+    @Override
+    public void onUpdatePresentDialog(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
+        Log.d("PresentsAddFragment", "onCLick");
+        //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PresentsAddFragment deswegen angepasst werden soll
+        presentsAddFragmentStatus = STATUS_UPDATE;
+
+        presentNameToUpdate = presentName;
+        personFirstNameToUpdate = personFirstName;
+        personLastNameToUpdate = personLastName;
+        eventNameToUpdate = eventName;
+        shopToUpdate = shop;
+        priceToUpdate = price;
+        statusToUpdate = status;
     }
 }
