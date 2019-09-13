@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class TestNotificationActivity extends AppCompatActivity {
 
+    //Code aus Note-Taker-Übung
+
     private Button button;
     private final static int NOTIFICATION_ID = 0;
     private final static String NOTIFICATION_CHANNEL_NAME = "CH0";

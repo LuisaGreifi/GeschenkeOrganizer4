@@ -1,8 +1,15 @@
 package com.example.geschenkeorganizer.presents;
 
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +25,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.geschenkeorganizer.MainActivity;
+import com.example.geschenkeorganizer.PersonsFile.PersonsActivity;
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.TestNotificationActivity;
 import com.example.geschenkeorganizer.database.PresentViewModel;
 import com.example.geschenkeorganizer.database.Repository;
 
@@ -48,6 +58,13 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     private Repository repository;
 
+    private final static int NOTIFICATION_ID = 0;
+    private final static String NOTIFICATION_CHANNEL_NAME = "CH0";
+    private final static String NOTIFICATION_CHANNEL_ID = "0";
+
+    public static final int INTENT_ITEM_SELECTED_ID = 0;
+    public static final String INTENT_ITEM_SELECTED_NAME = "IntentForLoadingSelectedNote";
+
 
     public PresentsAddFragment() {
     }
@@ -67,8 +84,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
         // Kontext der Activity des Fragments: Präfix: getActivity()
         repository = new Repository(getActivity().getApplicationContext());
-
-
         return view;
     }
 
@@ -130,16 +145,86 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         firstName = getView().findViewById(R.id.editText_firstName);
         surName = getView().findViewById(R.id.editText_surName);
         description = getView().findViewById(R.id.editText_description);
+        wrapped = getView().findViewById(R.id.checkBox_wrapped);
+        bought = getView().findViewById(R.id.checkBox_bought);
+
         if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
+
+            //todo: neu
+            if(!(bought.isChecked()) && !(wrapped.isChecked())) {
+                createNotification("Kaufe und verpacke dein Geschenk ;-)", "Geschenke-Erinnerung");
+            }
+            else if(!(bought.isChecked())) {
+                createNotification("verpackt aber nicht gekauft...interessant! ;-)", "Geschenke-Erinnerung");
+            }
+            else if(!(wrapped.isChecked())) {
+                createNotification("Verpacke dein Geschenk noch ;-)", "Geschenke-Erinnerung");
+            }
+
             saveEntry(v);
             // todo: für Insert erstmal nicht relevant
             //mCallback.onListItemChanged();
-
         } else {
             Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",
                     Toast.LENGTH_SHORT).show();
         }
+    }
 
+    private void createNotification(String title, String text) {
+        createNotificationChannel();
+        Notification.Builder mBuilder;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            mBuilder =
+                    new Notification.Builder(getActivity(), NOTIFICATION_CHANNEL_ID).setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle(getString(R.string.app_name)).setContentText(title)
+                            .setStyle(new Notification.BigTextStyle().bigText(text)).setAutoCancel(true);
+        }
+        else {
+            mBuilder =
+                    new Notification.Builder(getActivity()).setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle(getString(R.string.app_name)).setContentText(title)
+                            .setStyle(new Notification.BigTextStyle().bigText(text)).setAutoCancel(true);
+        }
+
+        // Check if we're running on Android 5.0 or higher, older versions don't support visibility
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Call some material design APIs here
+            mBuilder.setVisibility(Notification.VISIBILITY_SECRET);
+        }
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(getActivity(), MainActivity.class);
+        resultIntent
+                .putExtra(INTENT_ITEM_SELECTED_NAME, INTENT_ITEM_SELECTED_ID);
+        resultIntent.putExtra(INTENT_ITEM_SELECTED_NAME, INTENT_ITEM_SELECTED_ID);
+
+        // The stack builder object will contain an artificial back stack for the started Activity.
+        // This ensures that navigating backward from the Activity leads out of your application to
+        // the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
+    private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            CharSequence channelName = NOTIFICATION_CHANNEL_NAME;
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.GREEN);
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
     }
 
     private void saveEntry(View v) {
@@ -149,10 +234,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
 
         // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
-    }
-
-    public void loadEmptyAddView() {
-        //todo: alle Views ohne Text etc. laden
     }
 
     //todo: spinner heißt hier anders bzw. existiert noch gar nicht in Layout!! KEIN EditText
