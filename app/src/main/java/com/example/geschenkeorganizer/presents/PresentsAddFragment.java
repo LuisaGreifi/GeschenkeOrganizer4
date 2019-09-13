@@ -168,6 +168,9 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
                     Toast.LENGTH_SHORT).show();
         }
 
+        //todo: neu
+        loadEmptyAddView();
+
     }
 
     private void saveEntry(View v) {
@@ -175,12 +178,22 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         getInformation(v);
 
         repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
-
-        // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
     }
 
+    //todo: neu
     public void loadEmptyAddView() {
-        //todo: alle Views ohne Text etc. laden
+        firstName.setText("");
+        surName.setText("");
+        description.setText("");
+        event.setText("");
+        placeOfPurchase.setText("");
+        price.setText("");
+
+        //https://developer.android.com/reference/android/widget/CheckBox
+        //Checkbox checken (setten bzw ent-setten)
+        hadIdea.setChecked(false);
+        bought.setChecked(false);
+        wrapped.setChecked(false);
     }
 
     //todo: spinner heißt hier anders bzw. existiert noch gar nicht in Layout!! KEIN EditText

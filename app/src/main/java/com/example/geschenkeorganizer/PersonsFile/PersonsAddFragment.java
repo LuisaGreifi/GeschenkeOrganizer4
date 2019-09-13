@@ -190,6 +190,9 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
             startActivity(i);
         }
 
+        //todo: neu
+        loadEmptyAddView();
+
     }
 
     private void saveEntry(View v) {
@@ -226,13 +229,14 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     }
 
-    //todo: muss von onPostExecute aufgerufen werden..momentan nicht in Verwendung!
-    //todo: damit EditText wieder leer ist, nachdem Zeug gespeichert wurde (Wenn Inserten nicht mehr funktioniert ist das schuld!)
-    private void clearEditText(){
+    //todo: NEU
+    private void loadEmptyAddView(){
         editText_firstName.setText("");
         editText_surName.setText("");
         editText_eventDate.setText("");
-        //todo: Wie Ursprungsanzeige Spinner zurückbekommen?
+        //https://stackoverflow.com/questions/39451359/android-spinner-set-selected-item-as-default/39451650
+        //initiale Selection setten
+        spinner_eventType.setSelection(EVENTTYPE_BIRTHDAY);
     }
 
 
