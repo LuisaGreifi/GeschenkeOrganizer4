@@ -79,32 +79,13 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
     public void onUpdatePresentListItem(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
         Log.d("PresentsActivity", "onClick_clicked");
 
-        //https://developer.android.com/training/basics/fragments/communicating
-        // direkter Aufruf der Fragment Methode möglich, wenn großer Bildschirm (keine Activity dazwischengeschaltet)
-        //die verwenden getSupportFragmentManager?
         PresentsAddFragment paf =
                 (PresentsAddFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_add);
         if (paf != null) {
             //todo: hier müsste Eingabe auch aktualisiert werden ?
-            //todo: test
-            //https://developer.android.com/training/basics/fragments/communicating
-            // direkter Aufruf der Fragment Methode möglich, wenn großer Bildschirm (keine Activity dazwischengeschaltet)
-            paf.onUpdatePresentItem(presentName, personFirstName, personLastName, eventName, price, shop, status);
         } else {
-            //https://developer.android.com/training/basics/fragments/communicating
-            // Argumente in Bundle packen zur Übergabe an Activity
-            Bundle extras = new Bundle();
-            extras.putString("presentNameString", presentName);
-            extras.putString("personFirstNameString", personFirstName);
-            extras.putString("personLastNameString", personLastName);
-            extras.putString("eventNameString", eventName);
-            extras.putString("priceString", price);
-            extras.putString("shopNameString", shop);
-            extras.putString("statusNameString", status);
-
             //todo: muss das ins Manifest?
             Intent intent = new Intent(PresentsActivity.this, PresentsAddActivity.class);
-            intent.putExtras(extras);
             startActivity(intent);
         }
     }

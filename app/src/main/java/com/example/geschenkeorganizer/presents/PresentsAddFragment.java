@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.Repository;
 
-//todo: Neu (Test) (PresentActivityPresentsAddFragmentCommunication
 public class PresentsAddFragment extends Fragment implements View.OnClickListener {
 
     //todo: NEU (ausgeklammert: Interface)
