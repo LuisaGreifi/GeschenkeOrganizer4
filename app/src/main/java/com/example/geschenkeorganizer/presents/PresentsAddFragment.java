@@ -58,6 +58,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     private Repository repository;
 
+    //todo: neu
     private final static int NOTIFICATION_ID = 0;
     private final static String NOTIFICATION_CHANNEL_NAME = "CH0";
     private final static String NOTIFICATION_CHANNEL_ID = "0";
@@ -145,6 +146,8 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         firstName = getView().findViewById(R.id.editText_firstName);
         surName = getView().findViewById(R.id.editText_surName);
         description = getView().findViewById(R.id.editText_description);
+
+        //todo: neu
         wrapped = getView().findViewById(R.id.checkBox_wrapped);
         bought = getView().findViewById(R.id.checkBox_bought);
 
@@ -193,23 +196,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
             // Call some material design APIs here
             mBuilder.setVisibility(Notification.VISIBILITY_SECRET);
         }
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(getActivity(), MainActivity.class);
-        resultIntent
-                .putExtra(INTENT_ITEM_SELECTED_NAME, INTENT_ITEM_SELECTED_ID);
-        resultIntent.putExtra(INTENT_ITEM_SELECTED_NAME, INTENT_ITEM_SELECTED_ID);
 
-        // The stack builder object will contain an artificial back stack for the started Activity.
-        // This ensures that navigating backward from the Activity leads out of your application to
-        // the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager =
                 (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
