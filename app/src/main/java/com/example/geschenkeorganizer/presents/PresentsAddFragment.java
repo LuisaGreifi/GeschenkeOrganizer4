@@ -170,6 +170,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    //todo: neu
     private void createNotification(String title, String text) {
         createNotificationChannel();
         Notification.Builder mBuilder;
@@ -215,6 +216,8 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
+
+    //todo: neu
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             int importance = NotificationManager.IMPORTANCE_LOW;
