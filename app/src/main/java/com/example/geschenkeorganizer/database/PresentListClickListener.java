@@ -7,5 +7,5 @@ import android.view.View;
 // Idee Verwendung Interface zur Kommunikation Fragment - Fragment (Sachen an MainActivity übergeben, da mittels Intent an AddFragment)
 // Methoden komplett anders
 public interface PresentListClickListener {
-    void onPresentListItemClicked(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status);
+    void onUpdatePresentListItem(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status);
 }

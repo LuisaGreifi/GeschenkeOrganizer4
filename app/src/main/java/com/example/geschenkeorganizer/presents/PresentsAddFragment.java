@@ -1,8 +1,6 @@
 package com.example.geschenkeorganizer.presents;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,21 +14,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.database.PresentListAdapter;
-import com.example.geschenkeorganizer.database.PresentListClickListener;
-import com.example.geschenkeorganizer.database.PresentRepresentation;
-import com.example.geschenkeorganizer.database.PresentViewModel;
 import com.example.geschenkeorganizer.database.Repository;
 
-import java.util.List;
-
 //todo: Neu (Test) (PresentActivityPresentsAddFragmentCommunication
-public class PresentsAddFragment extends Fragment implements View.OnClickListener, PresentsActivityPresentsAddFragmentCommunication {
+public class PresentsAddFragment extends Fragment implements View.OnClickListener {
 
     //todo: NEU (ausgeklammert: Interface)
     /**
@@ -287,9 +275,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     // todo: Neu (Test)
     //wird aufgerufen, wenn Item aus Liste angeklickt wurde
-
-    @Override
-    public void onUpdatePresentDialog(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
+    protected void onUpdatePresentItem(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
         Log.d("PresentsAddFragment", "onCLick");
         //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PresentsAddFragment deswegen angepasst werden soll
         presentsAddFragmentStatus = STATUS_UPDATE;
@@ -301,5 +287,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         shopToUpdate = shop;
         priceToUpdate = price;
         statusToUpdate = status;
+
+        //todo: getId
     }
 }

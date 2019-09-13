@@ -63,6 +63,9 @@ public class PresentsListFragment extends Fragment {
             public void onChanged(@Nullable final List<PresentRepresentation> presents) {
                 // Update the cached copy of the words in the adapter.
                 presentListAdapter.setPresents(presents);
+
+                //todo: hier vllt observte Liste in Liste zwischenspeichern --> für autocomplete edittext verwenden
+                // bzw. NICHT hier, aber vom Prinzip so gut :)
             }
 
 

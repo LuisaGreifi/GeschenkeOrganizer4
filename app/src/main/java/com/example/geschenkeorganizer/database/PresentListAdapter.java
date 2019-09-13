@@ -47,6 +47,7 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
                 @Override
                 public void onClick(View view) {
                     if (listener != null) {
+                        Log.d("PresentListAdapter", "Listener != null");
                         String presentNameString = presentNameView.getText().toString();
                         String personFirstNameString = personFirstNameView.getText().toString();
                         String personLastNameString = personLastNameView.getText().toString();
@@ -55,7 +56,7 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
                         String shopString = shopView.getText().toString();
                         String statusString = statusView.getText().toString();
 
-                        listener.onPresentListItemClicked(presentNameString, personFirstNameString, personLastNameString, eventNameString, priceString, shopString, statusString);
+                        listener.onUpdatePresentListItem(presentNameString, personFirstNameString, personLastNameString, eventNameString, priceString, shopString, statusString);
                     }
                 }
             });

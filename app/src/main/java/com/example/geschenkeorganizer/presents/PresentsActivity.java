@@ -1,6 +1,5 @@
 package com.example.geschenkeorganizer.presents;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,16 +8,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.room.Room;
 
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.database.MyDatabase;
 import com.example.geschenkeorganizer.database.PresentListClickListener;
-import com.example.geschenkeorganizer.database.Repository;
-
-import static java.security.AccessController.getContext;
 
 //todo: NEU (ausgeklammert: Interfaces)
 //todo: Neu (PresentListClickListener)
@@ -84,17 +76,35 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
     // todo: Neu (Test)
     //wird aufgerufen, wenn Item aus Liste angeklickt wurde
     @Override
-    public void onPresentListItemClicked(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
-        Log.d("PresentsActivity", presentName + " " + personFirstName + " " + personLastName + " " + eventName + " " + price + " " + shop + " " + status);
+    public void onUpdatePresentListItem(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
+        Log.d("PresentsActivity", "onClick_clicked");
 
-        //todo: hier wäre ein Listener schön, der Informationen an PresentsAddActivity weiterleitet und da die Konstante für Update setzt.
-
+        //https://developer.android.com/training/basics/fragments/communicating
+        // direkter Aufruf der Fragment Methode möglich, wenn großer Bildschirm (keine Activity dazwischengeschaltet)
+        //die verwenden getSupportFragmentManager?
         PresentsAddFragment paf =
                 (PresentsAddFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_add);
         if (paf != null) {
             //todo: hier müsste Eingabe auch aktualisiert werden ?
+            //todo: test
+            //https://developer.android.com/training/basics/fragments/communicating
+            // direkter Aufruf der Fragment Methode möglich, wenn großer Bildschirm (keine Activity dazwischengeschaltet)
+            paf.onUpdatePresentItem(presentName, personFirstName, personLastName, eventName, price, shop, status);
         } else {
+            //https://developer.android.com/training/basics/fragments/communicating
+            // Argumente in Bundle packen zur Übergabe an Activity
+            Bundle extras = new Bundle();
+            extras.putString("presentNameString", presentName);
+            extras.putString("personFirstNameString", personFirstName);
+            extras.putString("personLastNameString", personLastName);
+            extras.putString("eventNameString", eventName);
+            extras.putString("priceString", price);
+            extras.putString("shopNameString", shop);
+            extras.putString("statusNameString", status);
+
+            //todo: muss das ins Manifest?
             Intent intent = new Intent(PresentsActivity.this, PresentsAddActivity.class);
+            intent.putExtras(extras);
             startActivity(intent);
         }
     }
