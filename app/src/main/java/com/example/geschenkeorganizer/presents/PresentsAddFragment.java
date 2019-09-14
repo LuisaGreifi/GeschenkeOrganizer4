@@ -5,6 +5,12 @@ package com.example.geschenkeorganizer.presents;
 import androidx.fragment.app.Fragment;
 //import android.app.Fragment;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +64,12 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     // todo: Neu
     //Inhalte, die in Item gespeichert sind --> sollen angezeigt/updatebar sein
     private String presentNameToUpdate, personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, priceToUpdate, shopToUpdate, statusToUpdate;
+
+    //todo: neu L
+    private final static int NOTIFICATION_ID = 0;
+    private final static String NOTIFICATION_CHANNEL_NAME = "CH0";
+    private final static String NOTIFICATION_CHANNEL_ID = "0";
+
 
 
     public PresentsAddFragment() {
@@ -154,7 +166,24 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         firstName = getView().findViewById(R.id.editText_firstName);
         surName = getView().findViewById(R.id.editText_surName);
         description = getView().findViewById(R.id.editText_description);
+
+        //todo: neu L
+        wrapped = getView().findViewById(R.id.checkBox_wrapped);
+        bought = getView().findViewById(R.id.checkBox_bought);
+
         if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
+
+            //todo: neu L
+            if(!(bought.isChecked()) && !(wrapped.isChecked())) {
+                createNotification("Kaufe und verpacke dein Geschenk ;-)", "Geschenke-Erinnerung");
+            }
+            else if(!(bought.isChecked())) {
+                createNotification("verpackt aber nicht gekauft...interessant! ;-)", "Geschenke-Erinnerung");
+            }
+            else if(!(wrapped.isChecked())) {
+                createNotification("Verpacke dein Geschenk noch ;-)", "Geschenke-Erinnerung");
+            }
+
             saveEntry(v);
             // todo: für Insert erstmal nicht relevant
             //mCallback.onListItemChanged();
@@ -167,6 +196,50 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         //todo: neu
         loadEmptyAddView();
 
+    }
+
+    //todo: neu L
+    private void createNotification(String title, String text) {
+        createNotificationChannel();
+        Notification.Builder mBuilder;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            mBuilder =
+                    new Notification.Builder(getActivity(), NOTIFICATION_CHANNEL_ID).setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle(getString(R.string.app_name)).setContentText(title)
+                            .setStyle(new Notification.BigTextStyle().bigText(text)).setAutoCancel(true);
+        }
+        else {
+            mBuilder =
+                    new Notification.Builder(getActivity()).setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle(getString(R.string.app_name)).setContentText(title)
+                            .setStyle(new Notification.BigTextStyle().bigText(text)).setAutoCancel(true);
+        }
+
+        // Check if we're running on Android 5.0 or higher, older versions don't support visibility
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Call some material design APIs here
+            mBuilder.setVisibility(Notification.VISIBILITY_SECRET);
+        }
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
+
+    //todo: neu L
+    private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            CharSequence channelName = NOTIFICATION_CHANNEL_NAME;
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.GREEN);
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
     }
 
     private void saveEntry(View v) {
