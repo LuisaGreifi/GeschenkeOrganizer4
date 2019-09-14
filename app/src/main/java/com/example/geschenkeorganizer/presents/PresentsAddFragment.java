@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.PresentListClickListener;
 import com.example.geschenkeorganizer.database.Repository;
 
 public class PresentsAddFragment extends Fragment implements View.OnClickListener {
@@ -64,6 +65,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_presents_add, container, false);
 
+        /**
         //todo: neu (Test
         //TextViews nur setten, wenn davor listItem angeklickt wurde
         if(presentsAddFragmentStatus == STATUS_UPDATE){
@@ -71,6 +73,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
             setInformation();
             Log.d("PAF_onCreateView", "onCLick");
         }
+         */
 
         Button doneButton = view.findViewById(R.id.button_done);
         doneButton.setOnClickListener(this);
@@ -271,11 +274,9 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     }
 
 
-
     // todo: Neu (Test)
-    //wird aufgerufen, wenn Item aus Liste angeklickt wurde
-    protected void onUpdatePresentItem(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
-        Log.d("PresentsAddFragment", "onCLick");
+    public void onPresentUpdate(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
+        Log.d("PresentsAddFragment", "onUpdate");
         //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PresentsAddFragment deswegen angepasst werden soll
         presentsAddFragmentStatus = STATUS_UPDATE;
 
@@ -283,10 +284,17 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         personFirstNameToUpdate = personFirstName;
         personLastNameToUpdate = personLastName;
         eventNameToUpdate = eventName;
-        shopToUpdate = shop;
         priceToUpdate = price;
+        shopToUpdate = shop;
         statusToUpdate = status;
 
+        Log.d("PresentsAddFragment", presentNameToUpdate + personFirstNameToUpdate + personLastNameToUpdate + eventNameToUpdate + shopToUpdate + priceToUpdate + statusToUpdate);
+
         //todo: getId
+
+        //todo. neu
+        findViewsById();
+        setInformation();
+        Log.d("PAF_onCreateView", "onCLick");
     }
 }

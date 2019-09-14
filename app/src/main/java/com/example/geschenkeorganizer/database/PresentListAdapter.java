@@ -56,7 +56,7 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
                         String shopString = shopView.getText().toString();
                         String statusString = statusView.getText().toString();
 
-                        listener.onUpdatePresentListItem(presentNameString, personFirstNameString, personLastNameString, eventNameString, priceString, shopString, statusString);
+                        listener.onPresentItemClick(presentNameString, personFirstNameString, personLastNameString, eventNameString, priceString, shopString, statusString);
                     }
                 }
             });
@@ -123,6 +123,4 @@ public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.
             return presents.size();
         else return 0;
     }
-
-
 }

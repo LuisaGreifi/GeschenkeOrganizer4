@@ -53,6 +53,7 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presents);
 
+
         Button addButton = findViewById(R.id.button_addPresent);
         addButton.setOnClickListener(new View.OnClickListener() {
             //todo: die Textmeldungen noch rauslöschen: nur für uns intern, oder?
@@ -73,21 +74,26 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
 
 
     }
-    // todo: Neu (Test)
+
+    //todo: neu TEST
     //wird aufgerufen, wenn Item aus Liste angeklickt wurde
     @Override
-    public void onUpdatePresentListItem(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
-        Log.d("PresentsActivity", "onClick_clicked");
+    public void onPresentItemClick(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
+        Log.d("PresentsActivity", "onClick");
 
         PresentsAddFragment paf =
                 (PresentsAddFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_add);
         if (paf != null) {
             //todo: hier müsste Eingabe auch aktualisiert werden ?
+
+            //todo: NEU
+            //https://developer.android.com/training/basics/fragments/communicating.html
+            //öffentliche Methode von PresentsAddFragment direkt aufrufen
+            paf.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
         } else {
             //todo: muss das ins Manifest?
             Intent intent = new Intent(PresentsActivity.this, PresentsAddActivity.class);
             startActivity(intent);
         }
     }
-
 }
