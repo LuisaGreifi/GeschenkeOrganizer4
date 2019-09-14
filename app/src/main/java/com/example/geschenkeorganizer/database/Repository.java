@@ -151,13 +151,35 @@ public class Repository {
 
     //todo: NEU (Test)
     //1. Teil: alte von zu upzudateten Present, 2. Teil: Werte aus EditText
-    public void updatePresent(final String personFirstNameToUpdate, final String personLastNameToUpdate, String eventToUpdate, final String presentNameToUpdate, final double priceToUpdate, final String shopToUpdate, final String statusToUpdate, final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus){
+    public void updatePresent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventToUpdate, final String presentNameToUpdate, final double priceToUpdate, final String shopToUpdate, final String statusToUpdate, final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                Present present = getPresentByPresentInformation(personFirstNameToUpdate,personLastNameToUpdate, presentNameToUpdate,priceToUpdate,shopToUpdate,statusToUpdate);
+                int personId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
+                Present present = getPresentByPresentInformation(personId, presentNameToUpdate,priceToUpdate,shopToUpdate,statusToUpdate);
 
-                //todo: person + event
+                if((personFirstNameToUpdate != firstName) || (personLastNameToUpdate != lastName)){
+                    insertPerson(firstName, lastName);
+                    int newPersonId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
+                    present.setPersonId(newPersonId);
+                }
+
+                if(eventToUpdate != eventName){
+                    int eventId;
+                    if((personFirstNameToUpdate == firstName) && (personLastNameToUpdate == lastName)){
+                        insertEventForPresent(personId, eventName);
+                        eventId = getEventIdForPresent(personId, eventName);
+                        insertPersonEventConnectionForPresent(personId, eventId);
+                    }else{
+                        int newPersonId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
+                        insertEventForPresent(newPersonId, eventName);
+                        eventId = getEventIdForPresent(newPersonId, eventName);
+                        insertPersonEventConnectionForPresent(newPersonId, eventId);
+                    }
+                    present.setEventId(eventId);
+                }
+
+
                 if(presentName != presentNameToUpdate){
                     present.setPresentName(presentName);
                 }
@@ -180,9 +202,8 @@ public class Repository {
 
     //todo:NEU
     //todo: eventName fehlt
-    private Present getPresentByPresentInformation(String personFirstNameToUpdate, String personLastNameToUpdate, String presentNameToUpdate, double priceToUpdateDouble, String shopToUpdate, String statusToUpdate){
+    private Present getPresentByPresentInformation(int personId, String presentNameToUpdate, double priceToUpdateDouble, String shopToUpdate, String statusToUpdate){
         Present presentToUpdate;
-        int personId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
         presentToUpdate = myDatabase.daoAccess().getPresentByPresentInformation(personId, presentNameToUpdate, priceToUpdateDouble, shopToUpdate, statusToUpdate);
         return presentToUpdate;
     }

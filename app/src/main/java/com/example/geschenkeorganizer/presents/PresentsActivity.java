@@ -99,7 +99,7 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
                     transaction.addToBackStack(null);
                     //todo:Neu
                     // set Status
-                    paf.setStatus(STATUS_ADD);
+                    presentsAddFragment.setStatus(STATUS_ADD);
 
                     transaction.commit();
                 }

@@ -167,8 +167,12 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         surName = getView().findViewById(R.id.editText_surName);
         description = getView().findViewById(R.id.editText_description);
          */
+
+        //todo: Neu: denk das kann man rauslöschen...oben in findViewsById
+        /**
         wrapped = getView().findViewById(R.id.checkBox_wrapped);
         bought = getView().findViewById(R.id.checkBox_bought);
+         */
 
         //todo:NEU
         //das hier, nicht in save + update extra
