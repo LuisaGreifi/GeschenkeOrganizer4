@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--todo: NEU (Relative Layout aus geklammert)
-stattdessen: FrameLayout -> austauschbar in presentActivity :) -->
+<!--todo: NEU: FrameLayout -> austauschbar in presentActivity :) -->
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

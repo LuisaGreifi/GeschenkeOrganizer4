@@ -78,6 +78,75 @@ public class Repository {
     }
 
 
+    //todo: NEU (Test)
+    //1. Teil: alte von zu upzudateten Present, 2. Teil: Werte aus EditText
+    public void updatePersonEvent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventNameToUpdate, final int eventDateToUpdate, final String firstName, final String lastName, final String eventName, final int eventDate){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                int personId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
+                Person person = myDatabase.daoAccess().getPersonById(personId);
+
+                if((personFirstNameToUpdate != firstName) || (personLastNameToUpdate != lastName)){
+                    insertPerson(firstName, lastName);
+                    int newPersonId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
+                    int oldPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
+                    int oldEventId = myDatabase.daoAccess().getEventIdByEventInformation(eventNameToUpdate, eventDateToUpdate);
+
+                    //Connection bzw. Listeneintrag löschen
+                    myDatabase.daoAccess().deletePersonEventJoin(oldPersonId, oldEventId);
+
+                    //richtige Connection herstellen
+                    if((eventNameToUpdate == eventName) && (eventDateToUpdate == eventDate)){
+                        insertPersonEventConnection(firstName, lastName, eventNameToUpdate, eventDateToUpdate);
+                    }else{
+                        insertEvent(eventName, eventDate);
+                        insertPersonEventConnection(firstName, lastName, eventName, eventDate);
+                    }
+
+                    //todo: wäre schon ganz cool
+                    /**
+                    //alte Person löschen, wenn es nur 1 Event dazu gab
+                    List<Event> eventsForPerson = myDatabase.daoAccess().getEventForPerson(oldPersonId);
+                    if(eventsForPerson.size() == 1){
+                        myDatabase.daoAccess().deletePersonByName(personFirstNameToUpdate, personLastNameToUpdate);
+                    }
+                     */
+                }
+
+                if((eventNameToUpdate != eventName) || (eventDateToUpdate != eventDate)){
+                    insertEvent(eventName, eventDate);
+
+                    int oldEventId = myDatabase.daoAccess().getEventIdByEventInformation(eventNameToUpdate, eventDateToUpdate);
+                    int oldPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
+
+                    //alte Verbindung aka Listenanzeife löschen
+                    myDatabase.daoAccess().deletePersonEventJoin(oldPersonId, oldEventId);
+
+                    //richtige Connection herstellen
+                    if((personFirstNameToUpdate == firstName) && (personLastNameToUpdate == lastName)){
+                        insertPersonEventConnection(personFirstNameToUpdate, personLastNameToUpdate, eventName, eventDate);
+                    }else{
+                        insertPerson(firstName, lastName);
+                        insertPersonEventConnection(firstName, lastName, eventName, eventDate);
+                    }
+
+                    //todo: wäre schon ganz cool
+                    /**
+                    //altes Event löschen, wenn es nur 1 Person dazu gab
+                    List<Person> personsForEvents = myDatabase.daoAccess().getPersonForEvent(oldEventId);
+                    if(personsForEvents.size() == 1){
+                        myDatabase.daoAccess().deleteEventByEventId(oldEventId);
+                    }
+                     */
+                }
+
+                return null;
+            }
+        }.execute();
+    }
+
+
 
 
     // Geschenk hinzufügen Dialog

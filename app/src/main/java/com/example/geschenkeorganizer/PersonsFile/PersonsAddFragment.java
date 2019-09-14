@@ -1,8 +1,12 @@
 package com.example.geschenkeorganizer.PersonsFile;
 
+//todo: NEU
+// import androidx Fragment!
+import androidx.fragment.app.Fragment;
+//import android.app.Fragment;
+
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Fragment;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,6 +18,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +58,19 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     private Repository repository;
 
+    //todo: Neu
+    //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PersonsAddFragment deswegen angepasst werden soll
+    //initial: add
+    private int personsAddFragmentStatus = STATUS_ADD;
+    private static final int STATUS_ADD = 0;
+    private static final int STATUS_UPDATE = 1;
+
+    // todo: Neu
+    //Inhalte, die in Item gespeichert sind --> sollen angezeigt/updatebar sein
+    private String personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, eventDateToUpdateString;
+    private int eventDateToUpdateInt;
+
+
     private final static int NOTIFICATION_ID = 0;
     private final static String NOTIFICATION_CHANNEL_NAME = "CH0";
     private final static String NOTIFICATION_CHANNEL_ID = "0";
@@ -72,16 +90,35 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                          Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_persons_add, container, false);
+
+        //todo: NEU Methode findViewById -> alle auf einmal
+        findViewsById(view);
+        /** in findViewsById
         button_done = view.findViewById(R.id.button_done2);
         button_calendarCall = view.findViewById(R.id.button_calendarCall);
+         */
+
+        if(personsAddFragmentStatus == STATUS_UPDATE){
+            setInformation();
+        }
+
         button_done.setOnClickListener(this);
         button_calendarCall.setOnClickListener(this);
 
         //spinner_eventType = view.findViewById(R.id.spinner_eventType);
         //initSpinner(spinner_eventType);
-
+/** in findViewsById
         editText_eventDate = view.findViewById(R.id.editText_eventDate);
+ */
         initEventDate();
+
+        //todo: neu
+        // davor in saveEntry (wird aber ja dann jedes Mal erzeugt --> madig)
+        //https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Erstellung Repository mit richtigem Kontext
+        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+        // Kontext der Activity des Fragments: Präfix: getActivity()
+        repository = new Repository(getActivity().getApplicationContext());
 
         return view;
     }
@@ -175,19 +212,34 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.button_done2) {
+            //todo: Neu: denk das kann man rauslöschen...oben in findViewsById
+            /**
+             editText_firstName = getView().findViewById(R.id.editText_firstName2);
+             editText_surName = getView().findViewById(R.id.editText_surName2);
+             */
 
-            editText_firstName = getView().findViewById(R.id.editText_firstName2);
-            editText_surName = getView().findViewById(R.id.editText_surName2);
-            if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty()) {
-                createNotification("Überlege dir ein Geschenk ;-)", "Geschenke-Erinnerung");
-                saveEntry(v);
-                // todo: für Insert erstmal nicht relevant
-                //mCallback.onListItemChanged();
-                Intent intent = new Intent(getActivity(), PersonsActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(getActivity(), "Du musst noch eine Person eingeben.",
-                        Toast.LENGTH_SHORT).show();
+            //todo:NEU
+            //das hier, nicht in save + update extra
+            getInformation();
+
+            //todo: NEU
+            //Unterscheidung, on Geschenk hinzugefügt oder geupdatet wird
+            if (personsAddFragmentStatus == STATUS_ADD){
+                if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty()) {
+                    createNotification("Überlege dir ein Geschenk ;-)", "Geschenke-Erinnerung");
+                    saveEntry(v);
+                    // todo: für Insert erstmal nicht relevant
+                    //mCallback.onListItemChanged();
+                    Intent intent = new Intent(getActivity(), PersonsActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), "Du musst noch eine Person eingeben.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                //todo: neu
+                loadEmptyAddView();
+            }else if(personsAddFragmentStatus == STATUS_UPDATE){
+                updateEntry();
             }
         } else if(v.getId()==R.id.button_calendarCall) {
             //todo: Code zitieren: https://stackoverflow.com/questions/1943679/android-calendar (abgerufen am 27.08.2019)
@@ -267,14 +319,17 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     }
 
     private void saveEntry(View v) {
-        findViewsById();
-        getInformation(v);
+        // todo: kann man hier nachad eigtl rauslöschen? (oben schon alle)
+        //findViewsById();
+        // getInformation(v);
+
+        //todo: Neu repository oben (hier Erzeugung rauslöschen
 
         // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
         // Erstellung Repository mit richtigem Kontext
         // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
         // Kontext der Activity des Fragments: Präfix: getActivity()
-        repository = new Repository(getActivity().getApplicationContext());
+        //repository = new Repository(getActivity().getApplicationContext());
 
         repository.insertPersonEvent(textFirstName,textSurName, eventType, eventDateInt);
 
@@ -282,7 +337,13 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     }
 
     //todo: NEU
-    private void loadEmptyAddView(){
+    private void updateEntry(){
+        //todo: get Present By id --> erst später :)
+        repository.updatePersonEvent(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, eventDateToUpdateInt, textFirstName,textSurName, eventType, eventDateInt);
+    }
+
+    //todo: NEU
+    protected void loadEmptyAddView(){
         editText_firstName.setText("");
         editText_surName.setText("");
         editText_eventDate.setText("");
@@ -295,15 +356,21 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     }
 
 
-    private void findViewsById() {
-        editText_firstName = getView().findViewById(R.id.editText_firstName2);
-        editText_surName = getView().findViewById(R.id.editText_surName2);
-        editText_eventDate = getView().findViewById(R.id.editText_eventDate);
-        editText_eventType = getView().findViewById(R.id.editText_eventType);
+    //todo: NEU (Übergabe view + Verwendung view (getView funktioniert bei mir irgendwie nicht)
+    private void findViewsById(View view) {
+        editText_firstName = view.findViewById(R.id.editText_firstName2);
+        editText_surName = view.findViewById(R.id.editText_surName2);
+        editText_eventDate = view.findViewById(R.id.editText_eventDate);
+        editText_eventType = view.findViewById(R.id.editText_eventType);
         //spinner_eventType = getView().findViewById(R.id.spinner_eventType);
+
+        //todo: Neu (alles auf einem Haufen)
+        button_done = view.findViewById(R.id.button_done2);
+        button_calendarCall = view.findViewById(R.id.button_calendarCall);
     }
 
-    private void getInformation(View v) {
+    //todo: Neu
+    private void getInformation() {
         textFirstName = editText_firstName.getText().toString();
         textSurName = editText_surName.getText().toString();
 
@@ -316,5 +383,40 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         //int eventTypeInt = spinner_eventType.getSelectedItemPosition();
         //eventType = getEvent(eventTypeInt);
         eventType = editText_eventType.getText().toString();
+    }
+
+    //todo: Neu (test)
+    //todo: hier evntl auch Button anpassen (setInformation)
+    protected void setInformation(){
+        editText_firstName.setText(personFirstNameToUpdate);
+        editText_surName.setText(personLastNameToUpdate);
+        editText_eventType.setText(eventNameToUpdate);
+        editText_eventDate.setText(eventDateToUpdateString);
+    }
+
+    // todo: Neu
+    protected void onPersonsUpdate(String personFirstName, String personLastName, String eventName, String eventDate) {
+        personFirstNameToUpdate = personFirstName;
+        personLastNameToUpdate = personLastName;
+        eventNameToUpdate = eventName;
+        eventDateToUpdateString = eventDate;
+
+        String eventDateToParse = eventDateToUpdateString;
+        // https://www.journaldev.com/18361/java-remove-character-string
+        // characters ersetzen
+        eventDateToParse = eventDateToParse.replace(".", "");
+        if(eventDateToParse.equals("")){
+            eventDateToParse = "0";
+        }
+
+        eventDateToUpdateInt = Integer.parseInt(eventDateToParse);
+        Log.d("PersonsAddFragment", String.valueOf(eventDateToUpdateInt));
+
+    }
+
+    //todo: Neu
+    protected void setStatus(int status){
+        //Konstante --> Unterscheidung, ob Geschenk hinzugefügt/geupdatet wird
+        personsAddFragmentStatus = status;
     }
 }

@@ -4,6 +4,7 @@ package com.example.geschenkeorganizer.database;
 // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#10
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +29,42 @@ public class PersonEventListAdapter extends RecyclerView.Adapter<PersonEventList
             personLastNameView = itemView.findViewById(R.id.personLastNameItem);
             eventNameView = itemView.findViewById(R.id.eventNameItem);
             eventDateView = itemView.findViewById(R.id.eventDateItem);
+
+            // todo: NEU
+            // https://medium.com/@apeapius/how-i-usually-code-recyclerview-adapter-class-65e30bcf30f
+            // onClickListener für einzelnes Item erstellen
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null) {
+                        Log.d("PresentListAdapter", "Listener != null");
+                        String personFirstNameString = personFirstNameView.getText().toString();
+                        String personLastNameString = personLastNameView.getText().toString();
+                        String eventNameString = eventNameView.getText().toString();
+                        String eventDateString = eventDateView.getText().toString();
+
+                        listener.onPersonEventItemClicked(personFirstNameString, personLastNameString, eventNameString, eventDateString);
+                    }
+                }
+            });
         }
     }
 
     private final LayoutInflater mInflater;
     private List<PersonEventRepresentation> personEvents;
 
+    //todo: Neu
+    //https://medium.com/@apeapius/how-i-usually-code-recyclerview-adapter-class-65e30bcf30f
+    //listener Variable in Adapter
+    private PersonEventListClickListener listener;
+
     public PersonEventListAdapter(Context context) {
+
         mInflater = LayoutInflater.from(context);
+        //todo: neu
+        // https://thedeveloperworldisyours.com/android/listener-from-fragment-to-activity/
+        // Initialisierung listener (Kontext übergeben)
+        listener = (PersonEventListClickListener) context;
     }
 
     @Override
@@ -68,12 +97,21 @@ public class PersonEventListAdapter extends RecyclerView.Adapter<PersonEventList
             // http://javatricks.de/tricks/int-in-string-umwandeln
             // String in Int umwandeln
             String eventDateString = Integer.toString(eventDate);
+            Log.d("PELA_date", eventDateString);
+
+            //Fall: vorangehende 0, wird weggelöscht --> wieder hinzufügen, damit richtig angezeigt werden kann
+            if(eventDateString.length() == 3){
+                eventDateString = "0" + eventDateString;
+            }
 
             // https://www.journaldev.com/18361/java-remove-character-string
             // String kürzen
             String eventDateDay = eventDateString.substring(0, 2);
+            Log.d("PELA_day", eventDateString);
             String eventDateMonth = eventDateString.substring(2, 4);
+            Log.d("PELA_month", eventDateMonth);
             result = eventDateDay + "." + eventDateMonth;
+
         }
 
         return result;

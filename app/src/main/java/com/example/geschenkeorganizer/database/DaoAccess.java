@@ -142,6 +142,7 @@ public interface DaoAccess {
     @Query("DELETE FROM PersonEventJoin")
     void deleteAllPersonEventJoins();
 
+    //todo: neu
     @Query("DELETE FROM PersonEventJoin WHERE personId =:personId AND eventId =:eventId")
     void deletePersonEventJoin(int personId, int eventId);
 
