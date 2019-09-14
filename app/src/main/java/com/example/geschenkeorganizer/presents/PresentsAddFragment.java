@@ -1,6 +1,10 @@
 package com.example.geschenkeorganizer.presents;
 
-import android.app.Fragment;
+//todo: NEU
+//import androidx Fragment!
+import androidx.fragment.app.Fragment;
+//import android.app.Fragment;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,14 +48,14 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     private Repository repository;
 
-    //todo: Neu (Test)
+    //todo: Neu
     //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PresentsAddFragment deswegen angepasst werden soll
     //initial: add
     private int presentsAddFragmentStatus = STATUS_ADD;
     private static final int STATUS_ADD = 0;
     private static final int STATUS_UPDATE = 1;
 
-    // todo: Neu (Test)
+    // todo: Neu
     //Inhalte, die in Item gespeichert sind --> sollen angezeigt/updatebar sein
     private String presentNameToUpdate, personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, priceToUpdate, shopToUpdate, statusToUpdate;
 
@@ -65,18 +69,20 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_presents_add, container, false);
 
-        /**
-        //todo: neu (Test
+        //todo: NEU
+        //hier Views finden --> nicht später überall einzeln + View übergeben (getView klappt bei mir irgendwie nicht mehr?)
+        findViewsById(view);
         //TextViews nur setten, wenn davor listItem angeklickt wurde
         if(presentsAddFragmentStatus == STATUS_UPDATE){
-            findViewsById();
             setInformation();
             Log.d("PAF_onCreateView", "onCLick");
         }
-         */
 
-        Button doneButton = view.findViewById(R.id.button_done);
-        doneButton.setOnClickListener(this);
+
+        //todo: Neu (Initialisierung Button in findViewById --> kann rausgelöscht werden
+        //todo: Neu doneButton --> done (oben initialisiert)
+        // Button doneButton = view.findViewById(R.id.button_done);
+        done.setOnClickListener(this);
 
         //todo: neu
         // davor in saveEntry (wird aber ja dann jedes Mal erzeugt --> madig)
@@ -164,7 +170,8 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     }
 
     private void saveEntry(View v) {
-        findViewsById();
+        // todo: kann man hier nachad eigtl rauslöschen? (oben schon alle)
+        // findViewsById();
         getInformation(v);
 
         repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
@@ -186,18 +193,19 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         wrapped.setChecked(false);
     }
 
+    //todo: NEU (Übergabe view + Verwendung view (getView funktioniert bei mir irgendwie nicht)
     //todo: spinner heißt hier anders bzw. existiert noch gar nicht in Layout!! KEIN EditText
-    private void findViewsById() {
-        firstName = getView().findViewById(R.id.editText_firstName);
-        surName = getView().findViewById(R.id.editText_surName);
-        description = getView().findViewById(R.id.editText_description);
-        event = getView().findViewById(R.id.editText_event);
-        placeOfPurchase = getView().findViewById(R.id.editText_placeOfPurchase);
-        price = getView().findViewById(R.id.editText_price);
-        hadIdea = getView().findViewById(R.id.checkBox_hadIdea);
-        bought = getView().findViewById(R.id.checkBox_bought);
-        wrapped = getView().findViewById(R.id.checkBox_wrapped);
-        done = getView().findViewById(R.id.button_done);
+    private void findViewsById(View view) {
+        firstName = view.findViewById(R.id.editText_firstName);
+        surName = view.findViewById(R.id.editText_surName);
+        description = view.findViewById(R.id.editText_description);
+        event = view.findViewById(R.id.editText_event);
+        placeOfPurchase = view.findViewById(R.id.editText_placeOfPurchase);
+        price = view.findViewById(R.id.editText_price);
+        hadIdea = view.findViewById(R.id.checkBox_hadIdea);
+        bought = view.findViewById(R.id.checkBox_bought);
+        wrapped = view.findViewById(R.id.checkBox_wrapped);
+        done = view.findViewById(R.id.button_done);
     }
 
     private void getInformation(View v) {
@@ -252,7 +260,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     }
 
     //todo: Neu (test)
-    private void setInformation(){
+    protected void setInformation(){
         firstName.setText(personFirstNameToUpdate);
         surName.setText(personLastNameToUpdate);
         description.setText(presentNameToUpdate);
@@ -264,18 +272,18 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         //Checkbox checken (setten)
         //todo: schöner: switch-case
         //todo: schöner Konstanten (wird obe nzum speichern auch benötigt
-        if(statusToUpdate == "Idee"){
+        if(statusToUpdate.equals("Idee")){
             hadIdea.setChecked(true);
-        } else if(statusToUpdate == "gekauft"){
+        } else if(statusToUpdate.equals("gekauft")){
             bought.setChecked(true);
-        } else if(statusToUpdate == "verpackt"){
+        } else if(statusToUpdate.equals("verpackt")){
             wrapped.setChecked(true);
         }
     }
 
 
     // todo: Neu (Test)
-    public void onPresentUpdate(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
+    protected void onPresentUpdate(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
         Log.d("PresentsAddFragment", "onUpdate");
         //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PresentsAddFragment deswegen angepasst werden soll
         presentsAddFragmentStatus = STATUS_UPDATE;
@@ -291,10 +299,5 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         Log.d("PresentsAddFragment", presentNameToUpdate + personFirstNameToUpdate + personLastNameToUpdate + eventNameToUpdate + shopToUpdate + priceToUpdate + statusToUpdate);
 
         //todo: getId
-
-        //todo. neu
-        findViewsById();
-        setInformation();
-        Log.d("PAF_onCreateView", "onCLick");
     }
 }

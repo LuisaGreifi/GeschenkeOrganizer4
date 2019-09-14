@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.PresentListClickListener;
@@ -46,7 +48,6 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
     }
      */
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,17 +58,25 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
         Button addButton = findViewById(R.id.button_addPresent);
         addButton.setOnClickListener(new View.OnClickListener() {
             //todo: die Textmeldungen noch rauslöschen: nur für uns intern, oder?
+
+            //todo Ne
+            //https://developer.android.com/training/basics/fragments/communicating
+            //quasi von da übernommen
             @Override
             public void onClick(View v) {
                 PresentsAddFragment paf =
-                        (PresentsAddFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_add);
-                if (paf != null) {
-                    Toast.makeText(PresentsActivity.this, "Gib das neue Geschenk auf der rechten Seite ein.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(PresentsActivity.this, "Du wirst weitergeleitet.",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(PresentsActivity.this, PresentsAddActivity.class);
-                    startActivity(intent);
+                        (PresentsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
+                if (paf == null) {
+                    //todo: NEU
+                    // https://developer.android.com/training/basics/fragments/communicating
+                    PresentsAddFragment presentsAddFragment = new PresentsAddFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                    transaction.replace(R.id.fragment5, presentsAddFragment);
+                    transaction.addToBackStack(null);
+                    
+                    transaction.commit();
+
                 }
             }
         });
@@ -75,25 +84,32 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
 
     }
 
-    //todo: neu TEST
+    //todo: neu
     //wird aufgerufen, wenn Item aus Liste angeklickt wurde
     @Override
     public void onPresentItemClick(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
         Log.d("PresentsActivity", "onClick");
 
+        //todo Neu
+        //https://developer.android.com/training/basics/fragments/communicating
+        //quasi von da übernommen (angepasst)
         PresentsAddFragment paf =
-                (PresentsAddFragment) getFragmentManager().findFragmentById(R.layout.fragment_presents_add);
+                (PresentsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
         if (paf != null) {
-            //todo: hier müsste Eingabe auch aktualisiert werden ?
-
             //todo: NEU
             //https://developer.android.com/training/basics/fragments/communicating.html
             //öffentliche Methode von PresentsAddFragment direkt aufrufen
             paf.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
+            paf.setInformation();
         } else {
-            //todo: muss das ins Manifest?
-            Intent intent = new Intent(PresentsActivity.this, PresentsAddActivity.class);
-            startActivity(intent);
+            //todo: NEU
+            // https://developer.android.com/training/basics/fragments/communicating
+            PresentsAddFragment presentsAddFragment = new PresentsAddFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment5, presentsAddFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+            presentsAddFragment.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
         }
     }
 }

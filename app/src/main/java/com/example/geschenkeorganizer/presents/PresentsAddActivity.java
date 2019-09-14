@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geschenkeorganizer.R;
 
+//todo: Neu: Klasse nicht verwenden!
+// Fragment in PresentsActivity austauschen
+// -> Daten überlieferbar, sonst (HIER) eher nicht
+
 //todo: Neu Interface auskommentiert
 public class PresentsAddActivity extends AppCompatActivity /** implements PresentsAddFragment.OnListItemChangedListener */{
 
