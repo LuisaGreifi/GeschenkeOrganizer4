@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--todo: NEU (Relative Layout aus geklammert)
+stattdessen: FrameLayout -> austauschbar in presentActivity :) -->
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
-
+<!-- todo: NEU (Fragment auskommentiert -> FrameLayout (flexibel austauschbar) -->
     <!-- todo: NEU width -> match_parent -->
-    <fragment
+  <!--  <fragment
         android:id="@+id/fragment5"
         android:name="com.example.geschenkeorganizer.presents.PresentsListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+        -->
+
+    <!-- https://www.vogella.com/tutorials/AndroidFragments/article.html#defining-fragments
+    FrameLayout INNERHALB Layout -->
+
+    <!--https://developer.android.com/training/basics/fragments/fragment-ui -->
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
 
 </RelativeLayout>
+
+<!-- https://developer.android.com/training/basics/fragments/fragment-ui
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    -->

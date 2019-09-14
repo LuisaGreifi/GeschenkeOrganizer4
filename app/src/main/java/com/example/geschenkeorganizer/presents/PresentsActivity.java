@@ -1,5 +1,6 @@
 package com.example.geschenkeorganizer.presents;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -16,7 +18,8 @@ import com.example.geschenkeorganizer.database.PresentListClickListener;
 
 //todo: NEU (ausgeklammert: Interfaces)
 //todo: Neu (PresentListClickListener)
-public class PresentsActivity extends AppCompatActivity implements PresentListClickListener/*PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
+//todo: Neu: extends FragmentActivity
+public class PresentsActivity extends FragmentActivity implements PresentListClickListener/*PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
 
 
     //todo: NEU (erstmal ausgeklammert: Interfaces)
@@ -54,6 +57,20 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presents);
 
+        //https://developer.android.com/training/basics/fragments/fragment-ui
+        //Fragment hinzufügen zu Layout
+        if (findViewById(R.id.fragment_container) != null) {
+            if (savedInstanceState != null) {
+                return;
+            }
+            PresentsListFragment presentsListFragment = new PresentsListFragment();
+            Log.d("PresentsActivity", "Fragment erzeugt");
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, presentsListFragment).commit();
+            Log.d("PresentsActivity", "Fragment hinzugefügt");
+        } else{
+            Log.d("PresentsActivity", "fragment container = null");
+        }
 
         Button addButton = findViewById(R.id.button_addPresent);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -72,9 +89,10 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
                     PresentsAddFragment presentsAddFragment = new PresentsAddFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                    transaction.replace(R.id.fragment5, presentsAddFragment);
+                    //todo: funktioniert nur, wenn Fragment dynamisch hinzugefügt zu Layout
+                    transaction.replace(R.id.fragment_container, presentsAddFragment);
                     transaction.addToBackStack(null);
-                    
+
                     transaction.commit();
 
                 }
@@ -106,7 +124,7 @@ public class PresentsActivity extends AppCompatActivity implements PresentListCl
             // https://developer.android.com/training/basics/fragments/communicating
             PresentsAddFragment presentsAddFragment = new PresentsAddFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment5, presentsAddFragment);
+            transaction.replace(R.id.fragment_container, presentsAddFragment);
             transaction.addToBackStack(null);
             transaction.commit();
             presentsAddFragment.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
