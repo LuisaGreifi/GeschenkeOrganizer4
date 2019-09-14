@@ -33,10 +33,11 @@
     //Checkboxes
     <string name="checkbox_isBought">Das Geschenk ist gekauft.</string>
     <string name="checkbox_isWrapped">Das Geschenk ist verpackt.</string>
-    <string name="EditText_hint_firstName">Vorname</string>
 
     //EditTexts - Hints
+    <string name="EditText_hint_firstName">Vorname</string>
     <string name="EditText_hint_surName">Nachname</string>
+    <string name="EditText_hint_event">Anlass</string>
     <string name="EditText_hint_description">Beschreibung</string>
     <string name="EditText_hint_placeOfPurchase">Ort/Geschäft</string>
     <string name="EditText_hint_price">Preis</string>

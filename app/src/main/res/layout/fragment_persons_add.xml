@@ -37,12 +37,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_firstName2" />
 
-    <Spinner
-        android:id="@+id/spinner_eventType"
-        android:layout_width="395dp"
+    <EditText
+        android:id="@+id/editText_eventType"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="@string/EditText_hint_event"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_surName2" />
 
@@ -67,7 +71,7 @@
         android:hint="@string/EditText_eventDate"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_eventType" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_eventType" />
 
     <Button
         android:id="@+id/button_calendarCall"

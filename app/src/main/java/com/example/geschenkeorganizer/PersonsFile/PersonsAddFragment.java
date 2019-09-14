@@ -40,12 +40,16 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     private OnListItemChangedListener mCallback;
 
-    private static final int EVENTTYPE_BIRTHDAY = 0, EVENTTYPE_CHRISTMAS = 1, EVENTTYPE_ANNIVERSARY = 2, EVENTTYPE_WEDDING = 3, EVENTTYPE_VALENTINESDAY = 4, EVENTTYPE_MOTHERSDAY = 5, EVENTTYPE_FATHERSDAY = 6, EVENTTYPE_NAMEDAY = 7, EVENTTYPE_OTHER = 8;
+    //todo: neu L (auskommentiert)
+    //private static final int EVENTTYPE_BIRTHDAY = 0, EVENTTYPE_CHRISTMAS = 1, EVENTTYPE_ANNIVERSARY = 2, EVENTTYPE_WEDDING = 3, EVENTTYPE_VALENTINESDAY = 4, EVENTTYPE_MOTHERSDAY = 5, EVENTTYPE_FATHERSDAY = 6, EVENTTYPE_NAMEDAY = 7, EVENTTYPE_OTHER = 8;
     private String eventType, eventDate;
     private int eventDateDay, eventDateMonth, eventDateInt;
 
     private EditText editText_firstName, editText_surName, editText_eventDate;
-    private Spinner spinner_eventType;
+    //todo: neu L
+    private EditText editText_eventType;
+
+    //private Spinner spinner_eventType;
     private Button button_done, button_calendarCall;
     //todo: neu L (kann gelöscht werden?)
     // ,button_test;
@@ -85,8 +89,8 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         //button_test = view.findViewById(R.id.button_test);
         //button_test.setOnClickListener(this);
 
-        spinner_eventType = view.findViewById(R.id.spinner_eventType);
-        initSpinner(spinner_eventType);
+        //spinner_eventType = view.findViewById(R.id.spinner_eventType);
+        //initSpinner(spinner_eventType);
 
         editText_eventDate = view.findViewById(R.id.editText_eventDate);
         initEventDate();
@@ -94,7 +98,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         return view;
     }
 
-    private void initSpinner(Spinner spinner) {
+    /*private void initSpinner(Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),  R.array.eventTypes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -110,7 +114,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-    }
+    } */
 
     private void initEventDate() {
         editText_eventDate.setFocusable(false);
@@ -140,7 +144,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         editText_eventDate.setText(eventDate);
     }
 
-    private String getEvent(int eventTypeInt) {
+    /*private String getEvent(int eventTypeInt) {
         switch (eventTypeInt) {
             case EVENTTYPE_BIRTHDAY:
                 eventType = "Geburtstag";
@@ -171,7 +175,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
                 break;
         }
         return eventType;
-    }
+    } */
 
 
     @Override
@@ -320,7 +324,9 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         editText_eventDate.setText("");
         //https://stackoverflow.com/questions/39451359/android-spinner-set-selected-item-as-default/39451650
         //initiale Selection setten
-        spinner_eventType.setSelection(EVENTTYPE_BIRTHDAY);
+        //todo: neu L
+        //spinner_eventType.setSelection(EVENTTYPE_BIRTHDAY);
+        editText_eventType.setText("");
     }
 
 
@@ -328,7 +334,9 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         editText_firstName = getView().findViewById(R.id.editText_firstName2);
         editText_surName = getView().findViewById(R.id.editText_surName2);
         editText_eventDate = getView().findViewById(R.id.editText_eventDate);
-        spinner_eventType = getView().findViewById(R.id.spinner_eventType);
+        //todo: neu L
+        editText_eventType = getView().findViewById(R.id.editText_eventType);
+        //spinner_eventType = getView().findViewById(R.id.spinner_eventType);
     }
 
     private void getInformation(View v) {
@@ -337,11 +345,14 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
         eventDate = editText_eventDate.getText().toString();
 
+
         // https://www.journaldev.com/18361/java-remove-character-string
         // characters ersetzen + String kürzen
         eventDateInt = Integer.parseInt(eventDate.replace(".", "").substring(0, 4));
 
-        int eventTypeInt = spinner_eventType.getSelectedItemPosition();
-        eventType = getEvent(eventTypeInt);
+        //todo: neu L
+        //int eventTypeInt = spinner_eventType.getSelectedItemPosition();
+        //eventType = getEvent(eventTypeInt);
+        eventType = editText_eventType.getText().toString();
     }
 }
