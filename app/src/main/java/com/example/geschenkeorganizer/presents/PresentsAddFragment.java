@@ -57,7 +57,8 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     // todo: Neu
     //Inhalte, die in Item gespeichert sind --> sollen angezeigt/updatebar sein
-    private String presentNameToUpdate, personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, priceToUpdate, shopToUpdate, statusToUpdate;
+    private String presentNameToUpdate, personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, priceToUpdateString, shopToUpdate, statusToUpdate;
+    private double priceToUpdateDouble;
 
 
     public PresentsAddFragment() {
@@ -75,7 +76,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         //TextViews nur setten, wenn davor listItem angeklickt wurde
         if(presentsAddFragmentStatus == STATUS_UPDATE){
             setInformation();
-            Log.d("PAF_onCreateView", "onCLick");
         }
 
 
@@ -151,34 +151,54 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        //todo: Neu: denk das kann man rauslöschen...oben in findViewsById
+        /**
         firstName = getView().findViewById(R.id.editText_firstName);
         surName = getView().findViewById(R.id.editText_surName);
         description = getView().findViewById(R.id.editText_description);
-        if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
-            saveEntry(v);
-            // todo: für Insert erstmal nicht relevant
-            //mCallback.onListItemChanged();
+         */
 
-        } else {
-            Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",
-                    Toast.LENGTH_SHORT).show();
+        //todo:NEU
+        //das hier, nicht in save + update extra
+        getInformation();
+
+        //todo: NEU
+        //Unterscheidung, on Geschenk hinzugefügt oder geupdatet wird
+        if(presentsAddFragmentStatus == STATUS_ADD){
+            if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
+                saveEntry();
+                // todo: für Insert erstmal nicht relevant
+                //mCallback.onListItemChanged();
+            } else {
+                Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",
+                        Toast.LENGTH_SHORT).show();
+            }
+            //todo: neu
+            loadEmptyAddView();
+        }else if(presentsAddFragmentStatus == STATUS_UPDATE){
+            updateEntry();
         }
-
-        //todo: neu
-        loadEmptyAddView();
-
     }
 
-    private void saveEntry(View v) {
+    //todo: NEU (Parameter View v braucht man nicht --> rauslöschen) + getInformation schon in onCLick, nicht in saveEntry
+    private void saveEntry() {
         // todo: kann man hier nachad eigtl rauslöschen? (oben schon alle)
         // findViewsById();
-        getInformation(v);
-
+        // getInformation();
         repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
     }
 
+    //todo: NEU
+    private void updateEntry(){
+        //todo: get Present By id --> erst später :)
+        repository.updatePresent(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, presentNameToUpdate, priceToUpdateDouble, shopToUpdate, statusToUpdate, textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
+    }
+
+
+
+
     //todo: neu
-    public void loadEmptyAddView() {
+    protected void loadEmptyAddView() {
         firstName.setText("");
         surName.setText("");
         description.setText("");
@@ -208,18 +228,27 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         done = view.findViewById(R.id.button_done);
     }
 
-    private void getInformation(View v) {
+    //todo: NEU (Parameter View v braucht man nicht --> rauslöschen
+    private void getInformation() {
         textFirstName = firstName.getText().toString();
         textSurName = surName.getText().toString();
         textDescription = description.getText().toString();
         textPlaceOfPurchase = placeOfPurchase.getText().toString();
         StringTextPrice = price.getText().toString();
 
+        //todo: NEU
         //todo: evntl auch andere Sachen replacen... €, Leerzeichen zu NICHTS
+        //todo: VORSICHT, sehr fehleranfällig...
 
         // https://www.journaldev.com/18361/java-remove-character-string
         // characters ersetzen
-        textPrice = Double.parseDouble(StringTextPrice.replace(",", "."));
+        String priceToParse = StringTextPrice;
+        priceToParse = priceToParse.replace(",", ".");
+        priceToParse = priceToParse.replace(" ", "");
+        priceToParse = priceToParse.replace("€", "");
+        priceToParse = priceToParse.replace(" €", "");
+        Log.d("PresentsAddFragment", priceToParse);
+        textPrice = Double.parseDouble(priceToParse);
 
 
         //todo: EditText im Layout über Attribute näher definieren (nur Komma-/Punktzahlen eingeben)
@@ -260,13 +289,14 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     }
 
     //todo: Neu (test)
+    //todo: hier evntl auch Button anpassen (setInformation)
     protected void setInformation(){
         firstName.setText(personFirstNameToUpdate);
         surName.setText(personLastNameToUpdate);
         description.setText(presentNameToUpdate);
         event.setText(eventNameToUpdate);
         placeOfPurchase.setText(shopToUpdate);
-        price.setText(priceToUpdate);
+        price.setText(priceToUpdateString);
 
         //https://developer.android.com/reference/android/widget/CheckBox
         //Checkbox checken (setten)
@@ -282,22 +312,26 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     }
 
 
-    // todo: Neu (Test)
+    // todo: Neu
     protected void onPresentUpdate(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
         Log.d("PresentsAddFragment", "onUpdate");
-        //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PresentsAddFragment deswegen angepasst werden soll
-        presentsAddFragmentStatus = STATUS_UPDATE;
-
         presentNameToUpdate = presentName;
         personFirstNameToUpdate = personFirstName;
         personLastNameToUpdate = personLastName;
         eventNameToUpdate = eventName;
-        priceToUpdate = price;
+        priceToUpdateString = price;
+        // https://www.journaldev.com/18361/java-remove-character-string
+        // characters ersetzen
+        priceToUpdateDouble = Double.parseDouble(price.replace(" €", ""));
+
         shopToUpdate = shop;
         statusToUpdate = status;
 
-        Log.d("PresentsAddFragment", presentNameToUpdate + personFirstNameToUpdate + personLastNameToUpdate + eventNameToUpdate + shopToUpdate + priceToUpdate + statusToUpdate);
+    }
 
-        //todo: getId
+    //todo: Neu
+    protected void setStatus(int status){
+        //Konstante --> Unterscheidung, ob Geschenk hinzugefügt/geupdatet wird
+        presentsAddFragmentStatus = status;
     }
 }

@@ -21,6 +21,10 @@ import com.example.geschenkeorganizer.database.PresentListClickListener;
 //todo: Neu: extends FragmentActivity
 public class PresentsActivity extends FragmentActivity implements PresentListClickListener/*PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
 
+    //todo: Neu
+    //Konstante --> Unterscheidung, ob Geschenk hinzugefügt/geupdatet wird
+    private static final int STATUS_ADD = 0;
+    private static final int STATUS_UPDATE = 1;
 
     //todo: NEU (erstmal ausgeklammert: Interfaces)
     /**
@@ -64,26 +68,27 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
                 return;
             }
             PresentsListFragment presentsListFragment = new PresentsListFragment();
-            Log.d("PresentsActivity", "Fragment erzeugt");
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, presentsListFragment).commit();
-            Log.d("PresentsActivity", "Fragment hinzugefügt");
-        } else{
-            Log.d("PresentsActivity", "fragment container = null");
         }
 
         Button addButton = findViewById(R.id.button_addPresent);
         addButton.setOnClickListener(new View.OnClickListener() {
             //todo: die Textmeldungen noch rauslöschen: nur für uns intern, oder?
 
-            //todo Ne
+            //todo Neu
             //https://developer.android.com/training/basics/fragments/communicating
             //quasi von da übernommen
             @Override
             public void onClick(View v) {
                 PresentsAddFragment paf =
                         (PresentsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
-                if (paf == null) {
+                if (paf != null) {
+                    //todo:Neu
+                    // set Status + leeren Dialog laden
+                    paf.setStatus(STATUS_ADD);
+                    paf.loadEmptyAddView();
+                } else {
                     //todo: NEU
                     // https://developer.android.com/training/basics/fragments/communicating
                     PresentsAddFragment presentsAddFragment = new PresentsAddFragment();
@@ -92,9 +97,11 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
                     //todo: funktioniert nur, wenn Fragment dynamisch hinzugefügt zu Layout
                     transaction.replace(R.id.fragment_container, presentsAddFragment);
                     transaction.addToBackStack(null);
+                    //todo:Neu
+                    // set Status
+                    paf.setStatus(STATUS_ADD);
 
                     transaction.commit();
-
                 }
             }
         });
@@ -117,7 +124,10 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
             //todo: NEU
             //https://developer.android.com/training/basics/fragments/communicating.html
             //öffentliche Methode von PresentsAddFragment direkt aufrufen
+            //todo: Neu
+            paf.setStatus(STATUS_UPDATE);
             paf.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
+            //todo: hier evntl auch Button anpassen (setInformation)
             paf.setInformation();
         } else {
             //todo: NEU
@@ -126,8 +136,11 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, presentsAddFragment);
             transaction.addToBackStack(null);
-            transaction.commit();
+            //todo:Neu
+            // set Status + onPresentUpdate über commit
+            presentsAddFragment.setStatus(STATUS_UPDATE);
             presentsAddFragment.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
+            transaction.commit();
         }
     }
 }

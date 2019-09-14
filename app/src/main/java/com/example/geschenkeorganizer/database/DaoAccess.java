@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +151,10 @@ public interface DaoAccess {
     @Insert
     void insertPresent(Present present);
 
+    //todo: NEU
+    @Update
+    void updatePresent(Present present);
+
     //vgl. Übung 6
     @Query("SELECT * FROM Present")
     List<Present> getAllPresents();
@@ -162,6 +167,10 @@ public interface DaoAccess {
 
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
     List<Present> getPresentsByEventId(int eventId);
+
+    //todo: NEU
+    @Query("SELECT * FROM Present WHERE personId =:personId AND presentName =:presentName AND price =:price AND shop =:shop AND status =:status")
+    Present getPresentByPresentInformation(int personId, String presentName, double price, String shop, String status);
 
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
     boolean existsPresentForEventAlready(int eventId);

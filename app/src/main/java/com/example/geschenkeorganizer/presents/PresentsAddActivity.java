@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geschenkeorganizer.R;
 
-//todo: Neu: Klasse nicht verwenden!
+//todo: Neu: Klasse nicht verwenden! (kann gelöscht werden)
 // Fragment in PresentsActivity austauschen
 // -> Daten überlieferbar, sonst (HIER) eher nicht
 

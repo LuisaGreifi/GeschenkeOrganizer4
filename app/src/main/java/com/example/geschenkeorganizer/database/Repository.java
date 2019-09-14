@@ -149,6 +149,45 @@ public class Repository {
     }
 
 
+    //todo: NEU (Test)
+    //1. Teil: alte von zu upzudateten Present, 2. Teil: Werte aus EditText
+    public void updatePresent(final String personFirstNameToUpdate, final String personLastNameToUpdate, String eventToUpdate, final String presentNameToUpdate, final double priceToUpdate, final String shopToUpdate, final String statusToUpdate, final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                Present present = getPresentByPresentInformation(personFirstNameToUpdate,personLastNameToUpdate, presentNameToUpdate,priceToUpdate,shopToUpdate,statusToUpdate);
+
+                //todo: person + event
+                if(presentName != presentNameToUpdate){
+                    present.setPresentName(presentName);
+                }
+                if(presentPrice != priceToUpdate){
+                    present.setPrice(presentPrice);
+                }
+                if(presentShop != shopToUpdate){
+                    present.setShop(presentShop);
+                }
+                if(presentStatus != statusToUpdate){
+                    present.setStatus(presentStatus);
+                }
+
+                myDatabase.daoAccess().updatePresent(present);
+
+                return null;
+            }
+        }.execute();
+    }
+
+    //todo:NEU
+    //todo: eventName fehlt
+    private Present getPresentByPresentInformation(String personFirstNameToUpdate, String personLastNameToUpdate, String presentNameToUpdate, double priceToUpdateDouble, String shopToUpdate, String statusToUpdate){
+        Present presentToUpdate;
+        int personId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
+        presentToUpdate = myDatabase.daoAccess().getPresentByPresentInformation(personId, presentNameToUpdate, priceToUpdateDouble, shopToUpdate, statusToUpdate);
+        return presentToUpdate;
+    }
+
+
 
     //todo: NEU
     // Present Representation
