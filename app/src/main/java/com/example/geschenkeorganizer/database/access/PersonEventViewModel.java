@@ -28,7 +28,4 @@ public class PersonEventViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<PersonEventRepresentation>> getAllPersonEvents() { return allPersonEvents; }
-
-    public void insertPersonEvent(final String firstName, final String lastName, final String eventName, final int eventDate) {
-        repo.insertPersonEvent(firstName, lastName, eventName, eventDate); }
 }

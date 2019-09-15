@@ -19,10 +19,7 @@ public class Event {
     private String eventName;
     private int eventDate;
 
-    // verschiedene Konstruktoren
     public Event(){}
-
-    public Event(String eventName, int eventDate){}
 
     //getter
     @NonNull

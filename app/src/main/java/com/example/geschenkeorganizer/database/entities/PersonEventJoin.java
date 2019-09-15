@@ -11,13 +11,10 @@ import androidx.room.ForeignKey;
 @Entity(primaryKeys = {"personId", "eventId"},
         foreignKeys = {@ForeignKey(entity=Person.class, parentColumns="personId", childColumns = "personId"), @ForeignKey(entity= Event.class, parentColumns = "eventId", childColumns = "eventId")})
 public class PersonEventJoin {
-    // todo: bei android developers public
     private int personId;
     private int eventId;
 
     public PersonEventJoin(){}
-
-    public PersonEventJoin(int personId, int eventId){}
 
     //getter
     public int getPersonId(){

@@ -1,7 +1,7 @@
 package com.example.geschenkeorganizer.database.representations;
 
-/**Klasse, die als Rückgabewert für DAO-Abrfrage verwendet werden kann
- * wird zur Darstellung der Personen und Events in der App verwendet. */
+/**Klasse, die als Rückgabewert für DAO-Abrfrage verwendet werden kann;
+ * Wird zur Darstellung der Personen und Events in der App verwendet. */
 
 
 /**Google Developers Codelabs. (n.d.).

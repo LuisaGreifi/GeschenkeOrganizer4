@@ -25,14 +25,7 @@ public class Present {
     private String shop;
     private String status;
 
-    // verschiedene Konstruktoren
     public Present(){}
-
-    public Present(String presentName){}
-
-    public Present(String presentName, String status){}
-
-    public Present(String presentName, double price, String shop, String status){}
 
     //getter
     @NonNull

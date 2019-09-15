@@ -27,7 +27,4 @@ public class PresentViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<PresentRepresentation>> getAllPresents() { return allPresents; }
-
-    public void insertPresent(String firstName, String lastName, String eventName, String presentName, double presentPrice, String presentShop, String presentStatus) {
-        repo.insertPresent(firstName, lastName, eventName, presentName, presentPrice, presentShop, presentStatus); }
 }

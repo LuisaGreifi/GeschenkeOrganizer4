@@ -1,4 +1,5 @@
 package com.example.geschenkeorganizer.presents;
+// eigener Adapter, der die Daten des Geschenks den passenden Views zuweist
 
 /**Google Developers Codelabs. (n.d.).
  * Add a RecyclerView.

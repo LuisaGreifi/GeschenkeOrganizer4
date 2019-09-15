@@ -1,4 +1,5 @@
 package com.example.geschenkeorganizer.PersonsFile;
+// eigener Adapter, der die Daten der Person und des Events den passenden Views zuweist
 
 /**Google Developers Codelabs. (n.d.).
  * Add a RecyclerView.
@@ -89,14 +90,14 @@ public class PersonEventListAdapter extends RecyclerView.Adapter<PersonEventList
     private String eventDateToString(int eventDate){
         String result = "";
 
-        // das EventDate wurde nicht initial auf 0 gesetzt (in Geschenk hinzufügen Dialog) und wird deswegen in Format angezeigt
+        // das EventDate wurde nicht initial auf 0 gesetzt (in Geschenk hinzufügen Dialog) und wird deswegen im passenden Format angezeigt
         if(eventDate != 0){
             /**int in String umwandeln. (09.11.2015).
              * Retrieved from: http://javatricks.de/tricks/int-in-string-umwandeln
              * String in Int umwandeln*/
             String eventDateString = Integer.toString(eventDate);
 
-            //Fall: vorangehende 0, wird weggelöscht -> wieder hinzufügen, damit richtig angezeigt werden kann
+            //Fall: vorangehende 0, die automatisch gelöscht wird; wieder hinzufügen, damit Datum richtig angezeigt werden kann
             if(eventDateString.length() == 3){
                 eventDateString = "0" + eventDateString;
             }
