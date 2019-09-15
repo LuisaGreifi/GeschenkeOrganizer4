@@ -12,7 +12,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +24,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.database.PresentListClickListener;
-import com.example.geschenkeorganizer.database.Repository;
+import com.example.geschenkeorganizer.database.access.Repository;
 
 //todo: NEU Interface
 public class PresentsAddFragment extends Fragment implements View.OnClickListener, PresentsAddListener {

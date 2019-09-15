@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer.database;
+package com.example.geschenkeorganizer.database.entities;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;

@@ -1,9 +1,12 @@
-package com.example.geschenkeorganizer.database;
+package com.example.geschenkeorganizer.database.access;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.example.geschenkeorganizer.database.representations.PresentRepresentation;
+
 import java.util.List;
 
 /**Google Developers Codelabs. (n.d.).

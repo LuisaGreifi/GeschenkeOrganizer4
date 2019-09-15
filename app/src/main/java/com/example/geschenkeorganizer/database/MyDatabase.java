@@ -6,6 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.geschenkeorganizer.database.access.DaoAccess;
+import com.example.geschenkeorganizer.database.entities.Event;
+import com.example.geschenkeorganizer.database.entities.Person;
+import com.example.geschenkeorganizer.database.entities.PersonEventJoin;
+import com.example.geschenkeorganizer.database.entities.Present;
+
 @Database(entities={Person.class, Event.class, PersonEventJoin.class, Present.class}, version = 1, exportSchema=false)
 public abstract class MyDatabase extends RoomDatabase {
         public abstract DaoAccess daoAccess();

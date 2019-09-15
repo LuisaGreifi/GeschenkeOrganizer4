@@ -1,21 +1,13 @@
 package com.example.geschenkeorganizer.PersonsFile;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.database.PersonEventListClickListener;
-import com.example.geschenkeorganizer.presents.PresentsAddFragment;
-import com.example.geschenkeorganizer.presents.PresentsListFragment;
 
 //todo: NEU (ausgeklammert: Interfaces)
 //todo: Neu (PersonEventListListClickListener)

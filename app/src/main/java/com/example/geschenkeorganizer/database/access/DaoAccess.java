@@ -1,11 +1,18 @@
-package com.example.geschenkeorganizer.database;
+package com.example.geschenkeorganizer.database.access;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.geschenkeorganizer.database.entities.Event;
+import com.example.geschenkeorganizer.database.entities.Person;
+import com.example.geschenkeorganizer.database.entities.PersonEventJoin;
+import com.example.geschenkeorganizer.database.representations.PersonEventRepresentation;
+import com.example.geschenkeorganizer.database.entities.Present;
+import com.example.geschenkeorganizer.database.representations.PresentRepresentation;
+
 import java.util.List;
 
 

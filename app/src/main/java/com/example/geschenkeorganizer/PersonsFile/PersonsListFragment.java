@@ -14,12 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.database.PersonEventListAdapter;
-import com.example.geschenkeorganizer.database.PersonEventRepresentation;
-import com.example.geschenkeorganizer.database.PersonEventViewModel;
-import com.example.geschenkeorganizer.database.PresentListAdapter;
-import com.example.geschenkeorganizer.database.PresentRepresentation;
-import com.example.geschenkeorganizer.database.PresentViewModel;
+import com.example.geschenkeorganizer.database.representations.PersonEventRepresentation;
+import com.example.geschenkeorganizer.database.access.PersonEventViewModel;
 
 import java.util.List;
 

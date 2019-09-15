@@ -1,4 +1,4 @@
-package com.example.geschenkeorganizer.database;
+package com.example.geschenkeorganizer.presents;
 
 /**Google Developers Codelabs. (n.d.).
  * Add a RecyclerView.
@@ -6,13 +6,14 @@ package com.example.geschenkeorganizer.database;
  * grundlegende Erstellung Adapter für RecyclerView*/
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.geschenkeorganizer.R;
+import com.example.geschenkeorganizer.database.representations.PresentRepresentation;
+
 import java.util.List;
 
 public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.PresentViewHolder>  {

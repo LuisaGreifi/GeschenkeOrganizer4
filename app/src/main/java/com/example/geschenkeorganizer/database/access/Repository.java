@@ -1,10 +1,17 @@
-package com.example.geschenkeorganizer.database;
+package com.example.geschenkeorganizer.database.access;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.example.geschenkeorganizer.PersonsFile.PersonsAddListener;
+import com.example.geschenkeorganizer.database.entities.Event;
+import com.example.geschenkeorganizer.database.MyDatabase;
+import com.example.geschenkeorganizer.database.entities.Person;
+import com.example.geschenkeorganizer.database.entities.PersonEventJoin;
+import com.example.geschenkeorganizer.database.representations.PersonEventRepresentation;
+import com.example.geschenkeorganizer.database.entities.Present;
+import com.example.geschenkeorganizer.database.representations.PresentRepresentation;
 import com.example.geschenkeorganizer.presents.PresentsAddListener;
 
 import java.util.List;

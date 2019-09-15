@@ -5,7 +5,6 @@ package com.example.geschenkeorganizer.PersonsFile;
 import androidx.fragment.app.Fragment;
 //import android.app.Fragment;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -18,28 +17,22 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.geschenkeorganizer.MainActivity;
-import com.example.geschenkeorganizer.NotifyService;
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.database.Repository;
+import com.example.geschenkeorganizer.database.access.Repository;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.TimeZone;
 
 //todo: neu Interface
 public class PersonsAddFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, PersonsAddListener{
