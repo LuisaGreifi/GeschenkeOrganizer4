@@ -3,6 +3,10 @@ package com.example.geschenkeorganizer.database;
 import android.content.Context;
 import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
+
+import com.example.geschenkeorganizer.PersonsFile.PersonsAddListener;
+import com.example.geschenkeorganizer.presents.PresentsAddListener;
+
 import java.util.List;
 
 /**Google Developers Codelabs. (n.d.).
@@ -17,11 +21,14 @@ public class Repository {
     private LiveData<List<PresentRepresentation>> allPresents;
     private LiveData<List<PersonEventRepresentation>> allPersonsEvents;
 
+    //todo: NEU
+    private PresentsAddListener presentsListener;
+    private PersonsAddListener personsListener;
+
     /**Murthy, A. (04.05.2018).
      * 5 steps to implement Room persistence library in Android.
      * Retrieved from https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24.
      * Verwendung context */
-
     public Repository(Context context){
         myDatabase = MyDatabase.getDatabase(context);
 
@@ -44,6 +51,11 @@ public class Repository {
                 insertEvent(eventName, eventDate);
                 insertPersonEventConnection(firstName, lastName, eventName, eventDate);
                 return null;
+            }
+
+            //todo:NEU
+            protected void onPostExecute(Void result) {
+                personsListener.onPostAddPerson();
             }
         }.execute();
     }
@@ -140,6 +152,12 @@ public class Repository {
                 }
 
                 return null;
+
+            }
+
+            //todo:NEU
+            protected void onPostExecute(Void result) {
+                personsListener.onPostUpdatePerson();
             }
         }.execute();
     }
@@ -163,7 +181,14 @@ public class Repository {
                 insertPresentWithData(personId, eventId, presentName, presentPrice, presentShop, presentStatus);
                 return null;
             }
+
+            //todo:NEU
+            protected void onPostExecute(Void result) {
+                presentsListener.onPostAddPresent();
+            }
         }.execute();
+
+
     }
 
     private void insertEventForPresent(int personId, String eventName){
@@ -257,6 +282,11 @@ public class Repository {
 
                 return null;
             }
+
+            //todo:NEU
+            protected void onPostExecute(Void result) {
+                presentsListener.onPostUpdatePresent();
+            }
         }.execute();
     }
 
@@ -267,22 +297,24 @@ public class Repository {
     }
 
 
-
-
     // Present Representation
-
     LiveData<List<PresentRepresentation>> getAllPresents() {
         return allPresents;
     }
 
-
-
-
-
     // Person Event Representation
-
     LiveData<List<PersonEventRepresentation>> getAllPersonsWithEvents() {
         return allPersonsEvents;
     }
 
+    /**Creating Custom Listeners. (n.d.).
+     * Retrieved from https://guides.codepath.com/android/Creating-Custom-Listeners#2-create-listener-setter.
+     * Verwendung von setListener zur Anmeldung des Listeners */
+    public void setPresentsAddListener(PresentsAddListener listener){
+        this.presentsListener = listener;
+    }
+
+    public void setPersonsAddListener(PersonsAddListener listener){
+        this.personsListener = listener;
+    }
 }

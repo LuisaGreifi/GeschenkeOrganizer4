@@ -28,7 +28,8 @@ import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.PresentListClickListener;
 import com.example.geschenkeorganizer.database.Repository;
 
-public class PresentsAddFragment extends Fragment implements View.OnClickListener {
+//todo: NEU Interface
+public class PresentsAddFragment extends Fragment implements View.OnClickListener, PresentsAddListener {
 
     //todo: NEU (ausgeklammert: Interface)
     /**
@@ -101,6 +102,9 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
          * Erstellung Repository mit richtigem Kontext;
          * Kontext der Activity des Fragments: Präfix: getActivity() */
         repository = new Repository(getActivity().getApplicationContext());
+
+        //todo: NEU
+        repository.setPresentsAddListener(this);
 
         return view;
     }
@@ -404,4 +408,19 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         //Unterscheidung, ob Geschenk im Hinzufügen-/Update-Modus ist
         presentsAddFragmentStatus = status;
     }
+
+    //todo: Test
+    @Override
+    public void onPostAddPresent() {
+        Toast.makeText(getActivity(), "Geschenk wurde hinzugefügt",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    //todo: Test
+    @Override
+    public void onPostUpdatePresent() {
+        Toast.makeText(getActivity(), "Geschenk wurde aktualisiert",
+                Toast.LENGTH_SHORT).show();
+    }
+
 }

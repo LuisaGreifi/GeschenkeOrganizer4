@@ -41,7 +41,8 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class PersonsAddFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener{
+//todo: neu Interface
+public class PersonsAddFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, PersonsAddListener{
 
     private OnListItemChangedListener mCallback;
 
@@ -76,6 +77,8 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     private final static String NOTIFICATION_CHANNEL_ID = "0";
     public static final int INTENT_ITEM_SELECTED_ID = 0;
     public static final String INTENT_ITEM_SELECTED_NAME = "IntentForLoading";
+
+
 
     public interface OnListItemChangedListener {
         public void onListItemChanged();
@@ -120,6 +123,9 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
          * Erstellung Repository mit richtigem Kontext;
          * Kontext der Activity des Fragments: Präfix: getActivity() */
         repository = new Repository(getActivity().getApplicationContext());
+
+        //todo: NEu
+        repository.setPersonsAddListener(this);
 
         return view;
     }
@@ -413,5 +419,19 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     protected void setStatus(int status){
         //Unterscheidung, ob Geschenk im Hinzufügen-/Update-Modus ist
         personsAddFragmentStatus = status;
+    }
+
+    //todo: neu
+    @Override
+    public void onPostAddPerson() {
+        Toast.makeText(getActivity(), "Eintrag wurde hinzugefügt",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    //todo: neu
+    @Override
+    public void onPostUpdatePerson() {
+        Toast.makeText(getActivity(), "Eintrag wurde aktualisiert",
+                Toast.LENGTH_SHORT).show();
     }
 }
