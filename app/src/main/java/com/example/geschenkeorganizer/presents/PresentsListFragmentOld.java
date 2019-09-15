@@ -1,17 +1,12 @@
 package com.example.geschenkeorganizer.presents;
 
-import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.presents.Present;
 
 // Code von NoteTaker-Übung
 //todo: NEU (Klasse kann komplett gelöscht werden, wird nicht benötigt)
