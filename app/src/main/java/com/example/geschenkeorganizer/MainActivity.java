@@ -12,16 +12,9 @@ import com.example.geschenkeorganizer.presents.PresentsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Variablen und Konstanten
-
     Button presentsButton;
     Button personsButton;
     Button inspirationButton;
-
-    //todo: Test
-    Button testNotificationButton;
-
-    //onCreate()-Methode
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +28,12 @@ public class MainActivity extends AppCompatActivity {
         presentsButton = findViewById(R.id.button_presents);
         personsButton = findViewById(R.id.button_persons);
         inspirationButton = findViewById(R.id.button_inspiration);
-        //todo: Test
-        testNotificationButton = findViewById(R.id.button_testNotification);
     }
 
     private void initViews() {
         initPresentsButton();
         initPersonsButton();
         initInspirationButton();
-        //todo: Test
-        initTestNotificationButton();
     }
 
     private void initPresentsButton() {
@@ -72,17 +61,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, InspirationActivity.class);
-                startActivity(i);
-            }
-        });
-    }
-
-    //todo: Test
-    private void initTestNotificationButton() {
-        testNotificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, TestNotificationActivity.class);
                 startActivity(i);
             }
         });

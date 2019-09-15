@@ -2,34 +2,24 @@ package com.example.geschenkeorganizer.presents;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.geschenkeorganizer.R;
-import com.example.geschenkeorganizer.database.MyDatabase;
-import com.example.geschenkeorganizer.database.Present;
 import com.example.geschenkeorganizer.database.PresentListAdapter;
-import com.example.geschenkeorganizer.database.PresentListClickListener;
 import com.example.geschenkeorganizer.database.PresentRepresentation;
 import com.example.geschenkeorganizer.database.PresentViewModel;
-import com.example.geschenkeorganizer.database.Repository;
 
 import java.util.List;
 
-//todo: NEU
 /**Tkachuk, T. (06.04.2018).
  * Android app example using Room database.
  * Retrieved from https://medium.com/@tonia.tkachuk/android-app-example-using-room-database-63f7091e69af.

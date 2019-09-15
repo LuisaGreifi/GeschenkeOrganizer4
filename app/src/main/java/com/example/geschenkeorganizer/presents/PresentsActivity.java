@@ -1,27 +1,18 @@
 package com.example.geschenkeorganizer.presents;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.PresentListClickListener;
 
-//todo: NEU (ausgeklammert: Interfaces)
-//todo: Neu (PresentListClickListener)
-//todo: Neu: extends FragmentActivity
 public class PresentsActivity extends FragmentActivity implements PresentListClickListener/*PresentsAddFragment.OnListItemChangedListener, PresentsListFragment.OnListItemSelectedListener */{
 
-    //todo: Neu
     //Konstante --> Unterscheidung, ob Geschenk hinzugefügt/geupdatet wird
     private static final int STATUS_ADD = 0;
     private static final int STATUS_UPDATE = 1;
@@ -113,7 +104,6 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
 
     }
 
-    //todo: neu
     //wird aufgerufen, wenn Item aus Liste angeklickt wurde
     @Override
     public void onPresentItemClick(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
@@ -122,11 +112,9 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
          * Communicate with other fragments. Deliver a Message to a Fragment.
          * Retrieved from https://developer.android.com/training/basics/fragments/communicating.html*/
 
-        //todo Neu
         PresentsAddFragment paf =
                 (PresentsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
         if (paf != null) {
-            //todo: NEU
             //öffentliche Methode von PresentsAddFragment direkt aufrufen
             paf.setStatus(STATUS_UPDATE);
             paf.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
@@ -136,7 +124,6 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, presentsAddFragment);
             transaction.addToBackStack(null);
-            //todo:Neu
             // set Status + onPresentUpdate über commit
             presentsAddFragment.setStatus(STATUS_UPDATE);
             presentsAddFragment.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
