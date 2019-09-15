@@ -3,6 +3,17 @@
     //Allgemeines
     <string name="app_name">GeschenkeOrganizer</string>
 
+    //Toasts
+    <string name="toast_fillOutAllFields">Fülle bitte alle Felder aus.</string>
+    <string name="toast_addedEntry">Eintrag wurde hinzugefügt.</string>
+    <string name="toast_updatedEntry">Eintrag wurde aktualisiert.</string>
+
+    //Notifications
+    <string name="notification_title">Geschenke-Erinnerung</string>
+    <string name="notification_text_thinkAboutPresent">Überlege dir ein Geschenk ;-)</string>
+    <string name="notification_text_buyAndWrapPresent">Kaufe und verpacke dein Geschenk ;-)</string>
+    <string name="notification_text_WrapPresent">Verpacke dein Geschenk ;-)</string>
+
     //InfoTexts
     <string name="text_noPresents">Es sind keine Geschenke vorhanden.</string>
     <string name="text_noPersons">Es sind keine Personen vorhanden.</string>

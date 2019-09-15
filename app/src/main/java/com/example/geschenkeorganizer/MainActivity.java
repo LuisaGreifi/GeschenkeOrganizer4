@@ -12,12 +12,9 @@ import com.example.geschenkeorganizer.presents.PresentsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Variablen und Konstanten
-
+    //Buttons
     Button presentsButton;
     Button personsButton;
-
-    //onCreate()-Methode
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

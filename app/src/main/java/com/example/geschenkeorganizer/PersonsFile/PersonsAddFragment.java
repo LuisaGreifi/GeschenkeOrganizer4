@@ -33,15 +33,15 @@ import java.util.Locale;
 
 public class PersonsAddFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, PersonsAddListener{
 
-    private String eventType, eventDate;
+    private String textFirstName, textSurName, eventType, eventDate;
     private int eventDateInt;
 
     private EditText editText_firstName, editText_surName, editText_eventDate, editText_eventType;
     private Button button_done, button_calendarCall;
 
-    private String textFirstName, textSurName;
 
     private Repository repository;
+
     //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PersonsAddFragment deswegen angepasst werden soll
     //initial: add
     private int personsAddFragmentStatus = STATUS_ADD;
@@ -52,6 +52,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     private String personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, eventDateToUpdateString;
     private int eventDateToUpdateInt;
 
+    //Konstanten für Benachrichtigungen
     private final static int NOTIFICATION_ID = 0;
     private final static String NOTIFICATION_CHANNEL_NAME = "CH0";
     private final static String NOTIFICATION_CHANNEL_ID = "0";
@@ -103,6 +104,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         });
     }
 
+    //Kalender auf aktuelles Datum setzen
     private DatePickerDialog createDatePickerDialog() {
         GregorianCalendar today = new GregorianCalendar();
         int day = today.get(Calendar.DAY_OF_MONTH);
@@ -112,6 +114,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
+    //Datum formatieren und in EditText einfügen
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         GregorianCalendar date = new GregorianCalendar(year, month, dayOfMonth);
@@ -148,18 +151,25 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         }
 
         } else if(v.getId()==R.id.button_calendarCall) {
-            //todo: Code zitieren: https://stackoverflow.com/questions/1943679/android-calendar (abgerufen am 27.08.2019)
-
-            Intent i = new Intent();
-
-            ComponentName cn = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
-
-            i.setComponent(cn);
-            startActivity(i);
+            callCalendar();
         }
     }
 
+    private void callCalendar() {
+        /** djk (24.03.2011)
+         * android calendar [Online forum comment]
+         * Retrieved from https://stackoverflow.com/questions/1943679/android-calendar
+         * Kalender wird über einen Intent aufgerufen*/
+        Intent i = new Intent();
+        ComponentName cn = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
+        i.setComponent(cn);
+        startActivity(i);
+    }
 
+    /**vgl. Friedl, T. & Wilhelm, T.(02.07.2019).
+     * Übungsaufgabe 11. NoteTaker [Lösung zur Übung].
+     * Retrieved from https://ilias.uni-passau.de/ilias/goto.php?target=root_1&client_id=intelec
+     * Benachrichtigung wird mithilfe des Notification.Builder, TastStackBuilder und Intents erstellt*/
     private void createNotification(String title, String text) {
         createNotificationChannel();
         Notification.Builder mBuilder;
@@ -177,33 +187,30 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
                             .setStyle(new Notification.BigTextStyle().bigText(text)).setAutoCancel(true);
         }
 
-        // Check if we're running on Android 5.0 or higher, older versions don't support visibility
+        // wenn Android 5.0 oder höher vorhanden ist, dann visibility setzen
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Call some material design APIs here
             mBuilder.setVisibility(Notification.VISIBILITY_SECRET);
         }
-        // Creates an explicit intent for an Activity in your app
+        // erstellt einen expliziten Intent
         Intent resultIntent = new Intent(getActivity(), PersonsActivity.class);
         resultIntent
                 .putExtra(INTENT_ITEM_SELECTED_NAME, INTENT_ITEM_SELECTED_ID);
         resultIntent.putExtra(INTENT_ITEM_SELECTED_NAME, INTENT_ITEM_SELECTED_ID);
 
-        // The stack builder object will contain an artificial back stack for the started Activity.
-        // This ensures that navigating backward from the Activity leads out of your application to
-        // the Home screen.
+        //erstellt einen künstlichen Back stack
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
-        // Adds the back stack for the Intent (but not the Intent itself)
 
-        //todo: PersonsAddActivity für Smartphone
+        // fügt den Back Stack für den Intent hinzu (nicht den Intent selbst)
         stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
+
+        // fügt den Intent hinzu, der die Activity oben auf den Stack legt
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager =
                 (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
@@ -293,13 +300,11 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onPostAddPerson() {
-        Toast.makeText(getActivity(), "Eintrag wurde hinzugefügt",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.toast_addedEntry), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPostUpdatePerson() {
-        Toast.makeText(getActivity(), "Eintrag wurde aktualisiert",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.toast_addedEntry), Toast.LENGTH_SHORT).show();
     }
 }

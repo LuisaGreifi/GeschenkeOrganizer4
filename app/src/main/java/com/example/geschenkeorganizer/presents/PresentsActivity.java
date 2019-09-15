@@ -21,7 +21,11 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presents);
+        initFragment(savedInstanceState);
+        initButton();
+    }
 
+    private void initFragment(Bundle savedInstanceState) {
         /**Android Developers. (n.d.).
          * Build a flexible UI. Add a Fragment to an Activity at Runtime.
          * Retrieved from https://developer.android.com/training/basics/fragments/fragment-ui.
@@ -34,7 +38,9 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, presentsListFragment).commit();
         }
+    }
 
+    private void initButton() {
         Button addButton = findViewById(R.id.button_addPresent);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,24 +67,18 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
                 }
             }
         });
-
-
     }
 
-    //todo: neu
     //wird aufgerufen, wenn Item aus Liste angeklickt wurde
     @Override
     public void onPresentItemClick(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
-        Log.d("PresentsActivity", "onClick");
         /**Android Developers. (n.d.).
          * Communicate with other fragments. Deliver a Message to a Fragment.
          * Retrieved from https://developer.android.com/training/basics/fragments/communicating.html*/
 
-        //todo Neu
         PresentsAddFragment paf =
                 (PresentsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
         if (paf != null) {
-            //todo: NEU
             //öffentliche Methode von PresentsAddFragment direkt aufrufen
             paf.setStatus(STATUS_UPDATE);
             paf.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
@@ -88,8 +88,7 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, presentsAddFragment);
             transaction.addToBackStack(null);
-            //todo:Neu
-            // set Status + onPresentUpdate über commit
+
             presentsAddFragment.setStatus(STATUS_UPDATE);
             presentsAddFragment.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
             transaction.commit();

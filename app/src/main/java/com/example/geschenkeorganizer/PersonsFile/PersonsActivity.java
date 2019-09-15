@@ -15,12 +15,15 @@ public class PersonsActivity extends FragmentActivity implements PersonEventList
     private static final int STATUS_ADD = 0;
     private static final int STATUS_UPDATE = 1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persons);
+        initFragment(savedInstanceState);
+        initButton();
+    }
 
+    private void initFragment(Bundle savedInstanceState) {
         /**Android Developers. (n.d.).
          * Build a flexible UI. Add a Fragment to an Activity at Runtime.
          * Retrieved from https://developer.android.com/training/basics/fragments/fragment-ui.
@@ -33,7 +36,9 @@ public class PersonsActivity extends FragmentActivity implements PersonEventList
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.persons_fragment_container, personsListFragment).commit();
         }
+    }
 
+    private void initButton() {
             Button addButton = findViewById(R.id.button_addPerson);
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -59,7 +64,7 @@ public class PersonsActivity extends FragmentActivity implements PersonEventList
                     }
                 }
             });
-        }
+    }
 
         //wird aufgerufen, wenn Item aus Liste angeklickt wurde
         @Override

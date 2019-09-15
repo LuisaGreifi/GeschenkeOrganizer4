@@ -11,12 +11,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.geschenkeorganizer.R;
@@ -45,6 +42,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     private String presentNameToUpdate, personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, priceToUpdateString, shopToUpdate, statusToUpdate;
     private double priceToUpdateDouble;
 
+    //Konstanten für Benachrichtigungen
     private final static int NOTIFICATION_ID = 0;
     private final static String NOTIFICATION_CHANNEL_NAME = "CH0";
     private final static String NOTIFICATION_CHANNEL_ID = "0";
@@ -86,15 +84,15 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         getInformation();
 
         if (textFirstName.isEmpty() || textSurName.isEmpty() || textDescription.isEmpty() || textPlaceOfPurchase.isEmpty() || StringTextPrice.isEmpty() || eventType.isEmpty() || textStatus.isEmpty()) {
-            Toast.makeText(getActivity(), "Bitte fülle alle Felder aus",
+            Toast.makeText(getActivity(), getResources().getString(R.string.toast_fillOutAllFields),
                     Toast.LENGTH_SHORT).show();
         } else {
             //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
             if (presentsAddFragmentStatus == STATUS_ADD) {
                 if (!(bought.isChecked()) && !(wrapped.isChecked())) {
-                    createNotification("Geschenke-Erinnerung", "Kaufe und verpacke dein Geschenk ;-)");
+                    createNotification(getResources().getString(R.string.notification_title), getResources().getString(R.string.notification_text_buyAndWrapPresent));
                 } else if (!(wrapped.isChecked())) {
-                    createNotification("Geschenke-Erinnerung", "Verpacke dein Geschenk noch ;-)");
+                    createNotification(getResources().getString(R.string.notification_title), getResources().getString(R.string.notification_text_WrapPresent));
                 }
                 saveEntry();
                 loadEmptyAddView();
@@ -104,6 +102,10 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    /**vgl. Friedl, T. & Wilhelm, T. (02.07.2019).
+     * Übungsaufgabe 11. NoteTaker [Lösung zur Übung].
+     * Retrieved from https://ilias.uni-passau.de/ilias/goto.php?target=root_1&client_id=intelec
+     * Benachrichtigung wird mithilfe des Notification.Builder, TastStackBuilder und Intents erstellt*/
     private void createNotification(String title, String text) {
         createNotificationChannel();
         Notification.Builder mBuilder;
@@ -121,15 +123,13 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
                             .setStyle(new Notification.BigTextStyle().bigText(text)).setAutoCancel(true);
         }
 
-        // Check if we're running on Android 5.0 or higher, older versions don't support visibility
+        // wenn Android 5.0 oder höher vorhanden ist, dann visibility setzen
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Call some material design APIs here
             mBuilder.setVisibility(Notification.VISIBILITY_SECRET);
         }
 
         NotificationManager mNotificationManager =
                 (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
@@ -275,13 +275,13 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onPostAddPresent() {
-        Toast.makeText(getActivity(), "Geschenk wurde hinzugefügt",
+        Toast.makeText(getActivity(), getResources().getString(R.string.toast_addedEntry),
                 Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPostUpdatePresent() {
-        Toast.makeText(getActivity(), "Geschenk wurde aktualisiert",
+        Toast.makeText(getActivity(), getResources().getString(R.string.toast_updatedEntry),
                 Toast.LENGTH_SHORT).show();
     }
 
