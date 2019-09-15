@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.geschenkeorganizer.MainActivity;
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.access.Repository;
+import com.example.geschenkeorganizer.presents.PresentsActivity;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -132,13 +133,13 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
             //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
             if (personsAddFragmentStatus == STATUS_ADD){
-                if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty()) {
-                    createNotification("Überlege dir ein Geschenk ;-)", "Geschenke-Erinnerung");
+                if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty() && !editText_eventType.getText().toString().isEmpty() && !editText_eventDate.getText().toString().isEmpty()) {
+                    createNotification("Geschenke-Erinnerung", "Überlege dir ein Geschenk ;-)");
                     saveEntry(v);
-                    Intent intent = new Intent(getActivity(), PersonsActivity.class);
+                    Intent intent = new Intent(getActivity(), PresentsActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getActivity(), "Du musst noch eine Person eingeben.",
+                    Toast.makeText(getActivity(), "Bitte fülle alle Felder aus",
                             Toast.LENGTH_SHORT).show();
                 }
                 loadEmptyAddView();

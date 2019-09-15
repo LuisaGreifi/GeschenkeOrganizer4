@@ -91,13 +91,9 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
                 if(!(bought.isChecked()) && !(wrapped.isChecked())) {
                     createNotification("Geschenke-Erinnerung", "Kaufe und verpacke dein Geschenk ;-)");
                 }
-                else if(!(bought.isChecked())) {
-                    createNotification("Geschenke-Erinnerung", "verpackt aber nicht gekauft...interessant! ;-)");
-                }
                 else if(!(wrapped.isChecked())) {
                     createNotification("Geschenke-Erinnerung", "Verpacke dein Geschenk noch ;-)");
                 }
-
                 saveEntry();
             } else {
                 Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",

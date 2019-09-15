@@ -28,7 +28,6 @@ public class Repository {
     private LiveData<List<PresentRepresentation>> allPresents;
     private LiveData<List<PersonEventRepresentation>> allPersonsEvents;
 
-    //todo: NEU
     private PresentsAddListener presentsListener;
     private PersonsAddListener personsListener;
 
@@ -60,7 +59,6 @@ public class Repository {
                 return null;
             }
 
-            //todo:NEU
             protected void onPostExecute(Void result) {
                 personsListener.onPostAddPerson();
             }
@@ -96,17 +94,16 @@ public class Repository {
         }
     }
 
-    //1. Teil: alte von zu upzudateten Present, 2. Teil: Werte aus EditText
-    public void updatePersonEvent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventNameToUpdate, final int eventDateToUpdate, final String firstName, final String lastName, final String eventName, final int eventDate){
+    public void updatePersonEvent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventNameToUpdate, final int eventDateToUpdate, final String personFirstName, final String personLastName, final String eventName, final int eventDate){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 int personId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
                 Person person = myDatabase.daoAccess().getPersonById(personId);
 
-                if((personFirstNameToUpdate != firstName) || (personLastNameToUpdate != lastName)){
-                    insertPerson(firstName, lastName);
-                    int newPersonId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
+                if((personFirstNameToUpdate != personFirstName) || (personLastNameToUpdate != personLastName)){
+                    insertPerson(personFirstName, personLastName);
+                    int newPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstName, personLastName);
                     int oldPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
                     int oldEventId = myDatabase.daoAccess().getEventIdByEventInformation(eventNameToUpdate, eventDateToUpdate);
 
@@ -115,10 +112,10 @@ public class Repository {
 
                     //richtige Connection herstellen
                     if((eventNameToUpdate == eventName) && (eventDateToUpdate == eventDate)){
-                        insertPersonEventConnection(firstName, lastName, eventNameToUpdate, eventDateToUpdate);
+                        insertPersonEventConnection(personFirstName, personLastName, eventNameToUpdate, eventDateToUpdate);
                     }else{
                         insertEvent(eventName, eventDate);
-                        insertPersonEventConnection(firstName, lastName, eventName, eventDate);
+                        insertPersonEventConnection(personFirstName, personLastName, eventName, eventDate);
                     }
 
                     //todo: wäre schon ganz cool
@@ -141,11 +138,11 @@ public class Repository {
                     myDatabase.daoAccess().deletePersonEventJoin(oldPersonId, oldEventId);
 
                     //richtige Connection herstellen
-                    if((personFirstNameToUpdate == firstName) && (personLastNameToUpdate == lastName)){
+                    if((personFirstNameToUpdate == personFirstName) && (personLastNameToUpdate == personLastName)){
                         insertPersonEventConnection(personFirstNameToUpdate, personLastNameToUpdate, eventName, eventDate);
                     }else{
-                        insertPerson(firstName, lastName);
-                        insertPersonEventConnection(firstName, lastName, eventName, eventDate);
+                        insertPerson(personFirstName, personLastName);
+                        insertPersonEventConnection(personFirstName, personLastName, eventName, eventDate);
                     }
 
                     //todo: wäre schon ganz cool
