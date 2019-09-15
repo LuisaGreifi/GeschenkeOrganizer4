@@ -85,23 +85,22 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
         getInformation();
 
-        //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
-        if(presentsAddFragmentStatus == STATUS_ADD){
-            if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
-                if(!(bought.isChecked()) && !(wrapped.isChecked())) {
+        if (textFirstName.isEmpty() || textSurName.isEmpty() || textDescription.isEmpty() || textPlaceOfPurchase.isEmpty() || StringTextPrice.isEmpty() || eventType.isEmpty() || textStatus.isEmpty()) {
+            Toast.makeText(getActivity(), "Bitte fülle alle Felder aus",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
+            if (presentsAddFragmentStatus == STATUS_ADD) {
+                if (!(bought.isChecked()) && !(wrapped.isChecked())) {
                     createNotification("Geschenke-Erinnerung", "Kaufe und verpacke dein Geschenk ;-)");
-                }
-                else if(!(wrapped.isChecked())) {
+                } else if (!(wrapped.isChecked())) {
                     createNotification("Geschenke-Erinnerung", "Verpacke dein Geschenk noch ;-)");
                 }
                 saveEntry();
-            } else {
-                Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",
-                        Toast.LENGTH_SHORT).show();
+                loadEmptyAddView();
+            } else if (presentsAddFragmentStatus == STATUS_UPDATE) {
+                updateEntry();
             }
-            loadEmptyAddView();
-        }else if(presentsAddFragmentStatus == STATUS_UPDATE){
-            updateEntry();
         }
     }
 
@@ -190,11 +189,22 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         textFirstName = firstName.getText().toString();
         textSurName = surName.getText().toString();
         textDescription = description.getText().toString();
-        textPlaceOfPurchase = placeOfPurchase.getText().toString();
-        StringTextPrice = price.getText().toString();
-        textPrice = Double.parseDouble(StringTextPrice);
-
         eventType = event.getText().toString();
+        textPlaceOfPurchase = placeOfPurchase.getText().toString();
+
+        StringTextPrice = price.getText().toString();
+        String priceToParse = StringTextPrice;
+        /**Pankaj. (n.d.).
+         * Java Remove Character from String.
+         * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
+         * characters ersetzen*/
+        if(!priceToParse.isEmpty()) {
+            priceToParse = priceToParse.replace(",", ".");
+            priceToParse = priceToParse.replace(" ", "");
+            priceToParse = priceToParse.replace("€", "");
+            priceToParse = priceToParse.replace(" €", "");
+            textPrice = Double.parseDouble(priceToParse);
+        }
 
         booHadIdea = hadIdea.isChecked();
         booBought = bought.isChecked();
@@ -245,8 +255,13 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         personFirstNameToUpdate = personFirstName;
         personLastNameToUpdate = personLastName;
         eventNameToUpdate = eventName;
+
         priceToUpdateString = price;
-        priceToUpdateDouble = Double.parseDouble(price);
+        /**Pankaj. (n.d.).
+         * Java Remove Character from String.
+         * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
+         * characters ersetzen*/
+        priceToUpdateDouble = Double.parseDouble(price.replace(" €", ""));
 
         shopToUpdate = shop;
         statusToUpdate = status;

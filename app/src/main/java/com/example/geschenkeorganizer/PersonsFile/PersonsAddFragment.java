@@ -131,21 +131,22 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
             getInformation();
 
-            //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
-            if (personsAddFragmentStatus == STATUS_ADD){
-                if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty() && !editText_eventType.getText().toString().isEmpty() && !editText_eventDate.getText().toString().isEmpty()) {
+            if (textFirstName.isEmpty() || textSurName.isEmpty() || eventDate.isEmpty() || eventType.isEmpty()) {
+                Toast.makeText(getActivity(), "Bitte fülle alle Felder aus",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
+                if (personsAddFragmentStatus == STATUS_ADD) {
                     createNotification("Geschenke-Erinnerung", "Überlege dir ein Geschenk ;-)");
                     saveEntry(v);
                     Intent intent = new Intent(getActivity(), PresentsActivity.class);
                     startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), "Bitte fülle alle Felder aus",
-                            Toast.LENGTH_SHORT).show();
-                }
-                loadEmptyAddView();
-            }else if(personsAddFragmentStatus == STATUS_UPDATE){
-                updateEntry();
+                    loadEmptyAddView();
+                 }else if (personsAddFragmentStatus == STATUS_UPDATE) {
+                    updateEntry();
             }
+        }
+
         } else if(v.getId()==R.id.button_calendarCall) {
             //todo: Code zitieren: https://stackoverflow.com/questions/1943679/android-calendar (abgerufen am 27.08.2019)
 
@@ -157,6 +158,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
             startActivity(i);
         }
     }
+
 
     private void createNotification(String title, String text) {
         createNotificationChannel();
@@ -251,7 +253,9 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
          * Java Remove Character from String.
          * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
          * characters ersetzen + String kürzen*/
-        eventDateInt = Integer.parseInt(eventDate.replace(".", "").substring(0, 4));
+        if(!eventDate.isEmpty()){
+            eventDateInt = Integer.parseInt(eventDate.replace(".", "").substring(0, 4));
+        }
 
         eventType = editText_eventType.getText().toString();
     }

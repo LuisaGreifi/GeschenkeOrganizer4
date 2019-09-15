@@ -45,6 +45,8 @@ public class Repository {
 
     //Person und Event hinzufügen Dialog
 
+    //Person hinzufügen
+
     /**Murthy, A. (04.05.2018).
      * 5 steps to implement Room persistence library in Android.
      * Retrieved from https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24.
@@ -94,83 +96,69 @@ public class Repository {
         }
     }
 
+    // Eintrag in Personen-Event-Liste aktualisieren
+
     public void updatePersonEvent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventNameToUpdate, final int eventDateToUpdate, final String personFirstName, final String personLastName, final String eventName, final int eventDate){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                int personId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
-                Person person = myDatabase.daoAccess().getPersonById(personId);
-
-                if((personFirstNameToUpdate != personFirstName) || (personLastNameToUpdate != personLastName)){
-                    insertPerson(personFirstName, personLastName);
-                    int newPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstName, personLastName);
-                    int oldPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
-                    int oldEventId = myDatabase.daoAccess().getEventIdByEventInformation(eventNameToUpdate, eventDateToUpdate);
-
-                    //Connection bzw. Listeneintrag löschen
-                    myDatabase.daoAccess().deletePersonEventJoin(oldPersonId, oldEventId);
-
-                    //richtige Connection herstellen
-                    if((eventNameToUpdate == eventName) && (eventDateToUpdate == eventDate)){
-                        insertPersonEventConnection(personFirstName, personLastName, eventNameToUpdate, eventDateToUpdate);
-                    }else{
-                        insertEvent(eventName, eventDate);
-                        insertPersonEventConnection(personFirstName, personLastName, eventName, eventDate);
-                    }
-
-                    //todo: wäre schon ganz cool
-                    /**
-                    //alte Person löschen, wenn es nur 1 Event dazu gab
-                    List<Event> eventsForPerson = myDatabase.daoAccess().getEventForPerson(oldPersonId);
-                    if(eventsForPerson.size() == 1){
-                        myDatabase.daoAccess().deletePersonByName(personFirstNameToUpdate, personLastNameToUpdate);
-                    }
-                     */
-                }
-
-                if((eventNameToUpdate != eventName) || (eventDateToUpdate != eventDate)){
-                    insertEvent(eventName, eventDate);
-
-                    int oldEventId = myDatabase.daoAccess().getEventIdByEventInformation(eventNameToUpdate, eventDateToUpdate);
-                    int oldPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
-
-                    //alte Verbindung aka Listenanzeife löschen
-                    myDatabase.daoAccess().deletePersonEventJoin(oldPersonId, oldEventId);
-
-                    //richtige Connection herstellen
-                    if((personFirstNameToUpdate == personFirstName) && (personLastNameToUpdate == personLastName)){
-                        insertPersonEventConnection(personFirstNameToUpdate, personLastNameToUpdate, eventName, eventDate);
-                    }else{
-                        insertPerson(personFirstName, personLastName);
-                        insertPersonEventConnection(personFirstName, personLastName, eventName, eventDate);
-                    }
-
-                    //todo: wäre schon ganz cool
-                    /**
-                    //altes Event löschen, wenn es nur 1 Person dazu gab
-                    List<Person> personsForEvents = myDatabase.daoAccess().getPersonForEvent(oldEventId);
-                    if(personsForEvents.size() == 1){
-                        myDatabase.daoAccess().deleteEventByEventId(oldEventId);
-                    }
-                     */
-                }
+                updatePerson(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, eventDateToUpdate, personFirstName, personLastName, eventName, eventDate);
+                updateEvent(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, eventDateToUpdate, personFirstName, personLastName, eventName, eventDate);
 
                 return null;
-
             }
 
-            //todo:NEU
             protected void onPostExecute(Void result) {
                 personsListener.onPostUpdatePerson();
             }
         }.execute();
     }
 
+    private void updatePerson(String personFirstNameToUpdate, String personLastNameToUpdate, String eventNameToUpdate, int eventDateToUpdate, String personFirstName, String personLastName, String eventName, int eventDate){
+        if((!personFirstNameToUpdate.equals(personFirstName)) || (!personLastNameToUpdate.equals(personLastName))){
+            insertPerson(personFirstName, personLastName);
+            deleteOldPersonEventConnection(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, eventDateToUpdate);
+            updatePersonEventConnectionForUpdatedPerson(eventNameToUpdate, eventDateToUpdate, personFirstName, personLastName, eventName, eventDate);
+        }
+    }
 
+    private void deleteOldPersonEventConnection(String personFirstNameToUpdate, String personLastNameToUpdate, String eventNameToUpdate, int eventDateToUpdate){
+        int oldPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
+        int oldEventId = myDatabase.daoAccess().getEventIdByEventInformation(eventNameToUpdate, eventDateToUpdate);
 
+        myDatabase.daoAccess().deletePersonEventJoin(oldPersonId, oldEventId);
+    }
+
+    private void updatePersonEventConnectionForUpdatedPerson(String eventNameToUpdate, int eventDateToUpdate, String personFirstName, String personLastName, String eventName, int eventDate){
+        if((eventNameToUpdate.equals(eventName)) && (eventDateToUpdate == eventDate)){
+            insertPersonEventConnection(personFirstName, personLastName, eventNameToUpdate, eventDateToUpdate);
+        }else{
+            insertEvent(eventName, eventDate);
+            insertPersonEventConnection(personFirstName, personLastName, eventName, eventDate);
+        }
+    }
+
+    private void updateEvent(String personFirstNameToUpdate, String personLastNameToUpdate, String eventNameToUpdate, int eventDateToUpdate, String personFirstName, String personLastName, String eventName, int eventDate){
+        if((!eventNameToUpdate.equals(eventName)) || (eventDateToUpdate != eventDate)){
+            insertEvent(eventName, eventDate);
+            deleteOldPersonEventConnection(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, eventDateToUpdate);
+            updatePersonEventConnectionForUpdatedEvent(personFirstNameToUpdate, personLastNameToUpdate, personFirstName, personLastName, eventName, eventDate);
+        }
+    }
+
+    private void updatePersonEventConnectionForUpdatedEvent(String personFirstNameToUpdate, String personLastNameToUpdate, String personFirstName, String personLastName, String eventName, int eventDate){
+        if((personFirstNameToUpdate.equals(personFirstName)) && (personLastNameToUpdate.equals(personLastName))){
+            insertPersonEventConnection(personFirstNameToUpdate, personLastNameToUpdate, eventName, eventDate);
+        }else{
+            insertPerson(personFirstName, personLastName);
+            insertPersonEventConnection(personFirstName, personLastName, eventName, eventDate);
+        }
+    }
 
 
     // Geschenk hinzufügen Dialog
+
+    // Geschenk hinzufügen
 
     public void insertPresent(final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus) {
         new AsyncTask<Void, Void, Void>() {
@@ -180,13 +168,11 @@ public class Repository {
                 int personId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
                 insertEventForPresent(personId, eventName);
                 int eventId = getEventIdForPresent(personId, eventName);
-                //todo: evntl. mit Methode oben zusammenlegen
                 insertPersonEventConnectionForPresent(personId, eventId);
                 insertPresentWithData(personId, eventId, presentName, presentPrice, presentShop, presentStatus);
                 return null;
             }
 
-            //todo:NEU
             protected void onPostExecute(Void result) {
                 presentsListener.onPostAddPresent();
             }
@@ -201,7 +187,6 @@ public class Repository {
             event.setEventName(eventName);
             event.setEventDate(0);
             myDatabase.daoAccess().insertEvent(event);
-            //todo: dann muss Mini-Acivity geöffnet werden --> (nach Speichern, gleiche Methode zur Abfrage nutzen?)
         }
     }
 
@@ -239,46 +224,44 @@ public class Repository {
 
     }
 
-    //1. Teil: alte von zu upzudateten Present, 2. Teil: Werte aus EditText
-    public void updatePresent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventToUpdate, final String presentNameToUpdate, final double priceToUpdate, final String shopToUpdate, final String statusToUpdate, final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus){
+    // Geschenk aktualisieren
+    public void updatePresent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventToUpdate, final String presentNameToUpdate, final double priceToUpdate, final String shopToUpdate, final String statusToUpdate, final String personFirstName, final String personLastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 int personId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
                 Present present = getPresentByPresentInformation(personId, presentNameToUpdate,priceToUpdate,shopToUpdate,statusToUpdate);
 
-                if((personFirstNameToUpdate != firstName) || (personLastNameToUpdate != lastName)){
-                    insertPerson(firstName, lastName);
-                    int newPersonId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
+                //neue Personen Id wird hinzugefügt und gegebenenfalls erstellt, wenn sich der eingegebene Name zum gespeicherten Namen unterscheidet
+                if((!personFirstNameToUpdate.equals(personFirstName)) || (!personLastNameToUpdate.equals(personLastName))){
+                    insertPerson(personFirstName, personLastName);
+                    int newPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstName, personLastName);
                     present.setPersonId(newPersonId);
                 }
 
-                if(eventToUpdate != eventName){
-                    int eventId;
-                    if((personFirstNameToUpdate == firstName) && (personLastNameToUpdate == lastName)){
-                        insertEventForPresent(personId, eventName);
-                        eventId = getEventIdForPresent(personId, eventName);
-                        insertPersonEventConnectionForPresent(personId, eventId);
-                    }else{
-                        int newPersonId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
-                        insertEventForPresent(newPersonId, eventName);
-                        eventId = getEventIdForPresent(newPersonId, eventName);
-                        insertPersonEventConnectionForPresent(newPersonId, eventId);
-                    }
+                //neue EventId wird hinzugefügt und gegebenenfalls erstellt, wenn sich der eingegebene Eventname zum gespeicherten Eventnamen unterscheidet
+                if(!eventToUpdate.equals(eventName)){
+                    int eventId = updateEventForUpdatedPresent(personFirstNameToUpdate, personLastNameToUpdate, eventToUpdate, personFirstName, personLastName, eventName);
                     present.setEventId(eventId);
                 }
 
-
-                if(presentName != presentNameToUpdate){
+                //neuer Geschenkname wird hinzugefügt, wenn sich der eingegebene Geschenkename zum gespeicherten Geschenknamen unterscheidet
+                if(!presentName.equals(presentNameToUpdate)){
                     present.setPresentName(presentName);
                 }
+
+                //neuer Preis wird hinzugefügt, wenn sich der eingegebene Preis zum gespeicherten Preis unterscheidet
                 if(presentPrice != priceToUpdate){
                     present.setPrice(presentPrice);
                 }
-                if(presentShop != shopToUpdate){
+
+                //neuer Einkaufsort wird hinzugefügt, wenn sich der eingegebene Einkaufsort zum gespeicherten Einkaufsort unterscheidet
+                if(!presentShop.equals(shopToUpdate)){
                     present.setShop(presentShop);
                 }
-                if(presentStatus != statusToUpdate){
+
+                //neuer Status wird hinzugefügt, wenn sich der eingegebene Status zum gespeicherten Status unterscheidet
+                if(!presentStatus.equals(statusToUpdate)){
                     present.setStatus(presentStatus);
                 }
 
@@ -287,11 +270,27 @@ public class Repository {
                 return null;
             }
 
-            //todo:NEU
             protected void onPostExecute(Void result) {
                 presentsListener.onPostUpdatePresent();
             }
         }.execute();
+    }
+
+    private int updateEventForUpdatedPresent(String personFirstNameToUpdate, String personLastNameToUpdate, String eventToUpdate, String personFirstName, String personLastName, String eventName){
+        int eventId;
+        int personId = myDatabase.daoAccess().getPersonIdByName(personFirstNameToUpdate, personLastNameToUpdate);
+
+        if((personFirstNameToUpdate.equals(personFirstName)) && (personLastNameToUpdate.equals(personLastName))){
+            insertEventForPresent(personId, eventName);
+            eventId = getEventIdForPresent(personId, eventName);
+            insertPersonEventConnectionForPresent(personId, eventId);
+        }else{
+            int newPersonId = myDatabase.daoAccess().getPersonIdByName(personFirstName, personLastName);
+            insertEventForPresent(newPersonId, eventName);
+            eventId = getEventIdForPresent(newPersonId, eventName);
+            insertPersonEventConnectionForPresent(newPersonId, eventId);
+        }
+        return eventId;
     }
 
     private Present getPresentByPresentInformation(int personId, String presentNameToUpdate, double priceToUpdateDouble, String shopToUpdate, String statusToUpdate){
@@ -301,12 +300,12 @@ public class Repository {
     }
 
 
-    // Present Representation
+    // Present Repräsentation
     LiveData<List<PresentRepresentation>> getAllPresents() {
         return allPresents;
     }
 
-    // Person Event Representation
+    // Person Event Repräsentation
     LiveData<List<PersonEventRepresentation>> getAllPersonsWithEvents() {
         return allPersonsEvents;
     }
