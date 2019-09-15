@@ -27,13 +27,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.0.0'
 
-    //aus Übung 6 (für Datenbankk)
+    /**vgl. Schwappach F. & Jelinski J. (25.05.2019).
+     * Übungsaufgabe 6. Telefonbuch-Datenbank [Vorlesungsfolien].
+     * Retrieved from https://ilias.uni-passau.de/ilias/ilias.php?ref_id=89588&cmd=view&cmdClass=ilrepositorygui&cmdNode=t0&baseClass=ilRepositoryGUI. */
     implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
 
     //todo: NEU (für RecyclerView)
-    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#2
-    // Lifecycle components
+    /**Google Developers Codelabs. (n.d.).
+    * Update gradle files.
+    * https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#2. */
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
     implementation 'androidx.recyclerview:recyclerview:1.0.0'

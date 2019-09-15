@@ -27,7 +27,9 @@ task clean(type: Delete) {
 }
 
 //todo: NEU (für RecyclerView)
-// https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#2
+/**Google Developers Codelabs. (n.d.).
+ * Update gradle files.
+ * https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#2. */
 ext {
     roomVersion = '2.1.0-alpha06'
     archLifecycleVersion = '2.0.0'
