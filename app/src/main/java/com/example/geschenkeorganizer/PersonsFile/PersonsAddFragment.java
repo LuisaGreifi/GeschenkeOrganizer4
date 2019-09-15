@@ -135,12 +135,12 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
             getInformation();
 
             if (textFirstName.isEmpty() || textSurName.isEmpty() || eventDate.isEmpty() || eventType.isEmpty()) {
-                Toast.makeText(getActivity(), "Bitte fülle alle Felder aus",
+                Toast.makeText(getActivity(), getResources().getString(R.string.toast_fillOutAllFields),
                         Toast.LENGTH_SHORT).show();
             } else {
                 //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
                 if (personsAddFragmentStatus == STATUS_ADD) {
-                    createNotification("Geschenke-Erinnerung", "Überlege dir ein Geschenk ;-)");
+                    createNotification(getResources().getString(R.string.notification_title), getResources().getString(R.string.notification_text_thinkAboutPresent));
                     saveEntry(v);
                     Intent intent = new Intent(getActivity(), PresentsActivity.class);
                     startActivity(intent);
@@ -305,6 +305,6 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onPostUpdatePerson() {
-        Toast.makeText(getActivity(), getString(R.string.toast_addedEntry), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.toast_updatedEntry), Toast.LENGTH_SHORT).show();
     }
 }
