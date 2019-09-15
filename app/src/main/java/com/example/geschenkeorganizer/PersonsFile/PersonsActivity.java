@@ -23,7 +23,7 @@ import com.example.geschenkeorganizer.presents.PresentsListFragment;
 public class PersonsActivity extends FragmentActivity implements PersonEventListClickListener /**PersonsListFragment.OnListItemSelectedListener, PersonsAddFragment.OnListItemChangedListener */{
 
     //todo: Neu
-    //Konstante --> Unterscheidung, ob Geschenk hinzugefügt/geupdatet wird
+    //Konstante --> Unterscheidung, ob Eintrag hinzugefügt/geupdatet wird
     private static final int STATUS_ADD = 0;
     private static final int STATUS_UPDATE = 1;
 
@@ -62,8 +62,10 @@ public class PersonsActivity extends FragmentActivity implements PersonEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persons);
 
-        //https://developer.android.com/training/basics/fragments/fragment-ui
-        //Fragment hinzufügen zu Layout
+        /**Android Developers. (n.d.).
+         * Build a flexible UI. Add a Fragment to an Activity at Runtime.
+         * Retrieved from https://developer.android.com/training/basics/fragments/fragment-ui.
+         * Fragment dynamisch zu Layout hinzufügen*/
         if (findViewById(R.id.persons_fragment_container) != null) {
             if (savedInstanceState != null) {
                 return;
@@ -77,6 +79,9 @@ public class PersonsActivity extends FragmentActivity implements PersonEventList
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    /**Android Developers. (n.d.).
+                     * Communicate with other fragments. Deliver a Message to a Fragment.
+                     * Retrieved from https://developer.android.com/training/basics/fragments/communicating.html*/
                     PersonsAddFragment paf =
                             (PersonsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment6);
                     if (paf != null) {
@@ -86,11 +91,11 @@ public class PersonsActivity extends FragmentActivity implements PersonEventList
                         paf.loadEmptyAddView();
                     } else {
                         //todo: NEU
-                        // https://developer.android.com/training/basics/fragments/communicating
+
+                        // Durchführung Transaktion: Fragments austauschen
                         PersonsAddFragment personsAddFragment = new PersonsAddFragment();
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                        //todo: funktioniert nur, wenn Fragment dynamisch hinzugefügt zu Layout
                         transaction.replace(R.id.persons_fragment_container, personsAddFragment);
                         transaction.addToBackStack(null);
                         //todo:Neu
@@ -108,28 +113,26 @@ public class PersonsActivity extends FragmentActivity implements PersonEventList
         public void onPersonEventItemClicked(String personFirstName, String personLastName, String
         eventName, String eventDate){
             //todo Neu
-            //https://developer.android.com/training/basics/fragments/communicating
-            //quasi von da übernommen (angepasst)
+            /**Android Developers. (n.d.).
+             * Communicate with other fragments. Deliver a Message to a Fragment.
+             * Retrieved from https://developer.android.com/training/basics/fragments/communicating.html*/
             PersonsAddFragment paf =
                     (PersonsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment6);
             if (paf != null) {
-                //todo: NEU
-                //https://developer.android.com/training/basics/fragments/communicating.html
+
                 //öffentliche Methode von PresentsAddFragment direkt aufrufen
                 //todo: Neu
                 paf.setStatus(STATUS_UPDATE);
                 paf.onPersonsUpdate(personFirstName, personLastName, eventName, eventDate);
-                //todo: hier evntl auch Button anpassen (setInformation)
                 paf.setInformation();
             } else {
                 //todo: NEU
-                // https://developer.android.com/training/basics/fragments/communicating
                 PersonsAddFragment personsAddFragment = new PersonsAddFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.persons_fragment_container, personsAddFragment);
                 transaction.addToBackStack(null);
                 //todo:Neu
-                // set Status + onPresentUpdate über commit
+                // set Status + onPresentUpdate
                 personsAddFragment.setStatus(STATUS_UPDATE);
                 personsAddFragment.onPersonsUpdate(personFirstName, personLastName, eventName, eventDate);
                 transaction.commit();

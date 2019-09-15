@@ -10,9 +10,11 @@ import androidx.room.RoomDatabase;
 public abstract class MyDatabase extends RoomDatabase {
         public abstract DaoAccess daoAccess();
 
-        /** https://codelabs.developers.google.com/codelabs/android-training-livedata-viewmodel/#6
-         * --> es kann nicht mehrere Datenbank-Instanzen gleichzeitig geben
-         */
+        /**Google Developers Codelabs. (n.d.).
+         * Android fundamentals 10.1 Part A: Room, LiveData, and ViewModel. Task 5: Add a Room database.
+         * Retrieved from https://codelabs.developers.google.com/codelabs/android-training-livedata-viewmodel/#6.
+         * Es kann nicht mehrere Datenbank Instanzen gleichzeitig geben */
+
         private static MyDatabase INSTANCE;
 
         public static MyDatabase getDatabase(final Context context) {

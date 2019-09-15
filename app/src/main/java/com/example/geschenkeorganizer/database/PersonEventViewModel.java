@@ -1,8 +1,9 @@
 package com.example.geschenkeorganizer.database;
 
-//todo: NEU
-//https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#8
-//Erstellung ViewModel
+/**Google Developers Codelabs. (n.d.).
+ * Create the ViewModel. Implement the ViewModel.
+ * Retrieved from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#8.
+ * grundlegende Erstellung ViewModel */
 
 import android.app.Application;
 
@@ -26,7 +27,6 @@ public class PersonEventViewModel extends AndroidViewModel {
 
     public LiveData<List<PersonEventRepresentation>> getAllPersonEvents() { return allPersonEvents; }
 
-    //todo: weiß nicht, ob ich das brauch...vllt nochmal schöner weil noch ne Abstraktionsschicht?
     public void insertPersonEvent(final String firstName, final String lastName, final String eventName, final int eventDate) {
         repo.insertPersonEvent(firstName, lastName, eventName, eventDate); }
 }

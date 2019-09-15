@@ -61,8 +61,10 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presents);
 
-        //https://developer.android.com/training/basics/fragments/fragment-ui
-        //Fragment hinzufügen zu Layout
+        /**Android Developers. (n.d.).
+         * Build a flexible UI. Add a Fragment to an Activity at Runtime.
+         * Retrieved from https://developer.android.com/training/basics/fragments/fragment-ui.
+         * Fragment dynamisch zu Layout hinzufügen*/
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
                 return;
@@ -81,6 +83,9 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
             //quasi von da übernommen
             @Override
             public void onClick(View v) {
+                /**Android Developers. (n.d.).
+                 * Communicate with other fragments. Deliver a Message to a Fragment.
+                 * Retrieved from https://developer.android.com/training/basics/fragments/communicating.html*/
                 PresentsAddFragment paf =
                         (PresentsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
                 if (paf != null) {
@@ -90,11 +95,10 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
                     paf.loadEmptyAddView();
                 } else {
                     //todo: NEU
-                    // https://developer.android.com/training/basics/fragments/communicating
+                    // Durchführung Transaktion: Fragments austauschen
                     PresentsAddFragment presentsAddFragment = new PresentsAddFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                    //todo: funktioniert nur, wenn Fragment dynamisch hinzugefügt zu Layout
                     transaction.replace(R.id.fragment_container, presentsAddFragment);
                     transaction.addToBackStack(null);
                     //todo:Neu
@@ -114,24 +118,20 @@ public class PresentsActivity extends FragmentActivity implements PresentListCli
     @Override
     public void onPresentItemClick(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
         Log.d("PresentsActivity", "onClick");
+        /**Android Developers. (n.d.).
+         * Communicate with other fragments. Deliver a Message to a Fragment.
+         * Retrieved from https://developer.android.com/training/basics/fragments/communicating.html*/
 
         //todo Neu
-        //https://developer.android.com/training/basics/fragments/communicating
-        //quasi von da übernommen (angepasst)
         PresentsAddFragment paf =
                 (PresentsAddFragment) getSupportFragmentManager().findFragmentById(R.id.fragment4);
         if (paf != null) {
             //todo: NEU
-            //https://developer.android.com/training/basics/fragments/communicating.html
             //öffentliche Methode von PresentsAddFragment direkt aufrufen
-            //todo: Neu
             paf.setStatus(STATUS_UPDATE);
             paf.onPresentUpdate(presentName, personFirstName, personLastName, eventName, price, shop, status);
-            //todo: hier evntl auch Button anpassen (setInformation)
             paf.setInformation();
         } else {
-            //todo: NEU
-            // https://developer.android.com/training/basics/fragments/communicating
             PresentsAddFragment presentsAddFragment = new PresentsAddFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, presentsAddFragment);

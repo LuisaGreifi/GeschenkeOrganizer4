@@ -95,11 +95,11 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         done.setOnClickListener(this);
 
         //todo: neu
-        // davor in saveEntry (wird aber ja dann jedes Mal erzeugt --> madig)
-        //https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
-        // Erstellung Repository mit richtigem Kontext
-        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
-        // Kontext der Activity des Fragments: Präfix: getActivity()
+        /**Murthy, A. (04.05.2018).
+         * 5 steps to implement Room persistence library in Android.
+         * Retrieved from https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24.
+         * Erstellung Repository mit richtigem Kontext;
+         * Kontext der Activity des Fragments: Präfix: getActivity() */
         repository = new Repository(getActivity().getApplicationContext());
 
         return view;
@@ -259,7 +259,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     //todo: NEU
     private void updateEntry(){
-        //todo: get Present By id --> erst später :)
         repository.updatePresent(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, presentNameToUpdate, priceToUpdateDouble, shopToUpdate, statusToUpdate, textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
     }
 
@@ -275,8 +274,10 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         placeOfPurchase.setText("");
         price.setText("");
 
-        //https://developer.android.com/reference/android/widget/CheckBox
-        //Checkbox checken (setten bzw ent-setten)
+        /**Android Developers. (n.d.).
+         * CheckBox.
+         * Retrieved from: https://developer.android.com/reference/android/widget/CheckBox.
+         * Checkboxes auf leer setzen*/
         hadIdea.setChecked(false);
         bought.setChecked(false);
         wrapped.setChecked(false);
@@ -306,17 +307,17 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         StringTextPrice = price.getText().toString();
 
         //todo: NEU
-        //todo: evntl auch andere Sachen replacen... €, Leerzeichen zu NICHTS
-        //todo: VORSICHT, sehr fehleranfällig...
 
-        // https://www.journaldev.com/18361/java-remove-character-string
-        // characters ersetzen
         String priceToParse = StringTextPrice;
+        /**Pankaj. (n.d.).
+         * Java Remove Character from String.
+         * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
+         * characters ersetzen*/
         priceToParse = priceToParse.replace(",", ".");
         priceToParse = priceToParse.replace(" ", "");
         priceToParse = priceToParse.replace("€", "");
         priceToParse = priceToParse.replace(" €", "");
-        Log.d("PresentsAddFragment", priceToParse);
+
         textPrice = Double.parseDouble(priceToParse);
 
 
@@ -358,7 +359,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     }
 
     //todo: Neu (test)
-    //todo: hier evntl auch Button anpassen (setInformation)
     protected void setInformation(){
         firstName.setText(personFirstNameToUpdate);
         surName.setText(personLastNameToUpdate);
@@ -367,10 +367,10 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         placeOfPurchase.setText(shopToUpdate);
         price.setText(priceToUpdateString);
 
-        //https://developer.android.com/reference/android/widget/CheckBox
-        //Checkbox checken (setten)
-        //todo: schöner: switch-case
-        //todo: schöner Konstanten (wird obe nzum speichern auch benötigt
+        /**Android Developers. (n.d.).
+         * CheckBox.
+         * Retrieved from: https://developer.android.com/reference/android/widget/CheckBox.
+         * Checkboxes überprüfen und gegebenenfalls setzen*/
         if(statusToUpdate.equals("Idee")){
             hadIdea.setChecked(true);
         } else if(statusToUpdate.equals("gekauft")){
@@ -383,14 +383,15 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     // todo: Neu
     protected void onPresentUpdate(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
-        Log.d("PresentsAddFragment", "onUpdate");
         presentNameToUpdate = presentName;
         personFirstNameToUpdate = personFirstName;
         personLastNameToUpdate = personLastName;
         eventNameToUpdate = eventName;
         priceToUpdateString = price;
-        // https://www.journaldev.com/18361/java-remove-character-string
-        // characters ersetzen
+        /**Pankaj. (n.d.).
+         * Java Remove Character from String.
+         * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
+         * characters ersetzen*/
         priceToUpdateDouble = Double.parseDouble(price.replace(" €", ""));
 
         shopToUpdate = shop;
@@ -400,7 +401,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     //todo: Neu
     protected void setStatus(int status){
-        //Konstante --> Unterscheidung, ob Geschenk hinzugefügt/geupdatet wird
+        //Unterscheidung, ob Geschenk im Hinzufügen-/Update-Modus ist
         presentsAddFragmentStatus = status;
     }
 }

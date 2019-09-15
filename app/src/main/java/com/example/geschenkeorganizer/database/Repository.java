@@ -2,38 +2,40 @@ package com.example.geschenkeorganizer.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
-
 import java.util.List;
+
+/**Google Developers Codelabs. (n.d.).
+ * Create the Repository. Implementing the Repository.
+ * Retrieved from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7.
+ * grundlegende Erstellung Repository */
 
 public class Repository {
 
-    //todo: NEU
-    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
+    private MyDatabase myDatabase;
+
     private LiveData<List<PresentRepresentation>> allPresents;
     private LiveData<List<PersonEventRepresentation>> allPersonsEvents;
 
-    // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
-    private MyDatabase myDatabase;
+    /**Murthy, A. (04.05.2018).
+     * 5 steps to implement Room persistence library in Android.
+     * Retrieved from https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24.
+     * Verwendung context */
 
     public Repository(Context context){
-        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
         myDatabase = MyDatabase.getDatabase(context);
 
-        //todo: NEU
-        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
         allPresents = myDatabase.daoAccess().getAllPresentsForRepresentation();
         allPersonsEvents = myDatabase.daoAccess().getAllPersonsWithEventsForRepresentation();
     }
 
+
     //Person und Event hinzufügen Dialog
 
-    //todo: vorsicht: Felder, die nicht leer sein dürfen, müssen davor noch gecheckt werden (Button Klick -- > falls Feld leer, dass nicht leer sein darf: Meldung --> inserten)
-
-    // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
-    //Funktionsweise
+    /**Murthy, A. (04.05.2018).
+     * 5 steps to implement Room persistence library in Android.
+     * Retrieved from https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24.
+     * Funktionsweise der Insert-Methode im Repository*/
     public void insertPersonEvent(final String firstName, final String lastName, final String eventName, final int eventDate){
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -55,7 +57,6 @@ public class Repository {
         }
     }
 
-    //todo: in diesem Fall MUSS der Nutzer EventName + -datum eingeben? --> noch in UI Nutzer informieren!
     private void insertEvent(String eventName, int eventDate){
         if (!myDatabase.daoAccess().existsEventWithEventInformationAlready(eventName, eventDate)) {
             Event event = new Event();
@@ -66,7 +67,6 @@ public class Repository {
     }
 
     private void insertPersonEventConnection(String firstName, String lastName, String eventName, int eventDate){
-        // brauch die zugehörige Id ja auch, wenn 1 von beiden schon existiert!
         int personId = myDatabase.daoAccess().getPersonIdByName(firstName, lastName);
         int eventId = myDatabase.daoAccess().getEventIdByEventInformation(eventName, eventDate);
         if (!myDatabase.daoAccess().existsPersonEventConnectionAlready(personId, eventId)) {
@@ -77,8 +77,6 @@ public class Repository {
         }
     }
 
-
-    //todo: NEU (Test)
     //1. Teil: alte von zu upzudateten Present, 2. Teil: Werte aus EditText
     public void updatePersonEvent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventNameToUpdate, final int eventDateToUpdate, final String firstName, final String lastName, final String eventName, final int eventDate){
         new AsyncTask<Void, Void, Void>() {
@@ -149,9 +147,9 @@ public class Repository {
 
 
 
+
     // Geschenk hinzufügen Dialog
 
-    //todo: Neu (eventId bekommen geändert --> TESTEN)
     public void insertPresent(final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus) {
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -169,17 +167,12 @@ public class Repository {
     }
 
     private void insertEventForPresent(int personId, String eventName){
-        //todo: nicht einfach so per id updatebar --> Event bezieht sich ja nicht nur auf 1 Person (NICHT einfach Eventdatum ändern)
-        //todo: Lösungsvorschlag: update umständlicher gestalten (eventId anhand Name und Personen Infos bekommen --> neues Event (wenn Eventdate = 0) --> eventName altes Event getten + für neues setten --> eingegebenes Datum für Event setten --> Event inserten (--> Person inserten) --> PersonEventJoin inserten --> alten PersonEventJoin löschen)
-        //todo: mit 0 semi-elegante Lösung, aber sollte funktionieren (vllt in UI Eventdatum nicht anzeigen, wenn Date=0?
         if (!myDatabase.daoAccess().existsEventForPersonAlready(personId, eventName) && !myDatabase.daoAccess().existsEventWithEventInformationAlready(eventName, 0)) {
             Event event = new Event();
             event.setEventName(eventName);
             event.setEventDate(0);
             myDatabase.daoAccess().insertEvent(event);
-            //dann muss Mini-Acivity geöffnet werden --> (nach Speichern, gleiche Methode zur Abfrage nutzen?)
-            //--> wahrscheinlich hast du wieder die Ehre mit onPostExecute
-            // --> Intent zu Mini-Activity
+            //todo: dann muss Mini-Acivity geöffnet werden --> (nach Speichern, gleiche Methode zur Abfrage nutzen?)
         }
     }
 
@@ -217,8 +210,6 @@ public class Repository {
 
     }
 
-
-    //todo: NEU (Test)
     //1. Teil: alte von zu upzudateten Present, 2. Teil: Werte aus EditText
     public void updatePresent(final String personFirstNameToUpdate, final String personLastNameToUpdate, final String eventToUpdate, final String presentNameToUpdate, final double priceToUpdate, final String shopToUpdate, final String statusToUpdate, final String firstName, final String lastName, final String eventName, final String presentName, final double presentPrice, final String presentShop, final String presentStatus){
         new AsyncTask<Void, Void, Void>() {
@@ -269,8 +260,6 @@ public class Repository {
         }.execute();
     }
 
-    //todo:NEU
-    //todo: eventName fehlt
     private Present getPresentByPresentInformation(int personId, String presentNameToUpdate, double priceToUpdateDouble, String shopToUpdate, String statusToUpdate){
         Present presentToUpdate;
         presentToUpdate = myDatabase.daoAccess().getPresentByPresentInformation(personId, presentNameToUpdate, priceToUpdateDouble, shopToUpdate, statusToUpdate);
@@ -279,20 +268,19 @@ public class Repository {
 
 
 
-    //todo: NEU
+
     // Present Representation
 
-    //https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
     LiveData<List<PresentRepresentation>> getAllPresents() {
         return allPresents;
     }
 
 
 
-    //todo: NEU
+
+
     // Person Event Representation
 
-    //https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
     LiveData<List<PersonEventRepresentation>> getAllPersonsWithEvents() {
         return allPersonsEvents;
     }

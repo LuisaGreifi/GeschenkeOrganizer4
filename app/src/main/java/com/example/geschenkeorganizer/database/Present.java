@@ -5,8 +5,10 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-/** https://developer.android.com/training/data-storage/room/relationships
- * one-to-many relationship */
+/**Android Developers. (n.d.).
+ * Define relationships between objects. Define one-to-many relationships.
+ * Retrieved from https://developer.android.com/training/data-storage/room/relationships.
+ * Erstellung one-to-many relationship*/
 @Entity(foreignKeys = {@ForeignKey(entity = Person.class, parentColumns = "personId", childColumns = "personId"), @ForeignKey(entity = Event.class, parentColumns = "eventId", childColumns = "eventId")})
 public class Present {
     @NonNull

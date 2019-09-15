@@ -1,13 +1,13 @@
 package com.example.geschenkeorganizer.database;
 
-//todo: Neu
-//Klasse, die als Rückgabewert für DAO-Abrfrage verwendet werden kann
-//wird zur Darstellung der Personen und Events in der App verwendet
+/**Klasse, die als Rückgabewert für DAO-Abrfrage verwendet werden kann
+ * wird zur Darstellung der Personen und Events in der App verwendet. */
 
-//https://codelabs.developers.google.com/codelabs/android-persistence/#7
-//Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
 
-import androidx.annotation.NonNull;
+/**Google Developers Codelabs. (n.d.).
+ * Step 5 - Add Custom Query Result Objects.
+ * Retrieved from https://codelabs.developers.google.com/codelabs/android-persistence/#7.
+ * Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage zu verwenden */
 
 public class PersonEventRepresentation {
     private String firstName;

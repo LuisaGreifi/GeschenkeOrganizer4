@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--todo: NEU: FrameLayout -> austauschbar in personsActivity :) -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,10 +22,15 @@
         app:layout_constraintTop_toTopOf="parent" />
         -->
 
-    <!-- https://www.vogella.com/tutorials/AndroidFragments/article.html#defining-fragments
-    FrameLayout INNERHALB Layout -->
 
-    <!--https://developer.android.com/training/basics/fragments/fragment-ui -->
+    <!-- Android Developers. (n.d.).
+    Build a flexible UI. Add a Fragment to an Activity at Runtime.
+    Retrieved from: https://developer.android.com/training/basics/fragments/fragment-ui.
+    FrameLayout (flexibel austauschbar) in PersonsActivity -->
+    <!-- vogella GmbH. (23.05.2019).
+    Building dynamic user interfaces in Android with fragments - Tutorial.
+    Retrieved from: https://www.vogella.com/tutorials/AndroidFragments/article.html#defining-fragments
+    FrameLayout innerhalb eines Layouts verwenden -->
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/persons_fragment_container"
         android:layout_width="match_parent"

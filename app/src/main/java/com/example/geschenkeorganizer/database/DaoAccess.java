@@ -6,18 +6,20 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Dao
 public interface DaoAccess {
+
     // Person Access
 
     @Insert
     void insertPerson(Person person);
 
-    //vgl. Übung 6
+    /**vgl. Schwappach F. & Jelinski J. (25.05.2019).
+    * Übungsaufgabe 6. Telefonbuch-Datenbank [Vorlesungsfolien].
+    * Retrieved from https://ilias.uni-passau.de/ilias/ilias.php?ref_id=89588&cmd=view&cmdClass=ilrepositorygui&cmdNode=t0&baseClass=ilRepositoryGUI. */
     @Query("SELECT * FROM Person")
     List<Person> getAllPersons();
 
@@ -27,11 +29,15 @@ public interface DaoAccess {
     @Query("SELECT lastName FROM Person")
     List<String> getAllLastNames();
 
-    //vgl. Übung 6
+    /**vgl. Schwappach F. & Jelinski J. (25.05.2019).
+     * Übungsaufgabe 6. Telefonbuch-Datenbank [Vorlesungsfolien].
+     * Retrieved from https://ilias.uni-passau.de/ilias/ilias.php?ref_id=89588&cmd=view&cmdClass=ilrepositorygui&cmdNode=t0&baseClass=ilRepositoryGUI. */
     @Query("SELECT lastName FROM Person WHERE firstName =:firstName")
     List<String> getLastNameByFirstName(String firstName);
 
-    //vgl. Übung 6
+    /**vgl. Schwappach F. & Jelinski J. (25.05.2019).
+     * Übungsaufgabe 6. Telefonbuch-Datenbank [Vorlesungsfolien].
+     * Retrieved from https://ilias.uni-passau.de/ilias/ilias.php?ref_id=89588&cmd=view&cmdClass=ilrepositorygui&cmdNode=t0&baseClass=ilRepositoryGUI. */
     @Query("SELECT firstName FROM Person WHERE lastName =:lastName")
     List<String> getFirstNameByLastName(String lastName);
 
@@ -44,7 +50,10 @@ public interface DaoAccess {
     @Query("SELECT * FROM Person WHERE firstName =:firstName AND lastName =:lastName")
     boolean existsPersonWithNameAlready(String firstName, String lastName);
 
-    // https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3
+    /**Google Developers Codelabs. (n.d.).
+     * Android fundamentals 10.1 Part B: Deleting data from a Room database. 4. Task 2: Delete all words.
+     * Retrieved from https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3.
+     * Funktionsweise Eintrag löschen */
     @Query("DELETE FROM Person")
     void deleteAllPersons();
 
@@ -52,17 +61,17 @@ public interface DaoAccess {
     void deletePersonByName(String firstName, String lastName);
 
 
+
+
+
     //Event Access
 
     @Insert
     void insertEvent(Event event);
 
-    //unktioniert für mehrere (und für eins!)
-    //Unterscheidung bei mehreren komplizierter, ob schon in DB oder nicht...(nur wenn unbedingt nötig für UI!)
-    @Insert
-    void insertEvents(Event... event);
-
-    //vgl. Übung 6
+    /**vgl. Schwappach F. & Jelinski J. (25.05.2019).
+     * Übungsaufgabe 6. Telefonbuch-Datenbank [Vorlesungsfolien].
+     * Retrieved from https://ilias.uni-passau.de/ilias/ilias.php?ref_id=89588&cmd=view&cmdClass=ilrepositorygui&cmdNode=t0&baseClass=ilRepositoryGUI. */
     @Query("SELECT * FROM Event")
     List<Event> getAllEvents();
 
@@ -81,7 +90,10 @@ public interface DaoAccess {
     @Query("SELECT * FROM Event WHERE eventName =:eventName AND eventDate =:eventDate")
     boolean existsEventWithEventInformationAlready(String eventName, int eventDate);
 
-    // https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3
+    /**Google Developers Codelabs. (n.d.).
+     * Android fundamentals 10.1 Part B: Deleting data from a Room database. 4. Task 2: Delete all words.
+     * Retrieved from https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3.
+     * Funktionsweise Eintrag löschen */
     @Query("DELETE FROM Event")
     void deleteAllEvents();
 
@@ -92,23 +104,31 @@ public interface DaoAccess {
     void deleteEventByEventId(int eventId);
 
 
+
+
+
     //PersonEventJoin Access
 
-    //vgl. https://developer.android.com/training/data-storage/room/relationships
+    /*Android Developers. (n.d.).
+    * Define relationships between objects.Define many-to-many relationships.
+    * Retrieved from https://developer.android.com/training/data-storage/room/relationships.
+    * Erstellung many-to-many relationship*/
     @Insert
     void insertPersonEventJoin(PersonEventJoin personEventJoin);
 
-    //vgl. Übung 6
+    /**vgl. Schwappach F. & Jelinski J. (25.05.2019).
+     * Übungsaufgabe 6. Telefonbuch-Datenbank [Vorlesungsfolien].
+     * Retrieved from https://ilias.uni-passau.de/ilias/ilias.php?ref_id=89588&cmd=view&cmdClass=ilrepositorygui&cmdNode=t0&baseClass=ilRepositoryGUI. */
     @Query("SELECT * FROM PersonEventJoin")
     List<PersonEventJoin> getAllPersonEventJoins();
 
-    //vgl. https://developer.android.com/training/data-storage/room/relationships
-    // könnte gut für Spinner in Geschenke hinzufügen sein
-    // auch: wahrscheinlich Nutzung zur Anzeige Events passend zu den Personen
+    /**Android Developers. (n.d.).
+    * Define relationships between objects.Define many-to-many relationships.
+    * Retrieved from https://developer.android.com/training/data-storage/room/relationships.
+    * Funktionsweise für Abfragen von beiden Tabellen*/
     @Query("SELECT * FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId")
     List<Event> getEventForPerson(final int personId);
 
-    //eher das gut für Spinner
     @Query("SELECT eventName FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId")
     List<String> getEventNameForPerson(final int personId);
 
@@ -121,11 +141,6 @@ public interface DaoAccess {
     @Query("SELECT eventDate FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE PersonEventJoin.personId =:personId AND Event.eventId =:eventId")
     int getEventDateForPersonAndEvent(final int personId, final int eventId);
 
-    //Person-Event-Join zu Event (& Event) dürfen halt nicht existieren
-    @Query("SELECT * FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE personId =:personId AND eventName =:eventName")
-    boolean existsEventForPersonAlready(int personId, String eventName);
-
-    //vgl. https://developer.android.com/training/data-storage/room/relationships
     @Query("SELECT * FROM Person " + "INNER JOIN PersonEventJoin " + "ON Person.personId = PersonEventJoin.personId " + "WHERE PersonEventJoin.eventId =:eventId")
     List<Person> getPersonForEvent(final int eventId);
 
@@ -135,10 +150,16 @@ public interface DaoAccess {
     @Query("SELECT lastName FROM Person " + "INNER JOIN PersonEventJoin " + "ON Person.personId = PersonEventJoin.personId " + "WHERE PersonEventJoin.eventId =:eventId")
     List<String> getPersonsLastNameForEvent(final int eventId);
 
+    @Query("SELECT * FROM Event " + "INNER JOIN PersonEventJoin " + "ON Event.eventId = PersonEventJoin.eventId " + "WHERE personId =:personId AND eventName =:eventName")
+    boolean existsEventForPersonAlready(int personId, String eventName);
+
     @Query("SELECT * FROM PersonEventJoin WHERE personId =:personId AND eventId =:eventId")
     boolean existsPersonEventConnectionAlready(int personId, int eventId);
 
-    // https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3
+    /**Google Developers Codelabs. (n.d.).
+     * Android fundamentals 10.1 Part B: Deleting data from a Room database. 4. Task 2: Delete all words.
+     * Retrieved from https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3.
+     * Funktionsweise Eintrag löschen */
     @Query("DELETE FROM PersonEventJoin")
     void deleteAllPersonEventJoins();
 
@@ -147,16 +168,20 @@ public interface DaoAccess {
     void deletePersonEventJoin(int personId, int eventId);
 
 
+
+
+
     //Present Access
 
     @Insert
     void insertPresent(Present present);
 
-    //todo: NEU
     @Update
     void updatePresent(Present present);
 
-    //vgl. Übung 6
+    /**vgl. Schwappach F. & Jelinski J. (25.05.2019).
+     * Übungsaufgabe 6. Telefonbuch-Datenbank [Vorlesungsfolien].
+     * Retrieved from https://ilias.uni-passau.de/ilias/ilias.php?ref_id=89588&cmd=view&cmdClass=ilrepositorygui&cmdNode=t0&baseClass=ilRepositoryGUI. */
     @Query("SELECT * FROM Present")
     List<Present> getAllPresents();
 
@@ -169,14 +194,16 @@ public interface DaoAccess {
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
     List<Present> getPresentsByEventId(int eventId);
 
-    //todo: NEU
     @Query("SELECT * FROM Present WHERE personId =:personId AND presentName =:presentName AND price =:price AND shop =:shop AND status =:status")
     Present getPresentByPresentInformation(int personId, String presentName, double price, String shop, String status);
 
     @Query("SELECT * FROM Present WHERE eventId =:eventId")
     boolean existsPresentForEventAlready(int eventId);
 
-    // https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3
+    /**Google Developers Codelabs. (n.d.).
+     * Android fundamentals 10.1 Part B: Deleting data from a Room database. 4. Task 2: Delete all words.
+     * Retrieved from https://codelabs.developers.google.com/codelabs/android-training-room-delete-data/index.html#3.
+     * Funktionsweise Eintrag löschen */
     @Query("DELETE FROM Present")
     void deleteAllPresents();
 
@@ -190,31 +217,46 @@ public interface DaoAccess {
     void deletePresentByEvent(int eventId);
 
 
-    //Present Representation
-
-    //todo: NEU
-
-    //https://codelabs.developers.google.com/codelabs/android-persistence/#7
-    // Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
-    // https://wiki.selfhtml.org/wiki/Datenbank/Fortgeschrittene_Jointechniken#Unterschiedliche_Join-Spalten_nutzen
-    // inner join + Struktur
-    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
-    // LiveData als Rückgabe
-    @Query("SELECT firstName, lastName, eventName, presentName, price, shop, status FROM Present " + "INNER JOIN Person INNER JOIN Event " + "ON Present.eventId = Event.eventId AND Present.personId = Person.personId")
-    LiveData<List<PresentRepresentation>> getAllPresentsForRepresentation();
 
 
-// Person Event Representation
 
-//todo: NEU
+    // Person Event Representation
 
-    //https://codelabs.developers.google.com/codelabs/android-persistence/#7
-    // Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage
-    // https://wiki.selfhtml.org/wiki/Datenbank/Fortgeschrittene_Jointechniken#Unterschiedliche_Join-Spalten_nutzen
-    // inner join + Struktur
-    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
-    // LiveData als Rückgabe
+    /**Google Developers Codelabs. (n.d.).
+     * Create the ViewModel. Implement the ViewModel.
+     * https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
+     * Möglichkeit LiveData als Rückgabe zu verwenden */
+    /**
+     /**Google Developers Codelabs. (n.d.).
+     * Step 5 - Add Custom Query Result Objects.
+     * Retrieved from: https://codelabs.developers.google.com/codelabs/android-persistence/#7.
+     * Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage zu verwenden */
+    /**
+     * Mehrere Tabellen mit JOIN verknüpfen - unterschiedliche Joinspalten. Unterschiedliche Join-Spalten nutzen. (n.d.).
+     * Retrieved from: https://wiki.selfhtml.org/wiki/Datenbank/Fortgeschrittene_Jointechniken#Unterschiedliche_Join-Spalten_nutzen
+     * Struktur Abfrage und Funktionsweise INNER JOIN*/
     @Query("SELECT firstName, lastName, eventName, eventDate FROM PersonEventJoin " + "INNER JOIN Person INNER JOIN Event " + "ON PersonEventJoin.eventId = Event.eventId AND PersonEventJoin.personId = Person.personId " + "ORDER BY firstName, lastName")
     LiveData<List<PersonEventRepresentation>> getAllPersonsWithEventsForRepresentation();
 
+
+
+
+
+    //Present Representation
+
+    /**Google Developers Codelabs. (n.d.).
+     * Create the ViewModel. Implement the ViewModel.
+     * https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#5
+     * Möglichkeit LiveData als Rückgabe zu verwenden */
+    /**
+    /**Google Developers Codelabs. (n.d.).
+     * Step 5 - Add Custom Query Result Objects.
+     * Retrieved from: https://codelabs.developers.google.com/codelabs/android-persistence/#7.
+     * Möglichkeit eigenes Objekt als Rückgabetyp für DAO-Abfrage zu verwenden */
+    /**
+     * Mehrere Tabellen mit JOIN verknüpfen - unterschiedliche Joinspalten. Unterschiedliche Join-Spalten nutzen. (n.d.).
+     * Retrieved from: https://wiki.selfhtml.org/wiki/Datenbank/Fortgeschrittene_Jointechniken#Unterschiedliche_Join-Spalten_nutzen
+     * Struktur Abfrage und Funktionsweise INNER JOIN*/
+    @Query("SELECT firstName, lastName, eventName, presentName, price, shop, status FROM Present " + "INNER JOIN Person INNER JOIN Event " + "ON Present.eventId = Event.eventId AND Present.personId = Person.personId")
+    LiveData<List<PresentRepresentation>> getAllPresentsForRepresentation();
 }

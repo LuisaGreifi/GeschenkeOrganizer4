@@ -30,8 +30,10 @@ import com.example.geschenkeorganizer.database.Repository;
 import java.util.List;
 
 //todo: NEU
-// https://medium.com/@tonia.tkachuk/android-app-example-using-room-database-63f7091e69af
-// eigtl ganze Klasse, Platzierung Methoden an richtiger Stelle + Kontext!
+/**Tkachuk, T. (06.04.2018).
+ * Android app example using Room database.
+ * Retrieved from https://medium.com/@tonia.tkachuk/android-app-example-using-room-database-63f7091e69af.
+ * grundlegende Erstellung des Fragments zur Darstellung der RecyclerView und Anbindung an Adapter */
 
 
 public class PresentsListFragment extends Fragment {
@@ -57,16 +59,16 @@ public class PresentsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         //todo: neu
-        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
+        /**Google Developers Codelabs. (n.d.).
+         * Connect with the data.
+         * Retrieved from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13.
+         * LiveData der Personen- und Events-Liste überwachen;
+         * Übergabe der Daten an Adapter */
         presentViewModel = ViewModelProviders.of(this).get(PresentViewModel.class);
         presentViewModel.getAllPresents().observe(this, new Observer<List<PresentRepresentation>>() {
             @Override
             public void onChanged(@Nullable final List<PresentRepresentation> presents) {
-                // Update the cached copy of the words in the adapter.
                 presentListAdapter.setPresents(presents);
-
-                //todo: hier vllt observte Liste in Liste zwischenspeichern --> für autocomplete edittext verwenden
-                // bzw. NICHT hier, aber vom Prinzip so gut :)
             }
 
 

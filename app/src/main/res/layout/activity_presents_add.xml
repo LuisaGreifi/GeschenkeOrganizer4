@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--todo: NEU: FrameLayout -> austauschbar in presentActivity :) -->
-
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
@@ -13,10 +11,14 @@
         android:layout_height="wrap_content" />
         -->
 
-    <!-- https://www.vogella.com/tutorials/AndroidFragments/article.html#defining-fragments
-    FrameLayout INNERHALB Layout -->
-
-    <!--https://developer.android.com/training/basics/fragments/fragment-ui -->
+    <!-- Android Developers. (n.d.).
+    Build a flexible UI. Add a Fragment to an Activity at Runtime.
+    Retrieved from: https://developer.android.com/training/basics/fragments/fragment-ui.
+    FrameLayout (flexibel austauschbar) in PersonsActivity -->
+    <!-- vogella GmbH. (23.05.2019).
+    Building dynamic user interfaces in Android with fragments - Tutorial.
+    Retrieved from: https://www.vogella.com/tutorials/AndroidFragments/article.html#defining-fragments
+    FrameLayout innerhalb eines Layouts verwenden -->
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_container"
     android:layout_width="match_parent"
@@ -24,10 +26,3 @@
 
 
 </RelativeLayout>
-
-<!-- https://developer.android.com/training/basics/fragments/fragment-ui
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-    -->

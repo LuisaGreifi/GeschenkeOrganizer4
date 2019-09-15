@@ -5,8 +5,10 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-/** https://developer.android.com/training/data-storage/room/defining-data
- Index und unique */
+/**Android Developers. (n.d.).
+ * Defining data using Room entities. Index specific columns.
+ * Retrieved from https://developer.android.com/training/data-storage/room/defining-data.
+ * Verwendung Index und unique*/
 @Entity(indices = {@Index(value = {"firstName", "lastName"},
         unique = true)})
 public class Person {

@@ -1,11 +1,13 @@
 package com.example.geschenkeorganizer.database;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
-/** https://developer.android.com/training/data-storage/room/relationships
- many-to-many relationship --> grundlegender Aufbau Join Klasse*/
+/**Android Developers. (n.d.).
+ * Define relationships between objects. Define many-to-many relationships.
+ * Retrieved from https://developer.android.com/training/data-storage/room/relationships.
+ * Erstellung many-to-many relationship (grundlegender Aufbau der Join-Klasse)*/
+
 @Entity(primaryKeys = {"personId", "eventId"},
         foreignKeys = {@ForeignKey(entity=Person.class, parentColumns="personId", childColumns = "personId"), @ForeignKey(entity= Event.class, parentColumns = "eventId", childColumns = "eventId")})
 public class PersonEventJoin {
@@ -17,6 +19,7 @@ public class PersonEventJoin {
 
     public PersonEventJoin(int personId, int eventId){}
 
+    //getter
     public int getPersonId(){
         return personId;
     }
@@ -25,6 +28,7 @@ public class PersonEventJoin {
         return eventId;
     }
 
+    // setter
     public void setPersonId(int personId){
         this.personId = personId;
     }

@@ -24,8 +24,10 @@ import com.example.geschenkeorganizer.database.PresentViewModel;
 import java.util.List;
 
 //todo: NEU
-// https://medium.com/@tonia.tkachuk/android-app-example-using-room-database-63f7091e69af
-// eigtl ganze Klasse, Platzierung Methoden an richtiger Stelle + Kontext!
+/**Tkachuk, T. (06.04.2018).
+ * Android app example using Room database.
+ * Retrieved from https://medium.com/@tonia.tkachuk/android-app-example-using-room-database-63f7091e69af.
+ * grundlegende Erstellung des Fragments zur Darstellung der RecyclerView und Anbindung an Adapter */
 
 public class PersonsListFragment extends Fragment {
 
@@ -48,12 +50,15 @@ public class PersonsListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //todo: neu
-        // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13
+        /**Google Developers Codelabs. (n.d.).
+         * Connect with the data.
+         * Retrieved from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13.
+         * LiveData der Personen- und Events-Liste überwachen;
+         * Übergabe der Daten an Adapter */
         personEventViewModel = ViewModelProviders.of(this).get(PersonEventViewModel.class);
         personEventViewModel.getAllPersonEvents().observe(this, new Observer<List<PersonEventRepresentation>>() {
             @Override
             public void onChanged(@Nullable final List<PersonEventRepresentation> personEvents) {
-                // Update the cached copy of the words in the adapter.
                 personEventListAdapter.setPersonEvents(personEvents);
             }
 

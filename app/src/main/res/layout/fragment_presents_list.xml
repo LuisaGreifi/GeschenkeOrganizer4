@@ -7,8 +7,11 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- todo: NEU
-    https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#9 -->
+    <!-- todo: NEU -->
+    <!--Google Developers Codelabs. (n.d.).
+    Add XML layout.
+    https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#9
+    Verwendung RecyclerView und Erstellung in XML -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerviewPresentList"
         android:layout_width="match_parent"

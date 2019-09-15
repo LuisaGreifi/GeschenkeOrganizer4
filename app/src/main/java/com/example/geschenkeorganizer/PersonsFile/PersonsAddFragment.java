@@ -98,6 +98,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         button_calendarCall = view.findViewById(R.id.button_calendarCall);
          */
 
+        //TextViews nur setten, wenn davor listItem angeklickt wurde
         if(personsAddFragmentStatus == STATUS_UPDATE){
             setInformation();
         }
@@ -113,11 +114,11 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         initEventDate();
 
         //todo: neu
-        // davor in saveEntry (wird aber ja dann jedes Mal erzeugt --> madig)
-        //https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
-        // Erstellung Repository mit richtigem Kontext
-        // https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
-        // Kontext der Activity des Fragments: Präfix: getActivity()
+        /**Murthy, A. (04.05.2018).
+         * 5 steps to implement Room persistence library in Android.
+         * Retrieved from https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24.
+         * Erstellung Repository mit richtigem Kontext;
+         * Kontext der Activity des Fragments: Präfix: getActivity() */
         repository = new Repository(getActivity().getApplicationContext());
 
         return view;
@@ -223,7 +224,7 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
             getInformation();
 
             //todo: NEU
-            //Unterscheidung, on Geschenk hinzugefügt oder geupdatet wird
+            //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
             if (personsAddFragmentStatus == STATUS_ADD){
                 if (!editText_firstName.getText().toString().isEmpty() && !editText_surName.getText().toString().isEmpty()) {
                     createNotification("Überlege dir ein Geschenk ;-)", "Geschenke-Erinnerung");
@@ -251,10 +252,6 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
             i.setComponent(cn);
             startActivity(i);
         }
-
-        //todo: neu
-        loadEmptyAddView();
-
     }
 
     private void createNotification(String title, String text) {
@@ -332,13 +329,10 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         //repository = new Repository(getActivity().getApplicationContext());
 
         repository.insertPersonEvent(textFirstName,textSurName, eventType, eventDateInt);
-
-        // todo: am Besten Einträge rauslöschen --> Nutzer, sieht, das gespeicehrt wurde; am besten in Post-Execute (Nicht, das Daten gelöscht werden, bevor sie gespeichert wurden)
     }
 
     //todo: NEU
     private void updateEntry(){
-        //todo: get Present By id --> erst später :)
         repository.updatePersonEvent(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, eventDateToUpdateInt, textFirstName,textSurName, eventType, eventDateInt);
     }
 
@@ -376,8 +370,10 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
 
         eventDate = editText_eventDate.getText().toString();
 
-        // https://www.journaldev.com/18361/java-remove-character-string
-        // characters ersetzen + String kürzen
+        /**Pankaj. (n.d.).
+         * Java Remove Character from String.
+         * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
+         * characters ersetzen + String kürzen*/
         eventDateInt = Integer.parseInt(eventDate.replace(".", "").substring(0, 4));
 
         //int eventTypeInt = spinner_eventType.getSelectedItemPosition();
@@ -386,7 +382,6 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
     }
 
     //todo: Neu (test)
-    //todo: hier evntl auch Button anpassen (setInformation)
     protected void setInformation(){
         editText_firstName.setText(personFirstNameToUpdate);
         editText_surName.setText(personLastNameToUpdate);
@@ -402,21 +397,21 @@ public class PersonsAddFragment extends Fragment implements View.OnClickListener
         eventDateToUpdateString = eventDate;
 
         String eventDateToParse = eventDateToUpdateString;
-        // https://www.journaldev.com/18361/java-remove-character-string
-        // characters ersetzen
+        /**Pankaj. (n.d.).
+         * Java Remove Character from String.
+         * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
+         * characters ersetzen*/
         eventDateToParse = eventDateToParse.replace(".", "");
         if(eventDateToParse.equals("")){
             eventDateToParse = "0";
         }
 
         eventDateToUpdateInt = Integer.parseInt(eventDateToParse);
-        Log.d("PersonsAddFragment", String.valueOf(eventDateToUpdateInt));
-
     }
 
     //todo: Neu
     protected void setStatus(int status){
-        //Konstante --> Unterscheidung, ob Geschenk hinzugefügt/geupdatet wird
+        //Unterscheidung, ob Geschenk im Hinzufügen-/Update-Modus ist
         personsAddFragmentStatus = status;
     }
 }
