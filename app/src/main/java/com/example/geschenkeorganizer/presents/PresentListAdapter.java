@@ -19,6 +19,7 @@ import java.util.List;
 
 public class PresentListAdapter extends RecyclerView.Adapter<PresentListAdapter.PresentViewHolder>  {
     class PresentViewHolder extends RecyclerView.ViewHolder {
+
         private final TextView presentNameView;
         private final TextView personFirstNameView;
         private final TextView personLastNameView;
