@@ -89,13 +89,13 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         if(presentsAddFragmentStatus == STATUS_ADD){
             if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
                 if(!(bought.isChecked()) && !(wrapped.isChecked())) {
-                    createNotification("Kaufe und verpacke dein Geschenk ;-)", "Geschenke-Erinnerung");
+                    createNotification("Geschenke-Erinnerung", "Kaufe und verpacke dein Geschenk ;-)");
                 }
                 else if(!(bought.isChecked())) {
-                    createNotification("verpackt aber nicht gekauft...interessant! ;-)", "Geschenke-Erinnerung");
+                    createNotification("Geschenke-Erinnerung", "verpackt aber nicht gekauft...interessant! ;-)");
                 }
                 else if(!(wrapped.isChecked())) {
-                    createNotification("Verpacke dein Geschenk noch ;-)", "Geschenke-Erinnerung");
+                    createNotification("Geschenke-Erinnerung", "Verpacke dein Geschenk noch ;-)");
                 }
 
                 saveEntry();
@@ -196,18 +196,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         textDescription = description.getText().toString();
         textPlaceOfPurchase = placeOfPurchase.getText().toString();
         StringTextPrice = price.getText().toString();
-
-        String priceToParse = StringTextPrice;
-        /**Pankaj. (n.d.).
-         * Java Remove Character from String.
-         * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
-         * characters ersetzen*/
-        priceToParse = priceToParse.replace(",", ".");
-        priceToParse = priceToParse.replace(" ", "");
-        priceToParse = priceToParse.replace("€", "");
-        priceToParse = priceToParse.replace(" €", "");
-
-        textPrice = Double.parseDouble(priceToParse);
+        textPrice = Double.parseDouble(StringTextPrice);
 
         eventType = event.getText().toString();
 
@@ -261,11 +250,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         personLastNameToUpdate = personLastName;
         eventNameToUpdate = eventName;
         priceToUpdateString = price;
-        /**Pankaj. (n.d.).
-         * Java Remove Character from String.
-         * Retrieved from: https://www.journaldev.com/18361/java-remove-character-string.
-         * characters ersetzen*/
-        priceToUpdateDouble = Double.parseDouble(price.replace(" €", ""));
+        priceToUpdateDouble = Double.parseDouble(price);
 
         shopToUpdate = shop;
         statusToUpdate = status;

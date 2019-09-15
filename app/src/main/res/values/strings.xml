@@ -6,25 +6,10 @@
     //InfoTexts
     <string name="text_noPresents">Es sind keine Geschenke vorhanden.</string>
     <string name="text_noPersons">Es sind keine Personen vorhanden.</string>
-    <string name="text_dateEntry">Wenn du möchtest, kannst du noch ein Datum eingeben.</string>
-
-    //StringArrays
-    <string-array name="eventTypes">
-        <item>Geburtstag</item>
-        <item>Weihnachten</item>
-        <item>Jahrestag</item>
-        <item>Hochzeit</item>
-        <item>Valentinstag</item>
-        <item>Muttertag</item>
-        <item>Vatertag</item>
-        <item>Namenstag</item>
-        <item>Sonstiges</item>
-    </string-array>
 
     //Buttons
     <string name="button_presents">Geschenke</string>
     <string name="button_persons">Personen und Events</string>
-    <string name="button_inspiration">Inspiration</string>
     <string name="button_done">Fertig!</string>
     <string name="button_add">+</string>
     <string name="button_calendarCall">Zu deinem Kalender...</string>
@@ -42,8 +27,5 @@
     <string name="EditText_hint_placeOfPurchase">Ort/Geschäft</string>
     <string name="EditText_hint_price">Preis</string>
     <string name="EditText_eventDate">Datum</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-
 
 </resources>
