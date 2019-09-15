@@ -19,7 +19,6 @@ import com.example.geschenkeorganizer.database.access.PersonEventViewModel;
 
 import java.util.List;
 
-//todo: NEU
 /**Tkachuk, T. (06.04.2018).
  * Android app example using Room database.
  * Retrieved from https://medium.com/@tonia.tkachuk/android-app-example-using-room-database-63f7091e69af.
@@ -45,7 +44,6 @@ public class PersonsListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //todo: neu
         /**Google Developers Codelabs. (n.d.).
          * Connect with the data.
          * Retrieved from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#13.

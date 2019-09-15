@@ -16,44 +16,15 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name = ".NotifyService"
-            android:enabled = "true"
-            android:exported = "true" >
-        </service>
-
         <activity
             android:name=".PersonsFile.PersonsActivity"
             android:parentActivityName=".MainActivity"
         />
 
 
-        <activity android:name=".PersonsFile.PersonsAddActivity"
-            android:parentActivityName=".PersonsFile.PersonsActivity"
-            />
-
         <activity android:name=".presents.PresentsActivity"
             android:parentActivityName=".MainActivity"
             />
-
-        <activity android:name=".presents.PresentsAddActivity"
-            android:parentActivityName=".presents.PresentsActivity"
-            />
-
-
-
-        <activity android:name=".presents.PresentsAddDateAddActivity"
-            android:parentActivityName=".MainActivity"
-            />
-
-        <activity android:name=".InspirationActivity"
-            android:parentActivityName=".MainActivity"
-            />
-
-        <activity android:name=".TestNotificationActivity"
-            android:parentActivityName=".MainActivity"
-            />
-
 
 
     </application>

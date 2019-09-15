@@ -1,10 +1,6 @@
 package com.example.geschenkeorganizer.presents;
 
-//todo: NEU
-// import androidx Fragment!
 import androidx.fragment.app.Fragment;
-//import android.app.Fragment;
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -26,41 +22,25 @@ import android.widget.Toast;
 import com.example.geschenkeorganizer.R;
 import com.example.geschenkeorganizer.database.access.Repository;
 
-//todo: NEU Interface
+
 public class PresentsAddFragment extends Fragment implements View.OnClickListener, PresentsAddListener {
-
-    //todo: NEU (ausgeklammert: Interface)
-    /**
-    private OnListItemChangedListener mCallback;
-
-    public interface OnListItemChangedListener {
-        public void onListItemChanged();
-    }
-     */
 
     private EditText firstName, surName, description, event, placeOfPurchase, price;
     private CheckBox hadIdea, bought, wrapped;
     private Button done;
 
-    private String textFirstName, textSurName, textDescription, textPlaceOfPurchase, StringTextPrice, /**todo:NEU */textStatus;
+    private String textFirstName, textSurName, textDescription, eventType, textPlaceOfPurchase, StringTextPrice, textStatus;
     private boolean booHadIdea, booBought, booWrapped;
     private double textPrice;
 
-    //todo: neu
-    private Spinner spinner_event;
-    private String eventType;
-    private static final int EVENTTYPE_BIRTHDAY = 0, EVENTTYPE_CHRISTMAS = 1, EVENTTYPE_ANNIVERSARY = 2, EVENTTYPE_WEDDING = 3, EVENTTYPE_VALENTINESDAY = 4, EVENTTYPE_MOTHERSDAY = 5, EVENTTYPE_FATHERSDAY = 6, EVENTTYPE_NAMEDAY = 7, EVENTTYPE_OTHER = 8;
-
     private Repository repository;
 
-    //todo: Neu
     //Konstante, die gesetzt wird, wenn Klick auf ListItem stattfindet und PresentsAddFragment deswegen angepasst werden soll
     //initial: add
     private int presentsAddFragmentStatus = STATUS_ADD;
     private static final int STATUS_ADD = 0;
     private static final int STATUS_UPDATE = 1;
 
-    // todo: Neu
     //Inhalte, die in Item gespeichert sind --> sollen angezeigt/updatebar sein
     private String presentNameToUpdate, personFirstNameToUpdate,personLastNameToUpdate, eventNameToUpdate, priceToUpdateString, shopToUpdate, statusToUpdate;
     private double priceToUpdateDouble;
@@ -73,27 +53,20 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
     public PresentsAddFragment() {
     }
 
-    //todo: in PersonsAdFragment wird hier Spinner initialisiert?
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_presents_add, container, false);
 
-        //todo: NEU
-        //hier Views finden --> nicht später überall einzeln + View übergeben (getView klappt bei mir irgendwie nicht mehr?)
         findViewsById(view);
+
         //TextViews nur setten, wenn davor listItem angeklickt wurde
         if(presentsAddFragmentStatus == STATUS_UPDATE){
             setInformation();
         }
 
-
-        //todo: Neu (Initialisierung Button in findViewById --> kann rausgelöscht werden
-        //todo: Neu doneButton --> done (oben initialisiert)
-        // Button doneButton = view.findViewById(R.id.button_done);
         done.setOnClickListener(this);
 
-        //todo: neu
         /**Murthy, A. (04.05.2018).
          * 5 steps to implement Room persistence library in Android.
          * Retrieved from https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24.
@@ -101,87 +74,18 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
          * Kontext der Activity des Fragments: Präfix: getActivity() */
         repository = new Repository(getActivity().getApplicationContext());
 
-        //todo: NEU
         repository.setPresentsAddListener(this);
 
         return view;
     }
 
 
-    //todo: müsste oben aufgerufen werden + Spinner spinenr übergeben werden
-    private void initSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),  R.array.eventTypes, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_event.setAdapter(adapter);
-
-        spinner_event.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View v,
-                                       int position, long arg3) {
-                int eventTypeInt = spinner_event.getSelectedItemPosition();
-                eventType = getEvent(eventTypeInt);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-    }
-
-    private String getEvent(int eventTypeInt) {
-        switch (eventTypeInt) {
-            case EVENTTYPE_BIRTHDAY:
-                eventType = "Geburtstag";
-                break;
-            case EVENTTYPE_CHRISTMAS:
-                eventType = "Weihnachten";
-                break;
-            case EVENTTYPE_ANNIVERSARY:
-                eventType = "Jahrestag";
-                break;
-            case EVENTTYPE_WEDDING:
-                eventType = "Hochzeit";
-                break;
-            case EVENTTYPE_VALENTINESDAY:
-                eventType = "Valentinstag";
-                break;
-            case EVENTTYPE_MOTHERSDAY:
-                eventType = "Muttertag";
-                break;
-            case EVENTTYPE_FATHERSDAY:
-                eventType = "Vatertag";
-                break;
-            case EVENTTYPE_NAMEDAY:
-                eventType = "Namenstag";
-                break;
-            case EVENTTYPE_OTHER:
-                eventType = "Sonstiges";
-                break;
-        }
-        return eventType;
-    }
-
-
     @Override
     public void onClick(View v) {
-        //todo: Neu: denk das kann man rauslöschen...oben in findViewsById
-        /**
-        firstName = getView().findViewById(R.id.editText_firstName);
-        surName = getView().findViewById(R.id.editText_surName);
-        description = getView().findViewById(R.id.editText_description);
-         */
 
-        //todo: Neu: denk das kann man rauslöschen...oben in findViewsById
-        /**
-        wrapped = getView().findViewById(R.id.checkBox_wrapped);
-        bought = getView().findViewById(R.id.checkBox_bought);
-         */
-
-        //todo:NEU
-        //das hier, nicht in save + update extra
         getInformation();
 
-        //todo: NEU
-        //Unterscheidung, on Geschenk hinzugefügt oder geupdatet wird
+        //Unterscheidung, ob Geschenk hinzugefügt oder geupdatet wird
         if(presentsAddFragmentStatus == STATUS_ADD){
             if (!firstName.getText().toString().isEmpty() && !surName.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
                 if(!(bought.isChecked()) && !(wrapped.isChecked())) {
@@ -195,13 +99,10 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
                 }
 
                 saveEntry();
-                // todo: für Insert erstmal nicht relevant
-                //mCallback.onListItemChanged();
             } else {
                 Toast.makeText(getActivity(), "Du musst noch eine Person und/oder die Beschreibung des Geschenks eingeben.",
                         Toast.LENGTH_SHORT).show();
             }
-            //todo: neu
             loadEmptyAddView();
         }else if(presentsAddFragmentStatus == STATUS_UPDATE){
             updateEntry();
@@ -237,8 +138,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
-
-    //todo: neu L
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             int importance = NotificationManager.IMPORTANCE_LOW;
@@ -251,23 +150,15 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    //todo: NEU (Parameter View v braucht man nicht --> rauslöschen) + getInformation schon in onCLick, nicht in saveEntry
+
     private void saveEntry() {
-        // todo: kann man hier nachad eigtl rauslöschen? (oben schon alle)
-        // findViewsById();
-        // getInformation();
         repository.insertPresent(textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
     }
 
-    //todo: NEU
     private void updateEntry(){
         repository.updatePresent(personFirstNameToUpdate, personLastNameToUpdate, eventNameToUpdate, presentNameToUpdate, priceToUpdateDouble, shopToUpdate, statusToUpdate, textFirstName,textSurName, eventType, textDescription, textPrice, textPlaceOfPurchase, textStatus);
     }
 
-
-
-
-    //todo: neu
     protected void loadEmptyAddView() {
         firstName.setText("");
         surName.setText("");
@@ -285,8 +176,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         wrapped.setChecked(false);
     }
 
-    //todo: NEU (Übergabe view + Verwendung view (getView funktioniert bei mir irgendwie nicht)
-    //todo: spinner heißt hier anders bzw. existiert noch gar nicht in Layout!! KEIN EditText
     private void findViewsById(View view) {
         firstName = view.findViewById(R.id.editText_firstName);
         surName = view.findViewById(R.id.editText_surName);
@@ -300,15 +189,13 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         done = view.findViewById(R.id.button_done);
     }
 
-    //todo: NEU (Parameter View v braucht man nicht --> rauslöschen
+
     private void getInformation() {
         textFirstName = firstName.getText().toString();
         textSurName = surName.getText().toString();
         textDescription = description.getText().toString();
         textPlaceOfPurchase = placeOfPurchase.getText().toString();
         StringTextPrice = price.getText().toString();
-
-        //todo: NEU
 
         String priceToParse = StringTextPrice;
         /**Pankaj. (n.d.).
@@ -322,21 +209,8 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
         textPrice = Double.parseDouble(priceToParse);
 
-
-        //todo: EditText im Layout über Attribute näher definieren (nur Komma-/Punktzahlen eingeben)
-        //todo: unteren textPrice rauslöschen!
-
-        // textPrice = Double.valueOf(StringTextPrice);
-
-        //todo: neu Spinner haut so noch nicht hin! (vorübergehend auskommentiert!)
-        /** int eventTypeInt = spinner_event.getSelectedItemPosition();
-         eventType = getEvent(eventTypeInt);
-         */
-
-        //todo: neu vorübergehend noch/wieder event (später rauslöschen)
         eventType = event.getText().toString();
 
-        //todo: Stati noch ändern (Idee eigtl unnötig!)
         booHadIdea = hadIdea.isChecked();
         booBought = bought.isChecked();
         booWrapped = wrapped.isChecked();
@@ -344,7 +218,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         textStatus = getHighestStatusOfCheckboxes();
     }
 
-    //todo: Stati noch ändern (Idee eigtl unnötig!)
     private String getHighestStatusOfCheckboxes(){
         String result = "";
         String hadIdea = "Idee";
@@ -360,7 +233,7 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         return result;
     }
 
-    //todo: Neu (test)
+
     protected void setInformation(){
         firstName.setText(personFirstNameToUpdate);
         surName.setText(personLastNameToUpdate);
@@ -382,8 +255,6 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
         }
     }
 
-
-    // todo: Neu
     protected void onPresentUpdate(String presentName, String personFirstName, String personLastName, String eventName, String price, String shop, String status) {
         presentNameToUpdate = presentName;
         personFirstNameToUpdate = personFirstName;
@@ -401,20 +272,17 @@ public class PresentsAddFragment extends Fragment implements View.OnClickListene
 
     }
 
-    //todo: Neu
     protected void setStatus(int status){
         //Unterscheidung, ob Geschenk im Hinzufügen-/Update-Modus ist
         presentsAddFragmentStatus = status;
     }
 
-    //todo: Test
     @Override
     public void onPostAddPresent() {
         Toast.makeText(getActivity(), "Geschenk wurde hinzugefügt",
                 Toast.LENGTH_SHORT).show();
     }
 
-    //todo: Test
     @Override
     public void onPostUpdatePresent() {
         Toast.makeText(getActivity(), "Geschenk wurde aktualisiert",

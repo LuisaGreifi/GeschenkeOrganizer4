@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- todo: NEU -->
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- todo: NEU -->
     <!--Google Developers Codelabs. (n.d.).
     Add XML layout.
     https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#9
@@ -23,6 +22,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/recyclerview_present_item" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

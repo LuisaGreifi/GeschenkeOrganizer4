@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--todo: NEU Button Constraints (gern anpassen)
-    todo: neu Button und fragment vertauscht-->
     <Button
         android:id="@+id/button_addPresent"
         android:layout_width="match_parent"
@@ -17,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--todo: NEU Constraints (gern anpassen) -->
     <include
         layout="@layout/activity_presents_add"
         android:id="@+id/activity_presents_add"

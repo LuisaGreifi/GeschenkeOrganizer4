@@ -7,22 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- todo: NEU (Fragment auskommentiert -> FrameLayout (flexibel austauschbar) -->
-    <!--todo: NEU
-    width -> match parent -->
-    <!--
-    <fragment
-        android:id="@+id/fragment9"
-        android:name="com.example.geschenkeorganizer.PersonsFile.PersonsListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-        -->
-
-
     <!-- Android Developers. (n.d.).
     Build a flexible UI. Add a Fragment to an Activity at Runtime.
     Retrieved from: https://developer.android.com/training/basics/fragments/fragment-ui.
